@@ -40,8 +40,9 @@ class Email {
 		$addressArray = explode( ",",$inAddress); 
 
 		//--通过循环对邮件地址的合法性进行检查 
-		for($i=0;$icheckEmail($addressArray[$i])==false) {
-			return false; 
+		foreach ($addressArray as $value) {
+			if($this->checkEmail($value)==false) 
+				return false; 
 		} 
 
 		//--所有合法的email地址存入数组中 
@@ -61,8 +62,9 @@ class Email {
 		$addressArray = explode( ",",$inAddress); 
 
 		//--通过循环对邮件地址的合法性进行检查 
-		for($i=0;$icheckEmail($addressArray[$i])==false) {
-			return false; 
+		foreach ($addressArray as $value) {
+			if($this->checkEmail($value)==false) 
+				return false; 
 		} 
 
 		//--所有合法的email地址存入数组中 
