@@ -1,11 +1,11 @@
 # ZxwFramework
 This is a PHP framework based on MVC !
 
-@copyright   Copyright(c) 2015
+@Copyright(c) 2015
 
-@author      iProg
+@Author      iProg
 
-@version     1.0
+@Version     1.0
 
 
 
