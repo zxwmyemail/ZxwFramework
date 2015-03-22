@@ -11,10 +11,10 @@ if (!defined('BASE_PATH'))
 
 class BasePDO { 
   
-	private $_pdo = null;                        //pdo实例
-	private $_pdoStmt = null;                    //pdo执行资源实例 
+    private $_pdo = null;                        //pdo实例
+    private $_pdoStmt = null;                    //pdo执行资源实例 
 
-	private static $_pdoInstance = null;         //单例模式，保存本类实例       
+    private static $_pdoInstance = null;         //单例模式，保存本类实例       
 
 
    /*
@@ -32,17 +32,17 @@ class BasePDO {
 
 
    /*
-	|---------------------------------------------------------------------------------------
-	| 构造函数
-	|--------------------------------------------------------------------------------------- 
-	| @param $dbconfig 	数据库连接配置相关信息
-	|--------------------------------------------------------------------------------------- 
-	*/ 
-	private function __construct($pdoConfig='') 
+    |---------------------------------------------------------------------------------------
+    | 构造函数
+    |--------------------------------------------------------------------------------------- 
+    | @param $dbconfig 	数据库连接配置相关信息
+    |--------------------------------------------------------------------------------------- 
+    */ 
+    private function __construct($pdoConfig='') 
     {  
-		if (!class_exists('PDO')) throw new Exception("环境不支持:PDO");
+	if (!class_exists('PDO')) throw new Exception("环境不支持:PDO");
 
-		if (empty($pdoConfig)) throw new Exception("PDO数据库参数异常!");
+	if (empty($pdoConfig)) throw new Exception("PDO数据库参数异常!");
 
         try {  
             $this->_pdo = new PDO($pdoConfig['dns'], $pdoConfig['username'], $pdoConfig['password']);  
@@ -50,8 +50,8 @@ class BasePDO {
             $this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
 
             if($pdoConfig['pconnect']) { 
-				$this->_pdo->setAttribute(PDO::ATTR_PERSISTENT, TRUE); 
-			}
+			$this->_pdo->setAttribute(PDO::ATTR_PERSISTENT, TRUE); 
+	    }
 
             $this->_pdo->query('SET NAMES ' . $pdoConfig['dbcharset']);
 
@@ -107,7 +107,7 @@ class BasePDO {
     | @param  string  $table  表名
     | @param  array   $data   array(
     |                       		array('表字段名'=>'表字段值','表字段名'=>'表字段值',......),
-	|								array('表字段名'=>'表字段值','表字段名'=>'表字段值',......)
+    |					array('表字段名'=>'表字段值','表字段名'=>'表字段值',......)
     |                   	  );
     | @return int     影响记录数
     |
@@ -157,19 +157,19 @@ class BasePDO {
     public function execSQL($sql='',$params=array()) 
     {
     	if($this->isMainIps($sql)) { 
-			return $this->execute($sql, $params=array()); 
-		} else { 
-			return $this->fetchAll($sql, $params=array()); 
-		} 
+		return $this->execute($sql, $params=array()); 
+	} else { 
+		return $this->fetchAll($sql, $params=array()); 
+	} 
     }
 
 
    /*
     |--------------------------------------------------------------------------------------
-	| 执行查询 获取所有数据 
-	|--------------------------------------------------------------------------------------
-	|
-	| @param   string  $sql  sql语句，写法有两种，举例如下：
+    | 执行查询 获取所有数据 
+    |--------------------------------------------------------------------------------------
+    |
+    | @param   string  $sql  sql语句，写法有两种，举例如下：
     |						 1. select * from where id=:id and name=:name ;
     |						 2. select * from where id=? and name=? ;
     |
@@ -178,24 +178,24 @@ class BasePDO {
     |						 2. array(1 => 1, 2 => 'zxw');
     |
     | @return  返回结果集 
-	|
-	|--------------------------------------------------------------------------------------
-	*/ 
-	public function fetchAll($sql='', $params=array()) 
+    |
+    |--------------------------------------------------------------------------------------
+    */ 
+    public function fetchAll($sql='', $params=array()) 
     { 
-		$this->select($sql, $params);
+	$this->select($sql, $params);
 
         //返回数据集 
-		return $this->_pdoStmt->fetchAll(PDO::FETCH_ASSOC); 
-	}  
+	return $this->_pdoStmt->fetchAll(PDO::FETCH_ASSOC); 
+    }  
 
 
    /*
     |---------------------------------------------------------------------------------------
-	| 获得一条查询结果 
-	|---------------------------------------------------------------------------------------
-	|
-	| @param   string  $sql  sql语句，写法有两种，举例如下：
+    | 获得一条查询结果 
+    |---------------------------------------------------------------------------------------
+    |
+    | @param   string  $sql  sql语句，写法有两种，举例如下：
     |						 1. select * from where id=:id and name=:name ;
     |						 2. select * from where id=? and name=? ;
     |
@@ -204,16 +204,16 @@ class BasePDO {
     |						 2. array(1 => 1, 2 => 'zxw');
     |
     | @return  返回结果集
-	|
-	|--------------------------------------------------------------------------------------- 
-	*/ 
-	public static function fetchOne($sql='', $params=array()) 
+    |	
+    |--------------------------------------------------------------------------------------- 
+    */ 
+    public static function fetchOne($sql='', $params=array()) 
     { 
-		$this->select($sql, $params);
+	$this->select($sql, $params);
 
-		// 返回数组集 
-		return $this->_pdoStmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
-	}
+	// 返回数组集 
+	return $this->_pdoStmt->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT);
+    }
 
 
     /*
@@ -257,10 +257,10 @@ class BasePDO {
 
    /* 
     |--------------------------------------------------------------------------------------
-	| 执行语句 针对 INSERT, UPDATE 以及DELETE 
-	|--------------------------------------------------------------------------------------
-	|
-	| @param   string  $sql  sql语句，写法有两种，举例如下：
+    | 执行语句 针对 INSERT, UPDATE 以及DELETE 
+    |--------------------------------------------------------------------------------------
+    |
+    | @param   string  $sql  sql语句，写法有两种，举例如下：
     |						 1. select * from where id=:id and name=:name ;
     |						 2. select * from where id=? and name=? ;
     |
@@ -269,38 +269,39 @@ class BasePDO {
     |						 2. array(1 => 1, 2 => 'zxw');
     |
     | @return  返回影响记录数
-	|
-	|--------------------------------------------------------------------------------------
-	*/ 
-	public function execute($sql='', $params=array()) 
+    |
+    |--------------------------------------------------------------------------------------
+    */ 
+    public function execute($sql='', $params=array()) 
     {
-		$this->select($sql, $params);
+	$this->select($sql, $params);
         return $this->_pdoStmt->rowCount(); 
-	}
+    	
+    }
 
 
    /*
     |-------------------------------------------------------------------------------------
-	| 执行查询SELECT指令 
-	|-------------------------------------------------------------------------------------
-	|
-	| @param   string  $sql  sql语句，写法有两种，举例如下：
+    | 执行查询SELECT指令 
+    |-------------------------------------------------------------------------------------
+    |
+    | @param   string  $sql  sql语句，写法有两种，举例如下：
     |						 1. select * from where id=:id and name=:name ;
     |						 2. select * from where id=? and name=? ;
     |
     | @param   array   $params  对应上面sql语句中的参数，具体写法如下：
     |						 1. array(':id' => 1, ':name' => 'zxw');
     |						 2. array(1 => 1, 2 => 'zxw'); 
-	| @return  无 
-	|
-	|--------------------------------------------------------------------------------------
-	*/ 
-	private function select($sql='', $params=array()) 
+    | @return  无 
+    |
+    |--------------------------------------------------------------------------------------
+    */ 
+    private function select($sql='', $params=array()) 
     { 
-		try {  
+	try {  
 
-			//释放前次的查询结果 
-			if ( !empty($this->_pdoStmt)) $this->_pdoStmt = null;
+           //释放前次的查询结果 
+	    if ( !empty($this->_pdoStmt)) $this->_pdoStmt = null;
 
             $this->_pdoStmt = $this->_pdo->prepare($sql); 
 
@@ -315,102 +316,105 @@ class BasePDO {
         } catch (PDOException  $e) {  
             exit('SQL语句：'.$sql.'<br />错误信息：'.$e->getMessage());  
         }  
-	}  
+    }  
 
 
    /*
-	|-------------------------------------------------------------------------------------
-	| 是否为数据库更改操作 
-	|------------------------------------------------------------------------------------- 
-	| @param string $query SQL指令 
-	| @return boolen 如果是查询操作返回false
-	|------------------------------------------------------------------------------------- 
-	*/ 
-	private function isMainIps($query) 
-    { 
-		$queryIps = 'INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|LOAD DATA|SELECT .* INTO|COPY|ALTER|GRANT|REVOKE|LOCK|UNLOCK'; 
+   |-------------------------------------------------------------------------------------
+   | 是否为数据库更改操作 
+   |------------------------------------------------------------------------------------- 
+   | @param string $query SQL指令 
+   | @return boolen 如果是查询操作返回false
+   |------------------------------------------------------------------------------------- 
+   */ 
+   private function isMainIps($query) 
+   { 
+	$queryIps = 'INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|LOAD DATA|SELECT .* INTO|COPY|ALTER|GRANT|REVOKE|LOCK|UNLOCK'; 
 
-		if (preg_match('/^\s*"?(' . $queryIps . ')\s+/i', $query)) { 
-			return true; 
-		} 
-
-		return false; 
-	} 
-
-
-   /*
-    |-------------------------------------------------------------------------------------
-	| 启动事务 
-	|-------------------------------------------------------------------------------------
-	*/ 
-	public function beginTransaction() 
-    { 
-
-		if (!$this->_pdo) return false; 
-
-		if (!$this->_pdo->inTransaction()) { 
-
-			$this->_pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, TRUE); 
-
-			$this->_pdo->beginTransaction(); 
-		}  
-
-		return; 
-	} 
-
-
-   /*
-    |-------------------------------------------------------------------------------------
-	| 用于非自动提交状态下面的查询提交 
-	|-------------------------------------------------------------------------------------
-	| @return boolen 
-	|-------------------------------------------------------------------------------------
-	*/ 
-	public function commit() 
-    { 
-		if (!$this->_pdo) return false;
-
-		if ($this->_pdo->inTransaction()) { 
-
-			$result = $this->_pdo->commit(); 
-
-			$this->_pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, FALSE); 
-
-			if(!$result){ 
-				throw new Exception('事务自动提交失败！'); 
-				return false; 
-			} 
-		} 
-
+	if (preg_match('/^\s*"?(' . $queryIps . ')\s+/i', $query)) { 
 		return true; 
 	} 
+
+	return false; 
+   } 
+
+
+   /*
+    |-------------------------------------------------------------------------------------
+    | 启动事务 
+    |-------------------------------------------------------------------------------------
+    */ 
+    public function beginTransaction() 
+    { 
+
+	if (!$this->_pdo) return false; 
+
+	if (!$this->_pdo->inTransaction()) { 
+
+		$this->_pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, TRUE); 
+
+		$this->_pdo->beginTransaction(); 
+	}  
+
+	return; 
+    	
+    } 
+
+
+   /*
+    |-------------------------------------------------------------------------------------
+    | 用于非自动提交状态下面的查询提交 
+    |-------------------------------------------------------------------------------------
+    | @return boolen 
+    |-------------------------------------------------------------------------------------
+    */ 
+    public function commit() 
+    { 
+	if (!$this->_pdo) return false;
+
+	if ($this->_pdo->inTransaction()) { 
+
+		$result = $this->_pdo->commit(); 
+
+		$this->_pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, FALSE); 
+
+		if(!$result){ 
+			throw new Exception('事务自动提交失败！'); 
+			return false; 
+		} 
+	} 
+
+	return true; 
+    	
+    } 
 
 
    /*
     |------------------------------------------------------------------------------------
-	| 事务回滚 
-	|------------------------------------------------------------------------------------ 
-	| @return boolen 
-	|------------------------------------------------------------------------------------
-	*/ 
-	public function rollback() 
+    | 事务回滚 
+    |------------------------------------------------------------------------------------ 
+    | @return boolen 
+    |------------------------------------------------------------------------------------
+    */ 
+    public function rollback() 
     { 
-		if (!$this->_pdo) return false; 
+	if (!$this->_pdo) return false; 
 
-		if ($this->_pdo->inTransaction()) { 
+	if ($this->_pdo->inTransaction()) { 
 
-			$result = $this->_pdo->rollback();
+		$result = $this->_pdo->rollback();
 
-			$this->_pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, FALSE); 
+		$this->_pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, FALSE); 
  
-			if(!$result){ 
-				throw new Exception('事务自动回滚失败！'); 
-				return false; 
-			} 
+		if(!$result){ 
+			throw new Exception('事务自动回滚失败！'); 
+			return false; 
 		} 
-
-		return true; 
 	} 
+
+	return true; 
+    	
+    } 
 
     
 } 
