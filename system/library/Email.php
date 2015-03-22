@@ -84,11 +84,11 @@ class Email {
 		$addressArray = explode( ",",$inAddress); 
 
 		//--通过循环对邮件地址的合法性进行检查 
-		for($i=0;$i<COUNT($ADDRESSARRAY);$I++) 
+		foreach ($addressArray as $value) { 
 		{ 
-			if($this->checkEmail($addressArray[$i])==false) 
+			if($this->checkEmail($value)==false) 
 				return false; 
-		} 
+		}  
 
 		//--所有合法的email地址存入数组中 
 		$this->mailBCC = implode($addressArray, ","); 
@@ -210,7 +210,7 @@ class Email {
 			while(!feof($templateFile)){ 
 				$templateLine = fgets($templateFile,1000); 
 				$templateLineArray = explode($templateDelim,$templateLine); 
-				for( $i=0; $i<COUNT($TEMPLATELINEARRAY);$I++){ 
+				for( $i=0; $i<COUNT($templateLineArray);$I++){ 
 					//--寻找起始位置 
 					if(strcspn($templateLineArray[$i],$templateNameStart)==0){ 
 						//--替换相应的值 
