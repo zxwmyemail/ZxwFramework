@@ -20,14 +20,14 @@ $mail->send();                      //发送邮件
 
 class Email { 
 
-    private $mailTo          = ""; // 收件人 
-    private $mailCC 	     = ""; // 抄送 
-    private $mailBCC 	     = ""; // 秘密抄送 
-    private $mailFrom 	     = ""; // 发件人 
-    private $mailSubject     = ""; // 主题 
-    private $mailText 	     = ""; // 文本格式的信件主体 
-    private $mailHTML 	     = ""; // html格式的信件主体 
-    private $mailAttachments = ""; // 附件 
+        private $mailTo              = ""; // 收件人 
+        private $mailCC 	     = ""; // 抄送 
+        private $mailBCC 	     = ""; // 秘密抄送 
+        private $mailFrom 	     = ""; // 发件人 
+        private $mailSubject         = ""; // 主题 
+        private $mailText 	     = ""; // 文本格式的信件主体 
+        private $mailHTML 	     = ""; // html格式的信件主体 
+        private $mailAttachments     = ""; // 附件 
 
 
        /*---------------------------------------------------------------------------------
