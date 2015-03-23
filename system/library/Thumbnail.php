@@ -23,7 +23,7 @@ if (!defined('BASE_PATH'))
  $image = file_get_contents('wap.gif');
  $thumb->loadData($image, 'image/jpeg');
  $thumb->buildThumb('wap_thumb.gif');
-*******************************************************************************************/
+********************************************************************************************/
 
 class Thumbnail {
  
