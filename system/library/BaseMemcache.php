@@ -3,7 +3,7 @@
 if (!defined('BASE_PATH'))
     exit('<H2 style="margin-top:200px;text-align:center;">Your request was forbidden!</H2>');
 
-/********************************************************************************************
+/*********************************************************************************************
     CLASS :  BaseMemcache类
     AUTHOR:  iProg 
     DATE  :  2015-03-09
