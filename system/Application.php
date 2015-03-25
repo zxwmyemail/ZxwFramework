@@ -34,14 +34,14 @@ final class Application {
         //加载config/下的参数配置params.config.php
         self::$_config = $config['system'];
 
-        //设置url的类型
+        //获取路由对象
         $route = new Route(self::$_config['route']['url_type']);
 
         //将url参数转换成数组 
         self::$_reqParams = $route->getUrlArray();   
 
         //加载smarty模板引擎
-        self::setTemplatesPath(self::$_reqParams);
+        self::setSmarty(self::$_reqParams);
 
         //导向控制层
         self::routeToCtrl(self::$_reqParams);
@@ -50,8 +50,9 @@ final class Application {
 
 
    /*---------------------------------------------------------------------------------------
-    |获取某个文件夹下面的所有文件
-    |@param   $dir 文件夹路径
+    |获取某个文件夹下面的指定的文件的路径
+    |@param   $dir        文件夹路径
+    |@param   $filename   指定文件名，如：model.php
     --------------------------------------------------------------------------------------*/
     public static function scanAllFiles ( $dir, $filename )
     {
@@ -149,7 +150,7 @@ final class Application {
     | @access      public
     | @param       array   $_reqParams
     --------------------------------------------------------------------------------------*/
-    public static function setTemplatesPath($reqParams)
+    public static function setSmarty($reqParams)
     {
         require_once SYS_FRAMEWORK_PATH.'/smarty/libs/Smarty.class.php'; 
 
