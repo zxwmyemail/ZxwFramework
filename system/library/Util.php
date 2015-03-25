@@ -15,7 +15,7 @@ class Util {
    /*------------------------------------------------------------------------------
     | XOR算法加密
     -----------------------------------------------------------------------------*/
-    public function encrypt($string, $key) {
+    public static function encrypt($string, $key) {
         $str_len = strlen($string);
         $key_len = strlen($key);
         for ($i = 0; $i < $str_len; $i++) {
@@ -30,7 +30,7 @@ class Util {
    /*------------------------------------------------------------------------------
     | XOR算法解密
     -----------------------------------------------------------------------------*/
-    public function decrypt($string, $key) {
+    public static function decrypt($string, $key) {
         $str_len = strlen($string);
         $key_len = strlen($key);
         for ($i = 0; $i < $str_len; $i++) {
