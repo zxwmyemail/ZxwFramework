@@ -122,14 +122,12 @@ class BasePDO {
     	$addFields = array_keys($data[0]); 
 
         $addValues = array();
-        foreach ($data as $record) {
-          	foreach ($record as $value) {
-          		$addValues[] = "('".implode("','",array_values($value))."')";
-          	}
+        foreach ($data as $value) {
+          	$addValues[] = "('".implode("','",array_values($value))."')";
         }  
 
         $addFields = "(`" . implode('`,`', $addFields) . "`)"; 
-        $addValues = implode("','", $addValues);
+        $addValues = implode(",", $addValues);
 
         $sql = "INSERT INTO {$table} {$addFields} VALUES {$addValues}";  
         return $this->execSQL($sql);  
