@@ -7,7 +7,7 @@ Version     1.0
 
 Email       zxwmyemail@163.com
 
-This is a PHP framework based on MVC !
+Is is a PHP framework based on the MVC design pattern!
 
 
 
