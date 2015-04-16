@@ -41,12 +41,6 @@ class homeController extends Controller {
         $result = Util::get_rand(array('0'=>30,'1'=>40,'2'=>20,'3'=>10));
         var_dump($result);die();
 
-        
-
-        //测试smarty模板
-        Application::$_smarty->assign('name','zxw');
-        Application::$_smarty->display('home.html'); 
-        exit();
 
         //自定义类加载，使用spl_autoload_register机制
         //可自动加载这些类/ZxwFramework/mvc/model/
