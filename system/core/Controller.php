@@ -29,7 +29,7 @@ class Controller {
     ----------------------------------------------------------------------------------------*/
     private function setSmarty()
     { 
-        require_once (SYS_FRAMEWORK_PATH.'/smarty/libs/Smarty.class.php'); 
+        require SYS_FRAMEWORK_PATH.'/smarty/libs/Smarty.class.php'; 
 
         $reqParams = Application::$_reqParams;
 
