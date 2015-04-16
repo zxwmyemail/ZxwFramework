@@ -33,8 +33,8 @@ class homeController extends Controller {
         die();
 
         //测试smarty模板
-        Application::$_smarty->assign('name','zxw');
-        Application::$_smarty->display('home.html'); 
+        $this->smarty->assign('name','zxw');
+        $this->smarty->display('home.html'); 
         exit();
 
         //测试静态类
