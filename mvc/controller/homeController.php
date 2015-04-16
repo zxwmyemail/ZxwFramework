@@ -16,7 +16,7 @@ class homeController extends Controller {
     }
 
     public function page404() {
-        Application::$_smarty->display('404Page.html'); 
+        $this->smarty->display('404Page.html'); 
         exit();
     }
 
