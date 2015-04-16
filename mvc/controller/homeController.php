@@ -23,7 +23,7 @@ class homeController extends Controller {
     public function index() {
         
         //测试smarty模板
-        $this->smarty->assign('name','zxw');
+        $this->smarty->assign('name','iProg');
         $this->smarty->display('home.html'); 
         exit();
 
