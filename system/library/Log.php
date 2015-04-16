@@ -25,15 +25,15 @@ class Log {
     
     private function __construct() {
 
-        $dir = LOG_PATH.DIRECTORY_SEPATRATOR.date('Y');
+        $dir = LOG_PATH.'/'.date('Y');
         if (!is_dir($dir)) 
             mkdir($dir, 0777); 
 
-        $dir .= DIRECTORY_SEPATRATOR.date('m');
+        $dir .= '/'.date('m');
         if (!is_dir($dir)) 
             mkdir($dir, 0777); 
 
-        $logFile = $dir.DIRECTORY_SEPATRATOR.date('Ymd').'.txt';
+        $logFile = $dir.'/'.date('Ymd').'.txt';
 
         $this->LogFile = @fopen($logFile,'a+');
 
