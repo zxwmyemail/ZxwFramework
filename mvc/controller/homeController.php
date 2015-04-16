@@ -21,6 +21,11 @@ class homeController extends Controller {
     }
 
     public function index() {
+        
+        //测试smarty模板
+        $this->smarty->assign('name','zxw');
+        $this->smarty->display('home.html'); 
+        exit();
 
         //测试日志记录函数
         $logIns = Log::getInstance();
@@ -31,11 +36,6 @@ class homeController extends Controller {
         $model = Application::newClass('MyTest','public');
         var_dump($model);
         die();
-
-        //测试smarty模板
-        $this->smarty->assign('name','zxw');
-        $this->smarty->display('home.html'); 
-        exit();
 
         //测试静态类
         $result = Util::get_rand(array('0'=>30,'1'=>40,'2'=>20,'3'=>10));
