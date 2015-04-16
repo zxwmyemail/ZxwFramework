@@ -29,8 +29,6 @@ class Controller {
     ----------------------------------------------------------------------------------------*/
     private function setSmarty()
     { 
-        require SYS_FRAMEWORK_PATH.'/smarty/libs/Smarty.class.php'; 
-
         $reqParams = Application::$_reqParams;
 
         $routeConfig = $this->config('route');
