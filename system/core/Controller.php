@@ -14,11 +14,45 @@ class Controller {
 
     protected $_redisConfig  = null;
     protected $_memcacheConfig  = null;
+    private $_smarty = null;
         
     public function __construct() 
     {
         $this->setRedisConfig();
         $this->setMemcacheConfig();
+    }
+    
+    /*---------------------------------------------------------------------------------------
+    | 设置smarty的路径配置参数
+    | @access      public
+    | @param       array   $_reqParams
+    ----------------------------------------------------------------------------------------*/
+    private function setSmarty()
+    { 
+        require_once (SYS_FRAMEWORK_PATH.'/smarty/libs/Smarty.class.php'); 
+
+        $reqParams = Application::$_reqParams;
+
+        $routeConfig = $this->config('route');
+
+        $smarty = new Smarty; 
+
+        $this->_smarty = $smarty;
+
+        $default_controller = $routeConfig['default_controller'];
+
+        //设置各个目录的路径，这里是配置smarty的路径参数
+        $controller = isset($reqParams['controller']) ? $reqParams['controller'] : $default_controller;
+        $smarty->template_dir    = VIEW_PATH.'/'.$controller;
+        $smarty->compile_dir     = SYS_FRAMEWORK_PATH."/smarty/templates_c";
+        $smarty->config_dir      = SYS_FRAMEWORK_PATH."/smarty/config";
+        $smarty->cache_dir       = SYS_FRAMEWORK_PATH."/smarty/cache";
+        $smarty->left_delimiter  = "<{";
+        $smarty->right_delimiter = "}>";
+
+        //smarty模板有高速缓存的功能，如果这里是true的话即打开caching
+        //但是会造成网页不立即更新的问题，当然也可以通过其他的办法解决
+        $smarty->caching = false; 
     }
 
 
@@ -32,7 +66,7 @@ class Controller {
     |                               $redis = $this->redis;
     |                            3、如果获取memcache实例：
     |                               $memcache = $this->memcache;
-    --------------------------------------------------------------------------------------*/
+    ----------------------------------------------------------------------------------------*/
     final public function __get($Param){
 
         $param = empty($Param) ? 'session' : $Param;
@@ -49,6 +83,12 @@ class Controller {
             case 'memcache':
                 $cache = new CacheFactory($this->_memcacheConfig);
                 return  $cache->memcache;
+                break;
+            case 'smarty':
+                if (empty($this->_smarty)) {
+                    $this->setSmarty(); 
+                }
+                return $this->_smarty;
                 break;
             
             default:
