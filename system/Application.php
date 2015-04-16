@@ -13,7 +13,6 @@ if (!defined('BASE_PATH'))
 final class Application {
 
     public static  $_config = null;         //系统配置参数，对应params.config.php文件
-    public static  $_smarty = null;         //smarty对象
     public static  $_reqParams = null;      //请求url参数
     public static  $allFiles = array();
 
@@ -39,9 +38,6 @@ final class Application {
 
         //将url参数转换成数组 
         self::$_reqParams = $route->getUrlArray();   
-
-        //加载smarty模板引擎
-        self::setSmarty(self::$_reqParams);
 
         //导向控制层
         self::routeToCtrl(self::$_reqParams);
@@ -142,37 +138,6 @@ final class Application {
         } else {
             trigger_error('加载 '.$classname.' 类库不存在');
         }
-    }   
-
-
-   /*---------------------------------------------------------------------------------------
-    | 设置smarty的路径配置参数
-    | @access      public
-    | @param       array   $_reqParams
-    --------------------------------------------------------------------------------------*/
-    public static function setSmarty($reqParams)
-    {
-        require_once SYS_FRAMEWORK_PATH.'/smarty/libs/Smarty.class.php'; 
-
-        $smarty = new Smarty; 
-
-        self::$_smarty = $smarty;
-
-        $default_controller = self::$_config['route']['default_controller'];
-
-        //设置各个目录的路径，这里是配置smarty的路径参数
-        $controller = isset($reqParams['controller']) ? $reqParams['controller'] : $default_controller;
-        $smarty->template_dir    = VIEW_PATH.'/'.$controller;
-        $smarty->compile_dir     = SYS_FRAMEWORK_PATH."/smarty/templates_c";
-        $smarty->config_dir      = SYS_FRAMEWORK_PATH."/smarty/config";
-        $smarty->cache_dir       = SYS_FRAMEWORK_PATH."/smarty/cache";
-        $smarty->left_delimiter  = "<{";
-        $smarty->right_delimiter = "}>";
-
-        //smarty模板有高速缓存的功能，如果这里是true的话即打开caching
-        //但是会造成网页不立即更新的问题，当然也可以通过其他的办法解决
-        $smarty->caching = false; 
-
     }
 
 
