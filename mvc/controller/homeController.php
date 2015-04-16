@@ -46,10 +46,6 @@ class homeController extends Controller {
         //可自动加载这些类/ZxwFramework/mvc/model/
         //                /ZxwFramework/system/library/
         //                /ZxwFramework/system/core/
-        $test = new MyTest();
-        var_dump($test);
-        exit();
-
         $homeModel = new homeModel();
         $homeModel -> testResult();
         exit();
