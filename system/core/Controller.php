@@ -12,8 +12,8 @@ if (!defined('BASE_PATH'))
 
 class Controller {
 
-    protected $_redisConfig  = null;
-    protected $_memcacheConfig  = null;
+    private $_redisConfig  = null;
+    private $_memcacheConfig  = null;
     private $_smarty = null;
         
     public function __construct() 
