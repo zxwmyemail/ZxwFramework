@@ -32,9 +32,9 @@
     所有自定义类，文件名和类名必须一样，如：类名为MyTest，则文件名也应为MyTest 
 
 
-三、系统集成了smarty引擎，使用方法如下：
-    Application::$_smarty->assign('name','zxw');
-    Application::$_smarty->display('home.html');
+三、系统集成了smarty引擎，在控制层中使用方法如下：
+    $this->smarty->assign('name','zxw');
+    $this->smarty->display('home.html');
 
 
 四、文件夹mvc/model/、mvc/view/下面，建立文件夹的规则和控制层类的对应关系举例如下：
