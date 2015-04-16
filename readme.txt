@@ -45,7 +45,7 @@
 
 五、类加载机制：
     1.自动加载，这种加载，只对下面文件夹下的类有用
-      mvc/model 、system/lib 和  system/core
+      mvc/model 、system/library 和  system/core
       如果类在这些文件夹下面，只需正常操作即可，比如 $model = new model();
 
     2.手动加载，这种需做配置，主要用于对自己写的类进行加载，步骤：
