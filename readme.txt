@@ -40,7 +40,7 @@
 四、文件夹mvc/model/、mvc/view/下面，建立文件夹的规则和控制层类的对应关系举例如下：
     如果    mvc/controller下面建立了一个控制层类homeController
     那么    mvc/model/下面应该新建一个home文件夹
-            mvc/view/下面也应该新建一个home文件夹  
+           mvc/view/下面也应该新建一个home文件夹  
 
 
 五、类加载机制：
