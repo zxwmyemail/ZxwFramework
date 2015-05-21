@@ -9,7 +9,6 @@
     for($i=0; $i<strlen($c); $i++) {
         echo ord($c[$i]).' ';//198 235 199 216  四个字节
     }
-
     //测试
     $PingYing = new ChineseToPy();
     echo '<p>'.$PingYing->getFirstPY('羽泉乐队，歌不错-推荐').'</p>'; //输出为：yqldgbc-tj
