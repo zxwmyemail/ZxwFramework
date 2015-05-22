@@ -65,7 +65,6 @@ class Controller {
         $smarty->caching = false; 
     }
 
-
    /*---------------------------------------------------------------------------------------
     | 获取缓存实例
     | @access  final   public
@@ -108,7 +107,6 @@ class Controller {
 
     }
 
-
    /*---------------------------------------------------------------------------------------
     | 加载系统配置,默认为系统配置 $CONFIG['system'][$config]
     | @access      final   protected
@@ -118,14 +116,12 @@ class Controller {
         return Application::$_config[$config];
     }
 
-
    /*---------------------------------------------------------------------------------------
     | 加载redis参数配置
     --------------------------------------------------------------------------------------*/
     final protected function setRedisConfig(){
         $this->_redisConfig = Application::$_config['redis'];
     }
-
 
    /*---------------------------------------------------------------------------------------
     | 加载memcache参数配置
@@ -134,7 +130,7 @@ class Controller {
         $this->_memcacheConfig = Application::$_config['memcache'];
     }
 
-    
+
 }
 
 
