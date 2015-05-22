@@ -42,10 +42,10 @@ class homeController extends Controller {
         var_dump($result);die();
 
 
-        //自动类加载，使用spl_autoload_register机制
-        //可自动加载这些类 /ZxwFramework/mvc/model/
-        //                /ZxwFramework/system/library/
-        //                /ZxwFramework/system/core/
+        //自动类加载，使用spl_autoload_register机制，可自动加载如下文件夹中的类
+        //  /ZxwFramework/mvc/model/
+        //  /ZxwFramework/system/library/
+        //  /ZxwFramework/system/core/
         $homeModel = new homeModel();
         $homeModel -> testResult();
         exit();
