@@ -1,20 +1,22 @@
 <?php
 
-/*
+if (!defined('BASE_PATH'))
+    exit('<H2 style="margin-top:200px;text-align:center;">Your request was forbidden!</H2>');
+    
+/*********************************************************************************************************************
     汉字转拼音类，1、可将汉字转全拼音  2、可取得每个汉字的首字母
-    使用方法：
-
+    
     中文是双字节(gbk编码)，所以需要两个字节连接起来(ASCII码的范围是在161-255)
     $c = '齐秦';
     for($i=0; $i<strlen($c); $i++) {
         echo ord($c[$i]).' ';//198 235 199 216  四个字节
     }
-    //测试
+    
+    使用方法：
     $PingYing = new ChineseToPy();
     echo '<p>'.$PingYing->getFirstPY('羽泉乐队，歌不错-推荐').'</p>'; //输出为：yqldgbc-tj
     echo '<p>'.$PingYing->getFullPY('羽泉乐队，歌不错-推荐').'</p>';  //输出为：yuquanleduigebucuo-tuijian
-
-*/
+*********************************************************************************************************************/
 
 class ChineseToPy {
 
