@@ -23,6 +23,48 @@ class Controller {
     }
     
     /*---------------------------------------------------------------------------------------
+    | 获取缓存实例
+    | @access  final   public
+    | @param   string  $Param    缓存参数，控制层如何获取缓存：
+    |                            1、如果获取session实例：
+    |                               $session = $this->session;
+    |                            2、如果获取redis实例：
+    |                               $redis = $this->redis;
+    |                            3、如果获取memcache实例：
+    |                               $memcache = $this->memcache;
+    ----------------------------------------------------------------------------------------*/
+    final public function __get($Param){
+
+        $param = empty($Param) ? 'session' : $Param;
+
+        switch (strtolower($param)) {
+            case 'session':
+                $cache = new CacheFactory();
+                return  $cache->session;
+                break;
+            case 'redis':
+                $cache = new CacheFactory($this->_redisConfig);
+                return  $cache->redis;
+                break;
+            case 'memcache':
+                $cache = new CacheFactory($this->_memcacheConfig);
+                return  $cache->memcache;
+                break;
+            case 'smarty':
+                if (empty($this->_smarty)) {
+                    $this->setSmarty(); 
+                }
+                return $this->_smarty;
+                break;
+            
+            default:
+                echo '参数错误';exit();
+                break;
+        }
+
+    }
+    
+    /*---------------------------------------------------------------------------------------
     | 设置客户端无缓存
     ----------------------------------------------------------------------------------------*/
     public function setNoCache()
@@ -63,48 +105,6 @@ class Controller {
         //smarty模板有高速缓存的功能，如果这里是true的话即打开caching
         //但是会造成网页不立即更新的问题，当然也可以通过其他的办法解决
         $smarty->caching = false; 
-    }
-
-   /*---------------------------------------------------------------------------------------
-    | 获取缓存实例
-    | @access  final   public
-    | @param   string  $Param    缓存参数，控制层如何获取缓存：
-    |                            1、如果获取session实例：
-    |                               $session = $this->session;
-    |                            2、如果获取redis实例：
-    |                               $redis = $this->redis;
-    |                            3、如果获取memcache实例：
-    |                               $memcache = $this->memcache;
-    ----------------------------------------------------------------------------------------*/
-    final public function __get($Param){
-
-        $param = empty($Param) ? 'session' : $Param;
-
-        switch (strtolower($param)) {
-            case 'session':
-                $cache = new CacheFactory();
-                return  $cache->session;
-                break;
-            case 'redis':
-                $cache = new CacheFactory($this->_redisConfig);
-                return  $cache->redis;
-                break;
-            case 'memcache':
-                $cache = new CacheFactory($this->_memcacheConfig);
-                return  $cache->memcache;
-                break;
-            case 'smarty':
-                if (empty($this->_smarty)) {
-                    $this->setSmarty(); 
-                }
-                return $this->_smarty;
-                break;
-            
-            default:
-                echo '参数错误';exit();
-                break;
-        }
-
     }
 
    /*---------------------------------------------------------------------------------------
