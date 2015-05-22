@@ -16,7 +16,6 @@ final class Application {
     public static  $_reqParams = null;      //请求url参数
     public static  $allFiles = array();
 
-
    /*---------------------------------------------------------------------------------------
     | 创建应用
     | @access      public
@@ -44,7 +43,6 @@ final class Application {
         
     }
 
-
    /*---------------------------------------------------------------------------------------
     |获取某个文件夹下面的指定的文件的路径
     |@param   $dir        文件夹路径
@@ -71,7 +69,6 @@ final class Application {
             closedir($handle);
         }
     }
-
 
    /*---------------------------------------------------------------------------------------
     | 手动进行类加载的函数
@@ -107,7 +104,6 @@ final class Application {
 
     }
 
-
    /*---------------------------------------------------------------------------------------
     | 自动类加载函数
     | @access      public
@@ -139,7 +135,6 @@ final class Application {
             trigger_error('加载 '.$classname.' 类库不存在');
         }
     }
-
 
    /*---------------------------------------------------------------------------------------
     | 根据URL分发到Controller
@@ -173,7 +168,24 @@ final class Application {
         }
 
     }
+    
+    /*---------------------------------------------------------------------------------------
+    | 为防止sql注入和xss攻击，对提交参数进行检查
+    ---------------------------------------------------------------------------------------*/
+    public static function checkRequestParams() 
+    {
+        $magic_quotes_gpc = get_magic_quotes_gpc(); 
 
+        self::daddslashes($_COOKIE); 
+        self::daddslashes($_POST); 
+        self::daddslashes($_GET); 
+        self::daddslashes($_REQUEST); 
+
+        if(!$magic_quotes_gpc) { 
+            $_FILES = self::daddslashes($_FILES); 
+        }
+
+    }
 
    /*---------------------------------------------------------------------------------------
     | 防止sql注入和xss攻击
@@ -197,26 +209,6 @@ final class Application {
         return $data;
         
     }
-
-
-   /*---------------------------------------------------------------------------------------
-    | 为防止sql注入和xss攻击，对提交参数进行检查
-    ---------------------------------------------------------------------------------------*/
-    public static function checkRequestParams() 
-    {
-        $magic_quotes_gpc = get_magic_quotes_gpc(); 
-
-        self::daddslashes($_COOKIE); 
-        self::daddslashes($_POST); 
-        self::daddslashes($_GET); 
-        self::daddslashes($_REQUEST); 
-
-        if(!$magic_quotes_gpc) { 
-            $_FILES = self::daddslashes($_FILES); 
-        }
-
-    }
-
 
    /*---------------------------------------------------------------------------------------
     | 防止xss攻击
@@ -246,7 +238,6 @@ final class Application {
             $string = preg_replace ( $no, '', $string );
             return $string;
         }
-        
     }
 
 
