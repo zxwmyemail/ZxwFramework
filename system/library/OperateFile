@@ -25,7 +25,7 @@ class FileOperation {
 	            $aimDir .= $d . '/';
 	            if (!file_exists($aimDir)) {
 	            	mkdir($aimDir);
-					chmod($aimDir, 0777);
+			chmod($aimDir, 0777);
 	            }
 	        }
 	
@@ -142,18 +142,18 @@ class FileOperation {
 	public function copyFile($name, $spath, $dpath, $isOverWrite = false) {
 		$filename = $spath . $name;
 		$aimUrl   = $dpath . $name;
-        if (!file_exists($filename)) {
-            return false;
-        }
-        if (file_exists($aimUrl) && $isOverWrite = false) {
-            return false;
-        } elseif (file_exists($aimUrl) && $isOverWrite = true) {
-            $this->deleteFile($aimUrl);
-        }
-
-        $this->createDir($dpath);
-        copy($filename, $aimUrl);
-        return true;
+	        if (!file_exists($filename)) {
+	            return false;
+	        }
+	        if (file_exists($aimUrl) && $isOverWrite = false) {
+	            return false;
+	        } elseif (file_exists($aimUrl) && $isOverWrite = true) {
+	            $this->deleteFile($aimUrl);
+	        }
+	
+	        $this->createDir($dpath);
+	        copy($filename, $aimUrl);
+	        return true;
 	}
 
 	/*-----------------------------------------------------------------------------------------
