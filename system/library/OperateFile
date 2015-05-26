@@ -17,49 +17,49 @@ class FileOperation {
 	-------------------------------------------------------------------------------------------*/ 
 	public function createDir($dir) {
 
-        $dir = str_replace('', '/', $dir);
-        $aimDir = '';
-        $dirArr = explode('/', $dir);
+	        $dir = str_replace('', '/', $dir);
+	        $aimDir = '';
+	        $dirArr = explode('/', $dir);
+	
+	        foreach ($dirArr as $d) {
+	            $aimDir .= $d . '/';
+	            if (!file_exists($aimDir)) {
+	            	mkdir($aimDir);
+					chmod($aimDir, 0777);
+	            }
+	        }
+	
+	        return;
+	}
 
-        foreach ($dirArr as $d) {
-            $aimDir .= $d . '/';
-            if (!file_exists($aimDir)) {
-            	mkdir($aimDir);
-				chmod($aimDir, 0777);
-            }
-        }
 
-        return;
-    }
-
-
-    /*-------------------------------------------------------------------------------------------
+        /*-------------------------------------------------------------------------------------------
 	| 删除目录
 	|--------------------------------------------------------------------------------------------
 	| @param string $dir
 	-------------------------------------------------------------------------------------------*/ 
-    public function deleteDir($dir) {
-        $dir = str_replace('', '/', $dir);
-        $dir = substr($dir, -1) == '/' ? $dir : $dir . '/';
-        if (!is_dir($dir)) {
-            return false;
-        }
-        $dirHandle = opendir($dir);
-        while (false !== ($file = readdir($dirHandle))) {
-            if ($file == '.' || $file == '..') {
-                continue;
-            }
-            if (!is_dir($dir . $file)) {
-                $this->deleteFile($dir, $file);
-            } else {
-                $this->deleteDir($dir . $file);
-            }
-        }
-        closedir($dirHandle);
-        return rmdir($dir);
-    }
+	public function deleteDir($dir) {
+	        $dir = str_replace('', '/', $dir);
+	        $dir = substr($dir, -1) == '/' ? $dir : $dir . '/';
+	        if (!is_dir($dir)) {
+	            return false;
+	        }
+	        $dirHandle = opendir($dir);
+	        while (false !== ($file = readdir($dirHandle))) {
+	            if ($file == '.' || $file == '..') {
+	                continue;
+	            }
+	            if (!is_dir($dir . $file)) {
+	                $this->deleteFile($dir, $file);
+	            } else {
+	                $this->deleteDir($dir . $file);
+	            }
+	        }
+	        closedir($dirHandle);
+	        return rmdir($dir);
+	}
 
-    /*-------------------------------------------------------------------------------------------
+        /*-------------------------------------------------------------------------------------------
 	| 本方法用来在path目录下创建name文件
 	|--------------------------------------------------------------------------------------------
 	| @param string path         路径名称，后面别忘了加"/"
@@ -69,36 +69,36 @@ class FileOperation {
 	public function createFile($path, $name, $isOverWrite = false) {
 		$filename = $path . $name;
 
-        if (file_exists($filename) && $isOverWrite == false) {
-            return false;
-        } elseif (file_exists($filename) && $isOverWrite == true) {
-            $this->deleteFile($filename);
-        }
+	        if (file_exists($filename) && $isOverWrite == false) {
+	            return false;
+	        } elseif (file_exists($filename) && $isOverWrite == true) {
+	            $this->deleteFile($filename);
+	        }
+	
+	        $this->createDir($path);
+	        touch($filename);
+	        return true;
+    	}
 
-        $this->createDir($path);
-        touch($filename);
-        return true;
-    }
-
-    /*------------------------------------------------------------------------------------------
-    | 删除文件
-    |-------------------------------------------------------------------------------------------
-    | @param string path         路径后面别忘了加"/"
+	/*------------------------------------------------------------------------------------------
+	| 删除文件
+	|-------------------------------------------------------------------------------------------
+	| @param string path         路径后面别忘了加"/"
 	| @param string name         文件名字
-    | @return boolean
-    ------------------------------------------------------------------------------------------*/
-    function deleteFile($path, $name) {
-    	$filename = $path . $name;
+	| @return boolean
+	------------------------------------------------------------------------------------------*/
+	function deleteFile($path, $name) {
+	    	$filename = $path . $name;
+	
+	        if (file_exists($filename)) {
+	            unlink($filename);
+	            return true;
+	        } else {
+	            return false;
+	        }
+	}
 
-        if (file_exists($filename)) {
-            unlink($filename);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /*-----------------------------------------------------------------------------------------
+        /*-----------------------------------------------------------------------------------------
 	| 获取文件内容
 	|------------------------------------------------------------------------------------------
 	| @param string path        文件路径,路径后面别忘了加"/"
@@ -167,19 +167,19 @@ class FileOperation {
 	public function moveFile($name, $spath, $dpath, $isOverWrite = false) {
 		$filename = $spath . $name;
 		$aimUrl   = $dpath . $name;
-        if (!file_exists($filename)) {
-            return false;
-        }
-        if (file_exists($aimUrl) && $isOverWrite = false) {
-            return false;
-        } elseif (file_exists($aimUrl) && $isOverWrite = true) {
-            $this->deleteFile($aimUrl);
-        }
+        	if (!file_exists($filename)) {
+            		return false;
+        	}
+	        if (file_exists($aimUrl) && $isOverWrite = false) {
+	            return false;
+	        } elseif (file_exists($aimUrl) && $isOverWrite = true) {
+	            $this->deleteFile($aimUrl);
+	        }
 
-        $this->createDir($dpath);
-        rename($filename, $aimUrl);
-        return true;
-    }
+	        $this->createDir($dpath);
+	        rename($filename, $aimUrl);
+	        return true;
+    	}
 
 
 	/*----------------------------------------------------------------------------------------
@@ -201,75 +201,75 @@ class FileOperation {
 	}
 
 	/*---------------------------------------------------------------------------------------
-    | 复制文件夹
-    |----------------------------------------------------------------------------------------
-    | @param string $oldDir
-    | @param string $aimDir
-    | @param boolean $overWrite 该参数控制是否覆盖原文件
-    | @return boolean
-    ---------------------------------------------------------------------------------------*/
-    public function copyDir($oldDir, $aimDir, $overWrite = false) {
-        $aimDir = str_replace('', '/', $aimDir);
-        $aimDir = substr($aimDir, -1) == '/' ? $aimDir : $aimDir . '/';
-        $oldDir = str_replace('', '/', $oldDir);
-        $oldDir = substr($oldDir, -1) == '/' ? $oldDir : $oldDir . '/';
-        if (!is_dir($oldDir)) {
-            return false;
-        }
-        if (!file_exists($aimDir)) {
-            $this->createDir($aimDir);
-        }
-        $dirHandle = opendir($oldDir);
-        while (false !== ($file = readdir($dirHandle))) {
-            if ($file == '.' || $file == '..') {
-                continue;
-            }
-            if (!is_dir($oldDir . $file)) {
-                $this->copyFile($file, $oldDir, $aimDir, $overWrite);
-            } else {
-                $this->copyDir($oldDir . $file, $aimDir . $file, $overWrite);
-            }
-        }
-        return closedir($dirHandle);
-    }
+	| 复制文件夹
+        |----------------------------------------------------------------------------------------
+	| @param string $oldDir
+	| @param string $aimDir
+	| @param boolean $overWrite 该参数控制是否覆盖原文件
+	| @return boolean
+	---------------------------------------------------------------------------------------*/
+	public function copyDir($oldDir, $aimDir, $overWrite = false) {
+	        $aimDir = str_replace('', '/', $aimDir);
+	        $aimDir = substr($aimDir, -1) == '/' ? $aimDir : $aimDir . '/';
+	        $oldDir = str_replace('', '/', $oldDir);
+	        $oldDir = substr($oldDir, -1) == '/' ? $oldDir : $oldDir . '/';
+	        if (!is_dir($oldDir)) {
+	            return false;
+	        }
+	        if (!file_exists($aimDir)) {
+	            $this->createDir($aimDir);
+	        }
+	        $dirHandle = opendir($oldDir);
+	        while (false !== ($file = readdir($dirHandle))) {
+	            if ($file == '.' || $file == '..') {
+	                continue;
+	            }
+	            if (!is_dir($oldDir . $file)) {
+	                $this->copyFile($file, $oldDir, $aimDir, $overWrite);
+	            } else {
+	                $this->copyDir($oldDir . $file, $aimDir . $file, $overWrite);
+	            }
+	        }
+	        return closedir($dirHandle);
+	}
 
 
-    /*---------------------------------------------------------------------------------------
-    | 移动文件夹
-    |----------------------------------------------------------------------------------------
-    | @param string $oldDir
-    | @param string $aimDir
-    | @param boolean $overWrite 该参数控制是否覆盖原文件
-    | @return boolean
-    ---------------------------------------------------------------------------------------*/
-    public function moveDir($oldDir, $aimDir, $overWrite = false) {
-        $aimDir = str_replace('', '/', $aimDir);
-        $aimDir = substr($aimDir, -1) == '/' ? $aimDir : $aimDir . '/';
-        $oldDir = str_replace('', '/', $oldDir);
-        $oldDir = substr($oldDir, -1) == '/' ? $oldDir : $oldDir . '/';
-        if (!is_dir($oldDir)) {
-            return false;
+    	/*---------------------------------------------------------------------------------------
+    	| 移动文件夹
+    	|----------------------------------------------------------------------------------------
+    	| @param string $oldDir
+    	| @param string $aimDir
+    	| @param boolean $overWrite 该参数控制是否覆盖原文件
+    	| @return boolean
+    	---------------------------------------------------------------------------------------*/
+    	public function moveDir($oldDir, $aimDir, $overWrite = false) {
+        	$aimDir = str_replace('', '/', $aimDir);
+        	$aimDir = substr($aimDir, -1) == '/' ? $aimDir : $aimDir . '/';
+        	$oldDir = str_replace('', '/', $oldDir);
+        	$oldDir = substr($oldDir, -1) == '/' ? $oldDir : $oldDir . '/';
+        	if (!is_dir($oldDir)) {
+            	return false;
+        	}
+        	if (!file_exists($aimDir)) {
+            	$this->createDir($aimDir);
+        	}
+        	@ $dirHandle = opendir($oldDir);
+        	if (!$dirHandle) {
+            	return false;
+        	}
+	        while (false !== ($file = readdir($dirHandle))) {
+	            if ($file == '.' || $file == '..') {
+	                continue;
+	            }
+	            if (!is_dir($oldDir . $file)) {
+	                $this->moveFile($file, $oldDir, $aimDir, $overWrite);
+	            } else {
+	                $this->moveDir($oldDir . $file, $aimDir . $file, $overWrite);
+	            }
+	        }
+	        closedir($dirHandle);
+	        return rmdir($oldDir);
         }
-        if (!file_exists($aimDir)) {
-            $this->createDir($aimDir);
-        }
-        @ $dirHandle = opendir($oldDir);
-        if (!$dirHandle) {
-            return false;
-        }
-        while (false !== ($file = readdir($dirHandle))) {
-            if ($file == '.' || $file == '..') {
-                continue;
-            }
-            if (!is_dir($oldDir . $file)) {
-                $this->moveFile($file, $oldDir, $aimDir, $overWrite);
-            } else {
-                $this->moveDir($oldDir . $file, $aimDir . $file, $overWrite);
-            }
-        }
-        closedir($dirHandle);
-        return rmdir($oldDir);
-    }
 
 }
 
