@@ -121,9 +121,9 @@ class FileOperation {
 		$filename = $path . $name;
 
 		$flag = false;
-		if (bool == 1) {
+		if ($bool == 1) {
 			$flag= file_put_contents($filename, $content);
-		} elseif (bool == 2) {
+		} elseif ($bool == 2) {
 			$flag= file_put_contents($filename, $content, FILE_APPEND);
 		}
 
