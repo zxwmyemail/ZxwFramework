@@ -266,8 +266,9 @@ class FileOperation {
 	                $this->moveDir($oldDir . $file, $aimDir . $file, $overWrite);
 	            }
 	        }
-	        closedir($dirHandle);
-	        return rmdir($oldDir);
+	        
+	        rmdir($oldDir);
+	        return closedir($dirHandle);
         }
 
 }
