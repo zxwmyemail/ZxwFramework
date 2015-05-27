@@ -185,19 +185,18 @@ class FileOperation {
 	/*----------------------------------------------------------------------------------------
 	| 把filename文件重命名为newname文件
 	|-----------------------------------------------------------------------------------------
-	| @param string_type filename
+	| @param string_type path
+	| @param string_type oldname
 	| @param string_type newname
 	----------------------------------------------------------------------------------------*/
-	public function renameFile($filename, $newname) { 
-		$path = dirname($filename);
-		$newfilename = $path.$newname;
+	public function renameFile($path, $oldname, $newname) { 
+		$oldFileName = $path.$oldname;
+		$newFileName = $path.$newname;
 
 		$result = false;
-		if (file_exists($filename)) {
-			$result = rename($filename,$newfilename);	
+		if (file_exists($oldFileName)) {
+			$result = rename($oldFileName,$newFileName);	
 		}
-
-		return $result;
 	}
 
 	/*---------------------------------------------------------------------------------------
