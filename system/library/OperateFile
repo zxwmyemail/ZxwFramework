@@ -67,6 +67,7 @@ class FileOperation {
 	| @param string isOverWrite  是否覆盖源文件
 	--------------------------------------------------------------------------------------------*/ 
 	public function createFile($path, $name, $isOverWrite = false) {
+		$path = substr($path, -1) == '/' ? $path : $path . '/';
 		$filename = $path . $name;
 
 	        if (file_exists($filename) && $isOverWrite == false) {
@@ -88,6 +89,7 @@ class FileOperation {
 	| @return boolean
 	------------------------------------------------------------------------------------------*/
 	function deleteFile($path, $name) {
+		$path = substr($path, -1) == '/' ? $path : $path . '/';
 	    	$filename = $path . $name;
 	
 	        if (file_exists($filename)) {
@@ -106,6 +108,7 @@ class FileOperation {
 	| @return string content    文件内容
 	-----------------------------------------------------------------------------------------*/
 	public function readFile($path, $name) {
+		$path = substr($path, -1) == '/' ? $path : $path . '/';
 		return file_get_contents($path . $name);
 	}
 
@@ -118,6 +121,7 @@ class FileOperation {
 	| @param bool   bool       文件写入选项，1为尾部追加，2为替换原内容
 	-----------------------------------------------------------------------------------------*/
 	public function writeFile($path, $name, $content, $bool=2) {
+		$path = substr($path, -1) == '/' ? $path : $path . '/';
 		$filename = $path . $name;
 
 		$flag = false;
@@ -140,6 +144,8 @@ class FileOperation {
 	| @param string isOverWrite  是否覆盖源文件
 	-----------------------------------------------------------------------------------------*/
 	public function copyFile($name, $spath, $dpath, $isOverWrite = false) {
+		$spath = substr($spath, -1) == '/' ? $spath : $spath . '/';
+		$dpath = substr($dpath, -1) == '/' ? $dpath : $dpath . '/';
 		$filename = $spath . $name;
 		$aimUrl   = $dpath . $name;
 	        if (!file_exists($filename)) {
@@ -165,6 +171,8 @@ class FileOperation {
 	| @param string isOverWrite  是否覆盖源文件
 	-----------------------------------------------------------------------------------------*/
 	public function moveFile($name, $spath, $dpath, $isOverWrite = false) {
+		$spath = substr($spath, -1) == '/' ? $spath : $spath . '/';
+		$dpath = substr($dpath, -1) == '/' ? $dpath : $dpath . '/';
 		$filename = $spath . $name;
 		$aimUrl   = $dpath . $name;
         	if (!file_exists($filename)) {
@@ -190,6 +198,7 @@ class FileOperation {
 	| @param string_type newname
 	----------------------------------------------------------------------------------------*/
 	public function renameFile($path, $oldname, $newname) { 
+		$path = substr($path, -1) == '/' ? $path : $path . '/';
 		$oldFileName = $path.$oldname;
 		$newFileName = $path.$newname;
 
