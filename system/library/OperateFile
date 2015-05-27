@@ -247,14 +247,14 @@ class FileOperation {
         	$oldDir = str_replace('', '/', $oldDir);
         	$oldDir = substr($oldDir, -1) == '/' ? $oldDir : $oldDir . '/';
         	if (!is_dir($oldDir)) {
-            	return false;
+            		return false;
         	}
         	if (!file_exists($aimDir)) {
-            	$this->createDir($aimDir);
+            		$this->createDir($aimDir);
         	}
         	@ $dirHandle = opendir($oldDir);
         	if (!$dirHandle) {
-            	return false;
+            		return false;
         	}
 	        while (false !== ($file = readdir($dirHandle))) {
 	            if ($file == '.' || $file == '..') {
