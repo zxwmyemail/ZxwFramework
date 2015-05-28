@@ -30,25 +30,25 @@ class FileOperation {
                         switch ($type) {
                     	    case 1:
                     		if ( is_dir ( $cur_path ) ){
-		                        $this->fileList[$file] = $cur_path;
-		                        $this->scanAllFiles ( $cur_path, $type );
-		                    }
+		                    $this->fileList[$file] = $cur_path;
+		                    $this->scanAllFiles ( $cur_path, $type );
+		                }
                     		break;
                     	    case 2:
                     		if ( is_dir ( $cur_path ) ){
-		                        $this->scanAllFiles ( $cur_path, $type );
-		                    }else{
-		                        $this->fileList['file'][$file] = $cur_path;
-		                    }
+		                    $this->scanAllFiles ( $cur_path, $type );
+		                }else{
+		                    $this->fileList['file'][$file] = $cur_path;
+		                }
                     		break;
                     	    case 3:
                     	    default:
                     		if ( is_dir ( $cur_path ) ){
-		                        $this->fileList['dir'][$file] = $cur_path;
-		                        $this->scanAllFiles ( $cur_path, $type );
-		                    }else{
-		                        $this->fileList['file'][$file] = $cur_path;
-		                    }
+		                    $this->fileList['dir'][$file] = $cur_path;
+		                    $this->scanAllFiles ( $cur_path, $type );
+		                }else{
+		                    $this->fileList['file'][$file] = $cur_path;
+		                }
                     		break;
                         }
                     }
