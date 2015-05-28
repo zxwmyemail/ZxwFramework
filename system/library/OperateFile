@@ -11,6 +11,54 @@
 
 class FileOperation {
 
+        private $fileList = array(); 
+
+        /*-------------------------------------------------------------------------------------------
+	| 浏览目录，获取文件，目录
+	|--------------------------------------------------------------------------------------------
+	| @param string $dir
+	| @param string $type  1为选取所有目录，2为选取所有文件，3为选取目录和文件
+	-------------------------------------------------------------------------------------------*/ 
+	public function scanAllFiles ( $dir, $type=3 )
+        {
+            $handle = opendir($dir);
+            if ( $handle ){
+                while ( ( $file = readdir ( $handle ) ) !== false ){
+                    if ( $file != '.' && $file != '..'){
+                        $cur_path = $dir . DIRECTORY_SEPARATOR . $file;
+
+                        switch ($type) {
+                    	    case 1:
+                    		if ( is_dir ( $cur_path ) ){
+		                        $this->fileList[$file] = $cur_path;
+		                        $this->scanAllFiles ( $cur_path, $type );
+		                    }
+                    		break;
+                    	    case 2:
+                    		if ( is_dir ( $cur_path ) ){
+		                        $this->scanAllFiles ( $cur_path, $type );
+		                    }else{
+		                        $this->fileList['file'][$file] = $cur_path;
+		                    }
+                    		break;
+                    	    case 3:
+                    	    default:
+                    		if ( is_dir ( $cur_path ) ){
+		                        $this->fileList['dir'][$file] = $cur_path;
+		                        $this->scanAllFiles ( $cur_path, $type );
+		                    }else{
+		                        $this->fileList['file'][$file] = $cur_path;
+		                    }
+                    		break;
+                        }
+                    }
+                }
+                closedir($handle);
+            }
+
+            return $this->fileList;
+        }
+
  	/*-------------------------------------------------------------------------------------------
 	| 创建目录
 	|--------------------------------------------------------------------------------------------
