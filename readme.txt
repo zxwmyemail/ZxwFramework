@@ -48,8 +48,8 @@
       网站后台：mvc/view/backendModule/
 
     3.无论哪个模块，如果在控制层建立了一个控制层类，对应的，在视图层要先建立文件夹，比如：
-      在网站前台是的控制层：mvc/controller/homeModule/下建立了一个控制层homeController.php
-      则对应网站前台的视图层：mvc/view/homeModule/下先建立home文件夹，然后渲染的页面放在home下面
+      在网站前台的控制层：mvc/controller/homeModule/下建立了一个控制层homeController.php
+      则需在对应的视图层：mvc/view/homeModule/下先建立home文件夹，然后把html页面放在home下面
 
     4.路由访问，有两种:
       (1) http://localhost/ZxwFramework/index.php?m=home&c=home&a=index&id=2
