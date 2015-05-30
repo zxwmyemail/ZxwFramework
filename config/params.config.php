@@ -186,6 +186,7 @@ $_CONFIG['system']['oracle'] = array(
 |
 */
 $_CONFIG['system']['route'] = array(
+    'default_module'     => 'home',
     'default_controller' => 'home', 
     'default_action'     => 'index', 
     'url_type'           => 1                                                                           
