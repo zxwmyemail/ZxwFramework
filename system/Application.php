@@ -135,9 +135,11 @@ final class Application {
     ---------------------------------------------------------------------------------------*/
     public static function routeToCtrl($url_array = array())
     {   
+        $module = empty($url_array['module']) ? self::$_config['route']['default_module'].'Module' : $url_array['module'].'Module';
+        
         $controller = empty($url_array['controller']) ? self::$_config['route']['default_controller'].'Controller' : $url_array['controller'].'Controller';
         
-        $controller_file = CONTROLLER_PATH.'/'.$controller.'.php';
+        $controller_file = CONTROLLER_PATH.'/'.$module.'/'.$controller.'.php';
 
         $action = empty($url_array['action']) ? self::$_config['route']['default_action'] : $url_array['action'];
 
