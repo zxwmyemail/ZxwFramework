@@ -111,13 +111,7 @@ final class Application {
     ---------------------------------------------------------------------------------------*/
     public static function classLoader($classname)     
     {     
-        $defaultController = self::$_config['route']['default_controller'];
-
-        $controller = isset(self::$_reqParams['controller']) ? self::$_reqParams['controller'] : $defaultController;
-
-        $mvc_model = MODEL_PATH.'/'.$controller.'/'.$classname.".php"; 
-
-        $mvc_model_default = MODEL_PATH.'/'.$classname.".php"; 
+        $mvc_model = MODEL_PATH.'/'.$classname.".php"; 
 
         $sys_lib = SYS_LIB_PATH.'/'.$classname.'.php';
 
