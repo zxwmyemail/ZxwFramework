@@ -87,7 +87,7 @@ class Controller {
 
         $routeConfig = $this->config('route');
 
-        $smarty = Application::newClass('Smarty','smarty');
+        $smarty = new Smarty; 
 
         $this->_smarty = $smarty;
 
