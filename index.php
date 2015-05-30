@@ -18,6 +18,9 @@ require BASE_PATH.'/config/params.config.php';
 //加载系统入口应用类
 require BASE_PATH.'/system/Application.php';
 
+//加载smarty模板类
+require BASE_PATH.'/system/framework/smarty/libs/Smarty.php';
+
 Application::run($_CONFIG);
 
 
