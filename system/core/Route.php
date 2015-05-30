@@ -62,7 +62,11 @@ final class Route {
                 $tmp = explode('=', $item);
                 $array[$tmp[0]] = $tmp[1];
             }
-
+            
+            if (isset($array['m'])) {
+                $this->_reqParams['module'] = $array['m'];
+                unset($array['m']);
+            }
             if (isset($array['c'])) {
                 $this->_reqParams['controller'] = $array['c'];
                 unset($array['c']);
@@ -87,7 +91,13 @@ final class Route {
         if (isset($_SERVER['PATH_INFO'])){
             //获取 pathinfo
             $pathInfo = explode('/', substr($_SERVER['PATH_INFO'], 1));
-
+            
+            if (count($pathInfo)>2) {
+                // 获取 module
+                $this->_reqParams['module'] = (isset($pathInfo[0]) ? $pathInfo[0] : null);
+                array_shift($pathInfo);
+            }
+            
             // 获取 controller
             $this->_reqParams['controller'] = (isset($pathInfo[0]) ? $pathInfo[0] : null);
             array_shift($pathInfo);
