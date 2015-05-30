@@ -91,11 +91,16 @@ class Controller {
 
         $this->_smarty = $smarty;
 
+        $default_module = $routeConfig['default_module'];
+
         $default_controller = $routeConfig['default_controller'];
 
-        //设置各个目录的路径，这里是配置smarty的路径参数
+        $module = isset($reqParams['module']) ? $reqParams['module'].'Module' : $default_module.'Module';
+        
         $controller = isset($reqParams['controller']) ? $reqParams['controller'] : $default_controller;
-        $smarty->template_dir    = VIEW_PATH.'/'.$controller;
+        
+        //设置各个目录的路径，这里是配置smarty的路径参数
+        $smarty->template_dir    = VIEW_PATH.'/'.$module.'/'.$controller;
         $smarty->compile_dir     = SYS_FRAMEWORK_PATH."/smarty/templates_c";
         $smarty->config_dir      = SYS_FRAMEWORK_PATH."/smarty/config";
         $smarty->cache_dir       = SYS_FRAMEWORK_PATH."/smarty/cache";
