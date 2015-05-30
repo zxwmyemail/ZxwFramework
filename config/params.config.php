@@ -252,7 +252,8 @@ $_CONFIG['system']['memcache'] = array(
 |
 */
 $_CONFIG['system']['newClassPath'] = array(
-    'public'    => APP_PUBLIC_PATH
+    'public'    => APP_PUBLIC_PATH,
+    'smarty'    => SYS_FRAMEWORK_PATH.'/smarty/libs'
 );
 
 
