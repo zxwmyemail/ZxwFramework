@@ -3,7 +3,7 @@ Copyright(c) 2015
 
 Author      iProg
 
-Version     1.0
+Version     1.1
 
 Email       zxwmyemail@163.com
 
