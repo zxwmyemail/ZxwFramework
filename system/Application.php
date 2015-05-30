@@ -119,8 +119,6 @@ final class Application {
 
         if (file_exists($mvc_model)){     
             require_once($mvc_model);     
-        } elseif (file_exists($mvc_model_default)){     
-            require_once($mvc_model_default);     
         } elseif (file_exists($sys_lib)){     
             require_once($sys_lib);     
         } elseif (file_exists($sys_core)){     
