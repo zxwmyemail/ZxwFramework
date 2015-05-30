@@ -37,9 +37,28 @@
     $this->smarty->display('home.html');
 
 
-四、文件夹mvc/view/下面，建立文件夹的规则和控制层类的对应关系举例如下：
-    如果    mvc/controller下面建立了一个控制层类homeController
-    那么    mvc/view/下面也应该新建一个home文件夹  
+四、文件夹mvc/view/视图层下面，建立文件夹的规则和控制层类的对应关系举例如下：
+    1.该框架支持模块，比如有网站前台（module名为home）和网站后台管理（module名为backend）
+      两个系统，所以要有两个控制层，先在mvc/controller下面建立两个文件夹，规则如下：
+      网站前台：mvc/controller/homeModule/
+      网站后台：mvc/controller/backendModule/
+
+    2.对应的视图层也要建立和上面一样的两个文件夹，建立规则如下：
+      网站前台：mvc/view/homeModule/
+      网站后台：mvc/view/backendModule/
+
+    3.无论哪个模块，如果在控制层建立了一个控制层类，对应的，在视图层要先建立文件夹，比如：
+      在网站前台是的控制层：mvc/controller/homeModule/下建立了一个控制层homeController.php
+      则对应网站前台的视图层：mvc/view/homeModule/下先建立home文件夹，然后渲染的页面放在home下面
+
+    4.路由访问，有两种:
+      (1) http://localhost/ZxwFramework/index.php?m=home&c=home&a=index&id=2
+      (2) http://localhost/ZxwFramework/index.php/home/controller/action/?id=2
+
+      说明，默认的系统模块为home（见config/params.config.php中关于默认路由配置），
+      所以可以不写，即为：
+      (1) http://localhost/ZxwFramework/index.php?c=home&a=index&id=2
+      (2) http://localhost/ZxwFramework/index.php/controller/action/?id=2  
 
 
 五、类加载机制：
