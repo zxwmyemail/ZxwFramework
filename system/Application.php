@@ -24,7 +24,7 @@ final class Application {
     public static function run($config)
     {
         //自动类加载函数
-        spl_autoload_register('self::classLoader'); 
+        self::registerAutoload(); 
 
         //初始化系统错误是否显示
         self::isDisplayErrors();
@@ -44,6 +44,14 @@ final class Application {
         //导向控制层
         self::routeToCtrl(self::$_reqParams);
         
+    }
+    
+    /*------------------------------------------------------------------------------------------
+    | 注册自动加载类函数
+    --------------------------------------------------------------------------------------------*/
+    public static function registerAutoload($enable = true)
+    {
+        $enable ? spl_autoload_register('self::classLoader') : spl_autoload_unregister('self::classLoader');
     }
 
     /*-------------------------------------------------------------------------------------
