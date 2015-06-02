@@ -66,7 +66,7 @@ final class Application {
         }
 
         ini_set('log_errors',1); 
-        ini_set('error_log',LOG_PATH.'/sys_log/'.date('Y-m-d').'_sys_log.txt');
+        ini_set('error_log',LOG_PATH.'/sys_log/'.date('Ymd').'.txt');
     }
 
     /*-------------------------------------------------------------------------------------
