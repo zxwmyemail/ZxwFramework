@@ -25,7 +25,7 @@ class Log {
     
     private function __construct() {
 
-        $dir = LOG_PATH.'/'.date('Y');
+        $dir = LOG_PATH.'/app_log/'.date('Y');
         if (!is_dir($dir)) 
             mkdir($dir, 0777); 
 
