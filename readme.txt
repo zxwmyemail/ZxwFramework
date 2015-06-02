@@ -11,7 +11,9 @@
         |--model                    模型文件  
         |--view                     视图文件     
     |-public                    存放自定义公共类库  
-    |-log                       系统报错日志
+    |-log                       日志文件夹
+        |--sys_log                  系统日志
+        |--app_log                  程序日志
     |-resource                  系统资源文件
         |--css                      css文件存放位置 
         |--js                       js文件存放位置
