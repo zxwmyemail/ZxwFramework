@@ -24,7 +24,10 @@ final class Application {
     public static function run($config)
     {
         //自动类加载函数
-        spl_autoload_register('self::classLoader');  
+        spl_autoload_register('self::classLoader'); 
+
+        //初始化系统错误是否显示
+        self::isDisplayErrors();
 
         //防止sql注入检查
         self::checkRequestParams();
@@ -43,7 +46,30 @@ final class Application {
         
     }
 
-   /*---------------------------------------------------------------------------------------
+    /*-------------------------------------------------------------------------------------
+    | 记录系统日志，判断是否显示日志
+    --------------------------------------------------------------------------------------*/
+    public static function isDisplayErrors()
+    {
+        error_reporting(E_ALL);
+        switch (CUR_ENV) {
+            case 'development':
+                ini_set('display_errors',1);
+                break;
+            case 'test':
+            case 'product':
+                ini_set('display_errors',0);
+                break;
+            default:
+                exit('The application environment is not set correctly.');
+                break;
+        }
+
+        ini_set('log_errors',1); 
+        ini_set('error_log',LOG_PATH.'/sys_log/'.date('Y-m-d').'_sys_log.txt');
+    }
+
+    /*-------------------------------------------------------------------------------------
     |获取某个文件夹下面的指定的文件的路径
     |@param   $dir        文件夹路径
     |@param   $filename   指定文件名，如：model.php
