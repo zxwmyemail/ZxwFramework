@@ -101,6 +101,8 @@ final class Application {
             require_once($classFile);
             if ($model=='new') {
                 return new $classname;
+            }else{
+                return true;
             }
         }else{
             return false;
