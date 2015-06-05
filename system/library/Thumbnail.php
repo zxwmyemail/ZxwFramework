@@ -43,14 +43,16 @@ class Thumbnail {
     private $thumbHeight;
 
 
-   /*----------------------------------------------------------------------------
+    /*----------------------------------------------------------------------------
     | 初始化
+    |-----------------------------------------------------------------------------
     | @param string $maxWidth      最大缩略宽度
     | @param string $maxHeight     最大缩略高度
     | @param type $scale
     | @param type $inflate 
     ----------------------------------------------------------------------------*/
-    public function init($maxWidth, $maxHeight, $scale = true, $inflate = true) {
+    public function init($maxWidth, $maxHeight, $scale = true, $inflate = true) 
+    {
         $this->maxWidth = $maxWidth;
         $this->maxHeight = $maxHeight;
         $this->scale = $scale;
@@ -75,12 +77,15 @@ class Thumbnail {
     }
 
 
-   /*----------------------------------------------------------------------
+    /*----------------------------------------------------------------------
     | 文件方式加载图片
+    |-----------------------------------------------------------------------
     | @param       string  $image 源图片
+    |
     | @return      bool
     -----------------------------------------------------------------------*/
-    public function loadFile($image){
+    public function loadFile($image)
+    {
         if(!$dims = @getimagesize($image)){
             trigger_error("源图片不存在");
         }
@@ -98,13 +103,16 @@ class Thumbnail {
     }
 
 
-   /*------------------------------------------------------------------------
+    /*------------------------------------------------------------------------
     | 字符串方式加载图片
+    |-------------------------------------------------------------------------
     | @param       string $image  字符串
     | @param       string $mime    图片类型
+    |
     | @return type
     -------------------------------------------------------------------------*/
-    public function loadData($image,$mime){
+    public function loadData($image,$mime)
+    {
         if(in_array($mime, $this->types)){
             if($this->source = @imagecreatefromstring($image)){
                 $this->sourceWidth = imagesx($this->source);
@@ -121,11 +129,13 @@ class Thumbnail {
     }
 
 
-   /*------------------------------------------------------------------------------
+    /*------------------------------------------------------------------------------
     | 生成缩略图
+    |-------------------------------------------------------------------------------
     | @param   string  $file   文件名。如果不为空则储存为文件，否则直接输出到浏览器
     -------------------------------------------------------------------------------*/
-    public function buildThumb($file = null){
+    public function buildThumb($file = null)
+    {
         $creator = $this->imgCreators[$this->sourceMime];
         if(isset($file)){
             return $creator($this->thumb,$file);
@@ -134,11 +144,8 @@ class Thumbnail {
         }
     }
 
-
-   /*------------------------------------------------------------------------------
-    | @access      public
-    -------------------------------------------------------------------------------*/
-    public function initThumb(){
+    public function initThumb()
+    {
         if($this->scale){
             if($this->sourceWidth > $this->sourceHeight){
                 $this->thumbWidth = $this->maxWidth;
@@ -160,15 +167,18 @@ class Thumbnail {
         }
     }
 
-    public function getMine(){
+    public function getMine()
+    {
         return $this->sourceMime;
     }
 
-    public function getThumbWidth(){
+    public function getThumbWidth()
+    {
         return $this->thumbWidth;
     }
 
-    public function getThumbHeight(){
+    public function getThumbHeight()
+    {
         return $this->thumbHeight;
     }
 
