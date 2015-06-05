@@ -81,7 +81,7 @@ final class Application {
     | @access    public
     | @param     string   $classname  类名
     | @param     string   $pathKey    在param.config.php文件中注册的类所在路径的键
-    | @param     int      $model      模式: 'new'表示返回类，
+    | @param     int      $model      模式: 'new'表示返回类的对象
     |                                       'static'表示只加载文件，不返回类
     | @return    找不到类，返回false,否则依据model的值返回相应的类
     --------------------------------------------------------------------------------------*/
