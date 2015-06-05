@@ -14,7 +14,6 @@ final class Application {
 
     public static  $_config = null;         //系统配置参数，对应params.config.php文件
     public static  $_reqParams = null;      //请求url参数
-    public static  $allFiles = array();
 
    /*---------------------------------------------------------------------------------------
     | 创建应用
@@ -77,33 +76,6 @@ final class Application {
         ini_set('error_log',LOG_PATH.'/sys_log/'.date('Ymd').'.txt');
     }
 
-    /*-------------------------------------------------------------------------------------
-    |获取某个文件夹下面的指定的文件的路径
-    |@param   $dir        文件夹路径
-    |@param   $filename   指定文件名，如：model.php
-    --------------------------------------------------------------------------------------*/
-    public static function scanAllFiles ( $dir, $filename )
-    {
-        $handle = opendir($dir);
-        if ( $handle ){
-            while ( ( $file = readdir ( $handle ) ) !== false ){
-                if ( $file != '.' && $file != '..'){
-                    $cur_path = $dir . DIRECTORY_SEPARATOR . $file;
-                    if ( is_dir ( $cur_path ) ){
-                        if (empty(self::$allFiles)) {
-                            self::scanAllFiles ( $cur_path, $filename  );
-                        }
-                    }else{
-                        if ($filename == $file) {
-                            self::$allFiles[] = $cur_path;
-                        }
-                    }
-                }
-            }
-            closedir($handle);
-        }
-    }
-
    /*---------------------------------------------------------------------------------------
     | 手动进行类加载的函数
     | @access    public
@@ -113,29 +85,22 @@ final class Application {
     |                                       'static'表示只加载文件，不返回类
     | @return    找不到类，返回false,否则依据model的值返回相应的类
     --------------------------------------------------------------------------------------*/
-    public static function newClass($classname, $pathKey, $model='new'){
-
+    public static function newClass($classname, $pathKey, $model='new')
+    {
         $filename = $classname.'.php';
 
         $dir = self::$_config['newClassPath'][$pathKey];
+        
+        $classFile = $dir.'/'.$classname.'.php';
 
-        if (empty($dir)) {
+        if (file_exists($classFile)) {
             return false;
-        }
-
-        self::$allFiles = array();
-
-        self::scanAllFiles($dir, $filename);
-
-        if (!empty(self::$allFiles)) {
-            require_once(self::$allFiles[0]);
+        }else{
+            require_once($classFile);
             if ($model=='new') {
                 return new $classname;
             }
-        }else{
-            return false;
         }
-
     }
 
    /*---------------------------------------------------------------------------------------
