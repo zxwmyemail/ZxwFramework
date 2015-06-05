@@ -33,7 +33,7 @@ class homeController extends Controller {
         die();
 
         //测试手动加载类函数
-        $model = Application::newClass('MyTest','public');
+        $model = Application::newObject('MyTest','public');
         var_dump($model);
         die();
 
