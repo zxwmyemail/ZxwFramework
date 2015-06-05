@@ -121,24 +121,26 @@ class Oracle {
     |                                    次序按照定义预编译参数的从左到右次序
     | 
     | @return 根据操作类型有不同的返回值：
-    |        1、array $data 执行查询操作返回的结果，每个数据元素是每行结果的一个
-    |                       cellbox对象，如果未查到结果将返回 null
-    |           如，Array
+    |        1、array  执行查询操作返回的结果，每个数据元素是每行结果的一个
+    |                  cellbox对象，如果未查到结果将返回 null
+    |           如：Array
     |              (
-    |                 [0] => cellBox Object
-    |                 (
-    |                      [_fields:protected] => Array(
-    |                           [UUID] => 41A53BF8E39EB3A48F338F5C90F1A973
-    |                           [TIMESTAMP] => 2012-11-07 17:54:10
-    |                           [CREATETIME] => 2012-11-07 17:54:10
-    |                           [ID] => 1988
-    |                           [NAME] => 509a2fc265f5a
-    |                           [PWD] => D27A0B7FE41491E3B917AEC29E4E590E
-    |                           [RN] => 11
-    |                      )
-    |                  )
-    |         2、boolean true/false 执行写操作返回操作结果
-    |                               true表示成功，false表示失败     
+    |                 	[0] => cellBox Object
+    |                 	(
+    |                      	[_fields:protected] => Array(
+    |                           	[UUID] => 41A53BF8E39EB3A48F338F5C90F1A973
+    |                           	[TIMESTAMP] => 2012-11-07 17:54:10
+    |                           	[CREATETIME] => 2012-11-07 17:54:10
+    |                           	[ID] => 1988
+    |                           	[NAME] => 509a2fc265f5a
+    |                           	[PWD] => D27A0B7FE41491E3B917AEC29E4E590E
+    |                           	[RN] => 11
+    |                      	)
+    |                  	)
+    |			[1] => .................
+    |			[2] => .................
+    |  		  ）
+    |         2、boolean  执行写操作返回操作结果，true表示成功，false表示失败     
     ---------------------------------------------------------------------------------------------*/
     public function stmt_query($sql) 
     {
