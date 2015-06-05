@@ -85,7 +85,7 @@ final class Application {
     |                                       'static'表示只加载文件，不返回类
     | @return    找不到类，返回false,否则依据model的值返回相应的类
     --------------------------------------------------------------------------------------*/
-    public static function newClass($classname, $pathKey, $model='new')
+    public static function newObject($classname, $pathKey, $model='new')
     {
         $dir = self::$_config['newClassPath'][$pathKey];
         
