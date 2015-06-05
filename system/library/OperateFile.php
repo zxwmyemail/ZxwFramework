@@ -138,6 +138,7 @@ class OperateFile {
 	|-------------------------------------------------------------------------------------------
 	| @param string path         路径后面别忘了加"/"
 	| @param string name         文件名字
+	|
 	| @return boolean
 	------------------------------------------------------------------------------------------*/
 	function deleteFile($path, $name) {
@@ -157,6 +158,7 @@ class OperateFile {
 	|------------------------------------------------------------------------------------------
 	| @param string path        文件路径
 	| @param string name        文件名字
+	|
 	| @return string content    文件内容
 	-----------------------------------------------------------------------------------------*/
 	public function readFile($path, $name) {
@@ -266,6 +268,7 @@ class OperateFile {
 	| @param string $oldDir
 	| @param string $aimDir
 	| @param boolean $overWrite 该参数控制是否覆盖原文件
+	|
 	| @return boolean
 	---------------------------------------------------------------------------------------*/
 	public function copyDir($oldDir, $aimDir, $overWrite = false) {
@@ -300,6 +303,7 @@ class OperateFile {
     	| @param string $oldDir
     	| @param string $aimDir
     	| @param boolean $overWrite 该参数控制是否覆盖原文件
+    	|
     	| @return boolean
     	---------------------------------------------------------------------------------------*/
     	public function moveDir($oldDir, $aimDir, $overWrite = false) {
