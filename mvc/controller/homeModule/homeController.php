@@ -44,9 +44,7 @@ class homeController extends Controller {
 
 
         //自定义类加载，使用spl_autoload_register机制
-        //可自动加载这些类/ZxwFramework/mvc/model/
-        //                /ZxwFramework/system/library/
-        //                /ZxwFramework/system/core/
+        //可自动加载mvc/model/、system/library/、system/core/这些文件夹下面的类
         $homeModel = new homeModel();
         $homeModel -> testResult();
         exit();
