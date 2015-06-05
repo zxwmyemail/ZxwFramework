@@ -76,8 +76,8 @@
             'public' => '/ZxwFramework/public'
         );
       c、如果想创建public下面的MyTest对象的时候，可做如下操作：
-        $myTestObj = Application::newClass('MyTest','public');
+        $myTestObj = Application::newObject('MyTest','public');
         说明：第一个参数为类名，第二个为上面配置的键名public。
       d、如果只是想加载类文件，不new对象时，可做如下操作：
-        $myTestObj = Application::newClass('MyTest','public','static');
+        $myTestObj = Application::newObject('MyTest','public','static');
 
