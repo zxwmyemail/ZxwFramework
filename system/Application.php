@@ -87,19 +87,23 @@ final class Application {
     --------------------------------------------------------------------------------------*/
     public static function newClass($classname, $pathKey, $model='new')
     {
-        $filename = $classname.'.php';
-
         $dir = self::$_config['newClassPath'][$pathKey];
         
-        $classFile = $dir.'/'.$classname.'.php';
+        if (empty($dir)){
+            return false;
+        }
+        
+        $dir = substr($dir, -1) == '/' ? $dir : $dir . '/';
+        
+        $classFile = $dir.$classname.'.php';
 
         if (file_exists($classFile)) {
-            return false;
-        }else{
             require_once($classFile);
             if ($model=='new') {
                 return new $classname;
             }
+        }else{
+            return false;
         }
     }
 
