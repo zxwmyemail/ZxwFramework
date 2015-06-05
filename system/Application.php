@@ -163,7 +163,7 @@ final class Application {
             else
                 die('控制器方法不存在');
         }else{
-            die('控制器方法不存在');
+            die('url参数中无控制器方法参数！');
         }
 
     }
