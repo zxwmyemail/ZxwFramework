@@ -24,6 +24,7 @@ class OperateFile {
 	-------------------------------------------------------------------------------------------*/ 
 	public function scanAllFiles ( $dir, $type=3 )
         {
+            $this->fileList = array();
             $handle = opendir($dir);
             if ( $handle ){
                 while ( ( $file = readdir ( $handle ) ) !== false ){
