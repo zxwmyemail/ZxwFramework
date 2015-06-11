@@ -121,7 +121,7 @@ class Model {
     | 加载redis参数配置
     -----------------------------------------------------------------------------------*/
     final protected function setRedisConfig(){
-        $this->_redisConfig = Application::$_config['redis'];
+        $this->_redisConfig = Application::$_config['redis'][CUR_ENV];
     }
 
     /*-----------------------------------------------------------------------------------
