@@ -225,16 +225,42 @@ $_CONFIG['system']['redis'] = array(
 |                      默认值是0.2表示20%压缩率。
 -------------------------------------------------------------------------------------------*/
 $_CONFIG['system']['memcache'] = array(
-    'server' => array(
-        array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1),
-        array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1)
+    'development' => array(
+        'server' => array(
+            array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1),
+            array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1)
+        ),
+        'expiration'    =>  18600, 
+        'prefix'        =>  'zxw_', 
+        'compression'   =>  false,
+        'isAutoTresh'   =>  true,
+        'threshold'     =>  20000, 
+        'thresavings'   =>  0.2 
     ),
-    'expiration'    =>  18600, 
-    'prefix'        =>  'zxw_', 
-    'compression'   =>  false,
-    'isAutoTresh'   =>  true,
-    'threshold'     =>  20000, 
-    'thresavings'   =>  0.2 
+    'test' => array(
+        'server' => array(
+            array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1),
+            array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1)
+        ),
+        'expiration'    =>  18600, 
+        'prefix'        =>  'zxw_', 
+        'compression'   =>  false,
+        'isAutoTresh'   =>  true,
+        'threshold'     =>  20000, 
+        'thresavings'   =>  0.2 
+    ),
+    'product' => array(
+        'server' => array(
+            array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1),
+            array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1)
+        ),
+        'expiration'    =>  18600, 
+        'prefix'        =>  'zxw_', 
+        'compression'   =>  false,
+        'isAutoTresh'   =>  true,
+        'threshold'     =>  20000, 
+        'thresavings'   =>  0.2 
+    ),
 );
 
 
