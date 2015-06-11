@@ -128,7 +128,7 @@ class Model {
     | 加载memcache参数配置
     -----------------------------------------------------------------------------------*/
     final protected function setMemcacheConfig(){
-        $this->_memcacheConfig = Application::$_config['memcache'];
+        $this->_memcacheConfig = Application::$_config['memcache'][CUR_ENV];
     }
         
 }
