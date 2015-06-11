@@ -75,7 +75,7 @@ class Log {
     /*------------------------------------------------------------------------------------------
     | 写日志信息
     -------------------------------------------------------------------------------------------*/
-    public function LogMessage($msg, $logLevel = Log::INFO, $module = 'SYSTEM')
+    public function logMessage($msg, $logLevel = Log::INFO, $module = 'SYSTEM')
     {
         $msg = trim($msg);
 
