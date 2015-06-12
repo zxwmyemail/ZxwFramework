@@ -68,8 +68,8 @@ class OperateFile {
 	|--------------------------------------------------------------------------------------------
 	| @param string $dir
 	-------------------------------------------------------------------------------------------*/ 
-	public function createDir($dir) {
-
+	public function createDir($dir) 
+	{
 	        $dir = str_replace('', '/', $dir);
 	        $aimDir = '';
 	        $dirArr = explode('/', $dir);
@@ -91,7 +91,8 @@ class OperateFile {
 	|--------------------------------------------------------------------------------------------
 	| @param string $dir
 	-------------------------------------------------------------------------------------------*/ 
-	public function deleteDir($dir) {
+	public function deleteDir($dir) 
+	{
 	        $dir = str_replace('', '/', $dir);
 	        $dir = substr($dir, -1) == '/' ? $dir : $dir . '/';
 	        if (!is_dir($dir)) {
@@ -119,7 +120,8 @@ class OperateFile {
 	| @param string name         文件名字
 	| @param string isOverWrite  是否覆盖源文件
 	--------------------------------------------------------------------------------------------*/ 
-	public function createFile($path, $name, $isOverWrite = false) {
+	public function createFile($path, $name, $isOverWrite = false) 
+	{
 		$path = substr($path, -1) == '/' ? $path : $path . '/';
 		$filename = $path . $name;
 
@@ -142,7 +144,8 @@ class OperateFile {
 	|
 	| @return boolean
 	------------------------------------------------------------------------------------------*/
-	function deleteFile($path, $name) {
+	function deleteFile($path, $name) 
+	{
 		$path = substr($path, -1) == '/' ? $path : $path . '/';
 	    	$filename = $path . $name;
 	
@@ -162,7 +165,8 @@ class OperateFile {
 	|
 	| @return string content    文件内容
 	-----------------------------------------------------------------------------------------*/
-	public function readFile($path, $name) {
+	public function readFile($path, $name) 
+	{
 		$path = substr($path, -1) == '/' ? $path : $path . '/';
 		return file_get_contents($path . $name);
 	}
@@ -175,7 +179,8 @@ class OperateFile {
 	| @param string content    文件内容
 	| @param bool   bool       文件写入选项，1为尾部追加，2为替换原内容
 	-----------------------------------------------------------------------------------------*/
-	public function writeFile($path, $name, $content, $bool=2) {
+	public function writeFile($path, $name, $content, $bool=2) 
+	{
 		$path = substr($path, -1) == '/' ? $path : $path . '/';
 		$filename = $path . $name;
 
@@ -198,7 +203,8 @@ class OperateFile {
 	| @param string dpath        目的目录
 	| @param string isOverWrite  是否覆盖源文件
 	-----------------------------------------------------------------------------------------*/
-	public function copyFile($name, $spath, $dpath, $isOverWrite = false) {
+	public function copyFile($name, $spath, $dpath, $isOverWrite = false) 
+	{
 		$spath = substr($spath, -1) == '/' ? $spath : $spath . '/';
 		$dpath = substr($dpath, -1) == '/' ? $dpath : $dpath . '/';
 		$filename = $spath . $name;
@@ -225,7 +231,8 @@ class OperateFile {
 	| @param string dpath        目的目录
 	| @param string isOverWrite  是否覆盖源文件
 	-----------------------------------------------------------------------------------------*/
-	public function moveFile($name, $spath, $dpath, $isOverWrite = false) {
+	public function moveFile($name, $spath, $dpath, $isOverWrite = false) 
+	{
 		$spath = substr($spath, -1) == '/' ? $spath : $spath . '/';
 		$dpath = substr($dpath, -1) == '/' ? $dpath : $dpath . '/';
 		$filename = $spath . $name;
@@ -252,7 +259,8 @@ class OperateFile {
 	| @param string_type oldname
 	| @param string_type newname
 	----------------------------------------------------------------------------------------*/
-	public function renameFile($path, $oldname, $newname) { 
+	public function renameFile($path, $oldname, $newname) 
+	{ 
 		$path = substr($path, -1) == '/' ? $path : $path . '/';
 		$oldFileName = $path.$oldname;
 		$newFileName = $path.$newname;
@@ -272,7 +280,8 @@ class OperateFile {
 	|
 	| @return boolean
 	---------------------------------------------------------------------------------------*/
-	public function copyDir($oldDir, $aimDir, $overWrite = false) {
+	public function copyDir($oldDir, $aimDir, $overWrite = false) 
+	{
 	        $aimDir = str_replace('', '/', $aimDir);
 	        $aimDir = substr($aimDir, -1) == '/' ? $aimDir : $aimDir . '/';
 	        $oldDir = str_replace('', '/', $oldDir);
@@ -307,7 +316,8 @@ class OperateFile {
     	|
     	| @return boolean
     	---------------------------------------------------------------------------------------*/
-    	public function moveDir($oldDir, $aimDir, $overWrite = false) {
+    	public function moveDir($oldDir, $aimDir, $overWrite = false) 
+    	{
         	$aimDir = str_replace('', '/', $aimDir);
         	$aimDir = substr($aimDir, -1) == '/' ? $aimDir : $aimDir . '/';
         	$oldDir = str_replace('', '/', $oldDir);
