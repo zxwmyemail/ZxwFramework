@@ -12,35 +12,22 @@ if (!defined('BASE_PATH'))
 
 class httpRequest {
 
-	private $type = 'get';   //请求类型：get和post
-
-	public function __construct($type='get'){
-
-		$this->type = $type;
-
-	}
-
-   	/*------------------------------------------------------------------------------
+   	/*-----------------------------------------------------------------------------
 	| 发起请求
 	-----------------------------------------------------------------------------*/
-	public function doHttpRequest($url, $param=array()){
-
-		switch ($this->type) {
-			case 'get':
-				return $this->get($url, $param=array());
-				break;
+	public function doHttpRequest($method = 'get', $url, $param = array()){
+		switch ($method) {
 			case 'post':
 				return $this->post($url, $param=array());
 				break;
-	
+			case 'get':
 			default:
-				# code...
+				return $this->get($url, $param=array());
 				break;
 		}
-
 	}
 
-   	/*------------------------------------------------------------------------------
+   	/*-----------------------------------------------------------------------------
 	| 发起get请求
 	-----------------------------------------------------------------------------*/
 	private function get($url, $param=array())
@@ -49,10 +36,7 @@ class httpRequest {
          		throw new Exception("参数必须为array");
      		}
 
-	     	$p='';
-	     	foreach($param as $key => $value){
-	         	$p=$p.$key.'='.$value.'&';
-	     	}
+	     	$p=http_build_query($param);
 
 	     	if(preg_match('/\?[\d\D]+/',$url)){
 	         	$p='&'.$p;
