@@ -30,7 +30,6 @@ class CacheFactory {
                 if (!isset( $this->_sessionInstance ))
                 {
                     $this->_sessionInstance = new BaseSession();
-
                     return $this->_sessionInstance;
                 }
                 break;
@@ -38,7 +37,6 @@ class CacheFactory {
                 if (!isset( $this->_redisInstance ))
                 {
                     $this->_redisInstance = BaseRedis::getInstance($this->_cacheConfig);
-
                     return $this->_redisInstance;
                 }
                 break;
@@ -46,7 +44,6 @@ class CacheFactory {
                 if (!isset( $this->_memcacheInstance ))
                 {
                     $this->_memcacheInstance = new BaseMemcache($this->_cacheConfig);
-
                     return $this->_memcacheInstance;
                 }
                 break;
