@@ -70,7 +70,7 @@ class FileUpload {
 	|
 	| @return	object		返回自己对象$this，可以用于连贯操作
 	------------------------------------------------------------------------------------*/
-	function set($key, $val)
+	public function set($key, $val)
 	{
 		$key = strtolower($key); 
 		if( array_key_exists( $key, get_class_vars(get_class($this) ) ) ){
@@ -87,7 +87,7 @@ class FileUpload {
 	|
 	| @return	bool			如果上传成功返回数true 
 	------------------------------------------------------------------------------------*/
-	function upload($fileField) 
+	public function upload($fileField) 
 	{
 		$return = true;
 
@@ -198,7 +198,7 @@ class FileUpload {
         /*-----------------------------------------------------------------------------------
 	| 设置上传出错信息
 	-----------------------------------------------------------------------------------*/
-	private function getError() 
+	public function getError() 
 	{
 		$str = "上传文件<font color='red'>{$this->originName}</font>时出错 : ";
 		switch ($this->errorNum) {
@@ -220,7 +220,7 @@ class FileUpload {
         /*-----------------------------------------------------------------------------------
 	| 设置和$_FILES有关的内容
 	-----------------------------------------------------------------------------------*/
-	private function setFiles($name="", $tmp_name="", $size=0, $error=0)
+	public function setFiles($name="", $tmp_name="", $size=0, $error=0)
 	{
 		$this->setOption('errorNum', $error);
 		if($error)
@@ -237,7 +237,7 @@ class FileUpload {
         /*-----------------------------------------------------------------------------------
 	| 为单个成员属性设置值
 	-----------------------------------------------------------------------------------*/
-	private function setOption($key, $val) 
+	public function setOption($key, $val) 
 	{
 		$this->$key = $val;
 	}
@@ -246,7 +246,7 @@ class FileUpload {
         /*-----------------------------------------------------------------------------------
 	| 设置上传后的文件名称
 	-----------------------------------------------------------------------------------*/
-	private function setNewFileName() 
+	public function setNewFileName() 
 	{
 		if ($this->israndname) {
 			$this->setOption('newFileName', $this->proRandName());	
@@ -259,7 +259,7 @@ class FileUpload {
         /*-----------------------------------------------------------------------------------
 	| 检查上传的文件是否是合法的类型
 	-----------------------------------------------------------------------------------*/
-	private function checkFileType() 
+	public function checkFileType() 
 	{
 		if (in_array(strtolower($this->fileType), $this->allowtype)) {
 			return true;
@@ -273,7 +273,7 @@ class FileUpload {
         /*-----------------------------------------------------------------------------------
 	| 检查上传的文件是否是允许的大小
 	-----------------------------------------------------------------------------------*/
-	private function checkFileSize() 
+	public function checkFileSize() 
 	{
 		if ($this->fileSize > $this->maxsize) {
 			$this->setOption('errorNum', -2);
@@ -287,7 +287,7 @@ class FileUpload {
         /*-----------------------------------------------------------------------------------
 	| 检查是否有存放上传文件的目录
 	-----------------------------------------------------------------------------------*/
-	private function checkFilePath() 
+	public function checkFilePath() 
 	{
 		if(empty($this->path)){
 			$this->setOption('errorNum', -5);
@@ -306,7 +306,7 @@ class FileUpload {
         /*-----------------------------------------------------------------------------------
 	| 设置随机文件名
 	-----------------------------------------------------------------------------------*/
-	private function proRandName() 
+	public function proRandName() 
 	{		
 		$fileName = date('YmdHis')."_".rand(100,999);   	
 		return $fileName.'.'.$this->fileType; 
@@ -316,7 +316,7 @@ class FileUpload {
         /*-----------------------------------------------------------------------------------
 	| 复制上传文件到指定的位置
 	-----------------------------------------------------------------------------------*/
-	private function copyFile() 
+	public function copyFile() 
 	{
 		if(!$this->errorNum) {
 			$path = rtrim($this->path, '/').'/';
