@@ -237,7 +237,6 @@ class BasePDO {
     {
 	$this->select($sql, $params);
         return $this->_pdoStmt->rowCount(); 
-    	
     }
 
 
@@ -316,9 +315,7 @@ class BasePDO {
 
 	if ($this->_pdo->inTransaction()) { 
 		$result = $this->_pdo->commit(); 
-
 		$this->_pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, TRUE); 
-
 		if(!$result){ 
 			throw new Exception('事务自动提交失败！'); 
 			return false; 
@@ -339,9 +336,7 @@ class BasePDO {
 	
 	if ($this->_pdo->inTransaction()) { 
 		$result = $this->_pdo->rollback();
-
 		$this->_pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, TRUE); 
- 
 		if(!$result){ 
 			throw new Exception('事务自动回滚失败！'); 
 			return false; 
