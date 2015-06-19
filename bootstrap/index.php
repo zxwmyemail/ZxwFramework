@@ -7,7 +7,7 @@
  * @version     1.0
  *****************************************************************/
  
-define('BASE_PATH', dirname(__FILE__));
+define('BASE_PATH', dirname(dirname(__FILE__)));
 
 //加载系统常量
 require BASE_PATH.'/config/const.config.php';
