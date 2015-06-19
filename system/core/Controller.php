@@ -113,6 +113,65 @@ class Controller {
         //但是会造成网页不立即更新的问题，当然也可以通过其他的办法解决
         $smarty->caching = false; 
     }
+    
+    /*-------------------------------------------------------------------------------------
+    | 重定向
+    |--------------------------------------------------------------------------------------
+    | @param  $action     string   重定向路由，格式有两种：
+    |                              1. 'controller/action',重定向到其他控制层
+    |                              2. 'action',重定向到自身控制层的其他action
+    | @param  $param      array    重定向参数
+    | @param  $end        bool     重定向完是否结束应用
+    | @param  $statusCode int      重定向请求码值，默认302
+    --------------------------------------------------------------------------------------*/
+    public function redirect($action, $param = array(), $end = true, $statusCode = 302){
+        
+        if (empty($action)) {
+            return false;
+        }
+
+        $C_A = explode('/', $action);
+        $reqParams = Application::$_reqParams;
+        $defaultRoute = $this->config('route');
+
+        if ($defaultRoute['url_type'] == 1) {
+            $url = empty($reqParams['module']) ? 'index.php?' : 'index.php?m='.$reqParams['module'].'&';
+            if (count($C_A) == 2) {
+                $url .= 'c='.$C_A[0].'&a='.$C_A[1];
+            } elseif (count($C_A) == 1) {
+                $url .= empty($reqParams['controller']) ? 'c='.$defaultRoute['default_controller'].'&' : 'c='.$reqParams['controller'].'&';
+                $url .= 'a='.$C_A[0];
+            } else {
+                trigger_error('重定向失败，路由参数【 '.$action.' 】解析失败！');die();
+            }
+
+            if (!empty($param)) {
+                $params = http_build_query($param);
+                $url .= "&".$params;
+            }
+        } elseif ($defaultRoute['url_type'] == 2) {
+            $url = empty($reqParams['module']) ? 'index.php/' : 'index.php/'.$reqParams['module'].'/';
+            if (count($C_A) == 2) {
+                $url .= $C_A[0].'/'.$C_A[1];
+            } elseif (count($C_A) == 1) {
+                $url .= empty($reqParams['controller']) ? $defaultRoute['default_controller'].'/' : 'c='.$reqParams['controller'].'/';
+                $url .= $C_A[0];
+            } else {
+                trigger_error('重定向失败，路由参数【 '.$action.' 】解析失败！');die();
+            }
+
+            if (!empty($param)) {
+                $params = http_build_query($param);
+                $url .= '/?'.$params;
+            }
+        }
+
+        header("Location:".$url, true, $statusCode);
+
+        if ($end) {
+            exit();
+        }
+    }
 
     /*--------------------------------------------------------------------------------------
     | 加载系统配置,默认为系统配置 $CONFIG['system'][$config]
