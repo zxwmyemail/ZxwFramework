@@ -5,28 +5,29 @@
  * @version     1.0
  ************************************************************************/
 
-一、系统目录和主要文件如下：  
+一、系统目录和主要文件如下： 
+    |-bootstrap                 web入口文件和静态资源所在文件夹
+        |--index.php                web入口文件
+        |--resource                 静态资源所在文件夹
+            |--css                      css文件存放位置 
+            |--js                       js文件存放位置
+            |--images                   images文件存放位置
+            |--font                     font文件存放位置
+    |-config                    存放配置文件  
+        |--const.config.php         系统预定义常量 
+        |--params.config.php        系统参数配置文件
+    |-log                       日志文件夹
+        |--sys_log                  系统日志
+        |--app_log                  程序日志
     |-mvc                       框架的mvc层
         |--controller               控制器文件  
         |--model                    模型文件  
         |--view                     视图文件     
     |-public                    存放自定义公共类库  
-    |-log                       日志文件夹
-        |--sys_log                  系统日志
-        |--app_log                  程序日志
-    |-resource                  系统资源文件
-        |--css                      css文件存放位置 
-        |--js                       js文件存放位置
-        |--images                   images文件存放位置
-        |--font                     font文件存放位置
-    |-config                    存放配置文件  
-        |--const.config.php         系统预定义常量 
-        |--params.config.php        系统参数配置文件
     |-system                    系统目录 
         |--core                     系统核心类，例如控制层父类，model层父类、路由类
         |--framework                第三方框架，例如smarty引擎
         |--library                  系统类库
-    |-index.php                 入口文件
     |-readme.txt                框架说明文件，即本文件
 
 
