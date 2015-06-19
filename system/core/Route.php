@@ -93,9 +93,10 @@ final class Route {
     {
         if (isset($_SERVER['PATH_INFO'])){
             //获取 pathinfo
-            $pathInfo = explode('/', substr($_SERVER['PATH_INFO'], 1));
+            $pathinfo = trim($_SERVER['PATH_INFO'], '/');
+            $pathInfo = explode('/', $pathinfo);
             
-            if (count($pathInfo)>2) {
+            if (count($pathInfo) > 2) {
                 // 获取 module
                 $this->_reqParams['module'] = (isset($pathInfo[0]) ? $pathInfo[0] : null);
                 array_shift($pathInfo);
