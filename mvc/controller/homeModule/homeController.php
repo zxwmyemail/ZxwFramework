@@ -26,6 +26,10 @@ class homeController extends Controller {
         $this->smarty->assign('name','iProg');
         $this->smarty->display('home.html'); 
         exit();
+        
+        //测试重定向
+        $this->redirect('page404'); 
+        exit();
 
         //测试日志记录函数
         $logIns = Log::getInstance();
