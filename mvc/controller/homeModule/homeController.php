@@ -15,12 +15,12 @@ class homeController extends Controller {
         parent::__construct();
     }
 
-    public function page404() {
+    public function page404Action() {
         $this->smarty->display('404Page.html'); 
         exit();
     }
 
-    public function index() {
+    public function indexAction() {
 
         //测试smarty模板
         $this->smarty->assign('name','iProg');
