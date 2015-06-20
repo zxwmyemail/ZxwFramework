@@ -150,7 +150,7 @@ final class Application {
         
         $controller_file = CONTROLLER_PATH.'/'.$module.'/'.$controller.'.php';
 
-        $action = empty($url_array['action']) ? self::$_config['route']['default_action'] : $url_array['action'];
+        $action = empty($url_array['action']) ? self::$_config['route']['default_action'].'Action' : $url_array['action'].'Action';
 
         $params = empty($url_array['params']) ? '' : $url_array['params'];
         
