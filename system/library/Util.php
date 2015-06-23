@@ -371,7 +371,7 @@ class Util {
     ----------------------------------------------------------------------------------------------------------*/
     public static function sortByCol($array, $key, $sort = SORT_ASC)
     {
-        return sortByMultiCols($array, array($key => $sort));
+        return self::sortByMultiCols($array, array($key => $sort));
     }
 
 
@@ -379,7 +379,7 @@ class Util {
     | 多维数组按照多列排序
     |----------------------------------------------------------------------------------------------------------
     | @param  array   $array   排序数组
-    | @param  array   $args    排序所参数，格式举例：array('key1'=>SORT_ASC, 'key2'=>SORT_DESC)
+    | @param  array   $args    排序参数，格式举例：array('key1'=>SORT_ASC, 'key2'=>SORT_DESC)
     |
     | @return array   返回排序后的新数组
     ----------------------------------------------------------------------------------------------------------*/
