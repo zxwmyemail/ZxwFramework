@@ -344,7 +344,7 @@ class Util {
     /*---------------------------------------------------------------------------------------------------------
     | 功能类似与var_dump,只是显示样式会比dump更加好看
     ---------------------------------------------------------------------------------------------------------*/
-    public function dump($vars, $label = '', $return = false) {
+    public static function dump($vars, $label = '', $return = false) {
         if (ini_get('html_errors')) {
             $content = "<pre>\n";
             if ($label != '') {
@@ -359,6 +359,50 @@ class Util {
         echo $content;
         return null;
     }
+    
+    /*---------------------------------------------------------------------------------------------------------
+    | 多维数组按照单列排序
+    |----------------------------------------------------------------------------------------------------------
+    | @param  array   $array   排序数组
+    | @param  string  $key     按某列值排序所对应的键名
+    | @param  string  $sort    排序方向：SORT_DESC（降序）、SORT_ASC（升序）
+    |
+    | @return array   返回排序后的新数组
+    ----------------------------------------------------------------------------------------------------------*/
+    public static function sortByCol($array, $key, $sort = SORT_ASC)
+    {
+        return sortByMultiCols($array, array($key => $sort));
+    }
+
+
+    /*---------------------------------------------------------------------------------------------------------
+    | 多维数组按照多列排序
+    |----------------------------------------------------------------------------------------------------------
+    | @param  array   $array   排序数组
+    | @param  array   $args    排序所参数，格式举例：array('key1'=>SORT_ASC, 'key2'=>SORT_DESC)
+    |
+    | @return array   返回排序后的新数组
+    ----------------------------------------------------------------------------------------------------------*/
+    public static function sortByMultiCols($array, $args)
+    {
+        $sortArray = array();
+        $sortRule = '';
+        foreach ($args as $sortField => $sortDir) 
+        {
+            foreach ($array as $offset => $row) 
+            {
+                $sortArray[$sortField][$offset] = $row[$sortField];
+            }
+            $sortRule .= '$sortArray[\'' . $sortField . '\'], ' . $sortDir . ', ';
+        }
+    
+        if (empty($sortArray) || empty($sortRule)) { return $array; }
+    
+        eval('array_multisort(' . $sortRule . '$array);');
+    
+        return $array;
+    }
+    
 }
 
 ?>
