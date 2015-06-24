@@ -97,6 +97,11 @@ class jsonRPCClient {
 	 */
 	public function __call($method,$params) {
 		
+		// check url
+  		if (empty($this->url)) {
+  			  throw new Exception('server url is null');
+  		}
+		
   		// check
   		if (!is_scalar($method)) {
   			  throw new Exception('Method name has no scalar value');
