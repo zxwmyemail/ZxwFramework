@@ -13,13 +13,16 @@ class JsonRpcController {
     | 构造函数
     ----------------------------------------------------------------------------------------------*/
     public function __construct() {
-        //控制器初始化
-        if(method_exists($this,'_initialize'))
+        // 控制器初始化
+        if(method_exists($this,'_initialize')) {
             $this->_initialize();
-        //导入类库
-        Vendor('jsonRPC.jsonRPCServer');
+        }
+            
+        // 导入类库
+        Application::newObject('jsonRPCServer', 'public', 'static');
+        
         // 启动server
-        \jsonRPCServer::handle($this);
+        jsonRPCServer::handle($this);
     }
 
     /*---------------------------------------------------------------------------------------------
