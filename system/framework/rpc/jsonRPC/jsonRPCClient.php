@@ -61,9 +61,7 @@ class jsonRPCClient {
 	 * @param string $url
 	 * @param boolean $debug
 	 */
-	public function __construct($url,$debug = false) {
-		  // server URL
-		  $this->url = $url;
+	public function __construct($debug = false) {
 		  // proxy
 		  empty($proxy) ? $this->proxy = '' : $this->proxy = $proxy;
 		  // debug state
@@ -79,6 +77,15 @@ class jsonRPCClient {
 	 */
 	public function setRPCNotification($notification) {
 		  empty($notification) ? $this->notification = false : $this->notification = true;
+	}
+	
+	/**
+	 * Sets url of server
+	 *
+	 * @param string $url
+	 */
+	public function setJsonRPCServerUrl($url) {
+		  empty($url) ? $this->url = $url : $this->url = '';
 	}
 	
 	/**
