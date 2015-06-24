@@ -7,8 +7,9 @@
 class jsonRpcClientController extends Controller {
     
     public function index(){
-        vendor('jsonRPC.jsonRPCClient');
-        $client = new \jsonRPCClient('http://serverName/index.php/Home/Server');
+        // 导入客户端类库
+        Application::newObject('jsonRPCClient', 'jsonRPC', 'static');
+        $client = new jsonRPCClient('http://serverName/index.php?c=jsonRpcServer&a=index');
         $result = $client->index();
         var_dump($result); // 结果：Hello, JsonRPC!
         $result = $client->test('ThinkPHP');
