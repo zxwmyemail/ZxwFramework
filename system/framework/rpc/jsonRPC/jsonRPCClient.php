@@ -58,7 +58,6 @@ class jsonRPCClient {
 	/**
 	 * Takes the connection parameters
 	 *
-	 * @param string $url
 	 * @param boolean $debug
 	 */
 	public function __construct($debug = false) {
