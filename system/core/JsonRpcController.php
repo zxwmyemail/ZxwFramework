@@ -19,7 +19,7 @@ class JsonRpcController {
         }
             
         // 导入类库
-        Application::newObject('jsonRPCServer', 'public', 'static');
+        Application::newObject('jsonRPCServer', 'jsonRPC', 'static');
         
         // 启动server
         jsonRPCServer::handle($this);
