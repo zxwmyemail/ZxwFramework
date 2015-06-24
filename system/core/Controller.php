@@ -15,6 +15,7 @@ class Controller {
     private $_redisConfig  = null;
     private $_memcacheConfig  = null;
     private $_smarty = null;
+    private $_jsonRPCClient = null;
         
     public function __construct() 
     {
@@ -57,6 +58,11 @@ class Controller {
                 }
                 return $this->_smarty;
                 break;
+            case 'jsonRPCClient':
+            	if (empty($this->_jsonRPCClient)) {
+                    $this->_jsonRPCClient = Application::newObject('jsonRPCClient', 'jsonRPC');; 
+                }
+                return $this->_jsonRPCClient;
             
             default:
                 echo '参数错误';exit();
