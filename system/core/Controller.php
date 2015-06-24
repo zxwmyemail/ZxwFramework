@@ -60,7 +60,7 @@ class Controller {
                 break;
             case 'jsonRPCClient':
             	if (empty($this->_jsonRPCClient)) {
-                    $this->_jsonRPCClient = Application::newObject('jsonRPCClient', 'jsonRPC');; 
+                    $this->_jsonRPCClient = Application::newObject('jsonRPCClient', 'jsonRPC');
                 }
                 return $this->_jsonRPCClient;
             
