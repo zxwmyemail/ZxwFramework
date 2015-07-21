@@ -403,6 +403,100 @@ class Util {
         return $array;
     }
     
+    /*---------------------------------------------------------------------------------------------------------
+    | 分页函数（这个本身封装了bootstrap的class标签，所以对页面含有bootstrap样式的网页尤为适用）
+    |----------------------------------------------------------------------------------------------------------
+    | @param  int   $iNowPage       当前页
+    | @param  int   $iTotal         总记录条数
+    | @param  int   $iPerRow        每页显示条数
+    | @param  array $aParam         点击分页时的get请求参数
+    | @param  int   $sPerUrl        分页请求的url
+    | @param  int   $adjacentsPage  当前页左右显示的页码数量
+    | @param  int   $first_last     首部和尾部显示的页码数量
+    |
+    | @return array 返回分页相关数据，具体参看return值
+    ----------------------------------------------------------------------------------------------------------*/
+    public static function makePagination($iNowPage,$iTotal,$iPerRow,$aParam=[],$sPerUrl='',$adjacentsPage=3,$first_last=2)
+    {
+        $iPerRow = $iPerRow>0?$iPerRow:10;
+        $iPage = ceil($iTotal/$iPerRow);
+        
+        if($iNowPage>$iPage) {
+            $iNowPage = $iPage;
+        } elseif ($iNowPage<=1) {
+            $iNowPage = 1;
+        }
+
+        $sPerUrl = empty($sPerUrl)? $_SERVER['SCRIPT_NAME']:$sPerUrl;
+
+        //分页html start
+        $sPagination = '';
+        if($iPage>=2)
+        {
+            $sPagination .= "<ul class='pagination'>";
+            if($iNowPage<=1) {
+                $sPagination .= "<li class='prev disabled'><span>上一页</span></li>";
+            } else {
+                $aParam['page'] = $iNowPage-1;
+                $sPagination .= "<li class='prev'><a href='{$sPerUrl}?".http_build_query($aParam)."'>上一页</a></li>";
+            }
+
+            $start = 1;
+            $end = 10;
+            if ($iNowPage - $first_last - 1 <= $adjacentsPage) {
+                $start = 1;
+            } else {
+                $start = $iNowPage - $adjacentsPage ;
+                for ($i=1; $i <= $first_last; $i++) { 
+                    $aParam['page'] = $i;
+                    $sPagination .= "<li class='prev'><a href='{$sPerUrl}?".http_build_query($aParam)."'>$i</a></li>";
+                }
+                $sPagination .= "<li class='prev'><a style='background-color:#f5f5f5;'>. . .</a></li>";
+            }
+
+            if ($iNowPage + $adjacentsPage + $first_last >= $iPage) {
+                $end = $iPage;
+            }else{
+                $end = $iNowPage + $adjacentsPage ;
+            }
+
+            for($i = $start; $i <= $end; $i++)
+            {
+                if($i == $iNowPage) {
+                    $sPagination .= "<li class='active'><span>$i</span></li>";
+                } else {
+                    $aParam['page'] = $i;
+                    $sPagination .= "<li><a href='{$sPerUrl}?".http_build_query($aParam)."'>$i</a></li>";
+                }
+                
+            }
+
+            if (($iNowPage + $adjacentsPage + $first_last) < $iPage) {
+                $sPagination .= "<li class='prev'><a style='background-color:#f5f5f5;'>. . .</a></li>";
+                for ($i = $iPage - $first_last + 1; $i <= $iPage; $i++) { 
+                    $aParam['page'] = $i;
+                    $sPagination .= "<li class='prev'><a href='{$sPerUrl}?".http_build_query($aParam)."'>$i</a></li>";
+                }
+            }
+
+            if($iNowPage>=$iPage) {
+                $sPagination .= "<li class='next disabled'><span>下一页</span></li></ul>";
+            } else {
+                $aParam['page'] = $iNowPage+1;
+                $sPagination .= "<li class='next'><a href='{$sPerUrl}?".http_build_query($aParam)."'>下一页</a></li></ul>";
+            }
+        }
+        //分页html end
+        return [
+            'total'      => $iTotal,
+            'page'       => $iPage,
+            'now'        => $iNowPage,
+            'next'       => $iNowPage + 1,
+            'prex'       => $iNowPage - 1,
+            'pagination' => $sPagination,
+        ];
+    }
+    
 }
 
 ?>
