@@ -2,7 +2,7 @@
 * 本文件为框架的说明文件
 * @copyright   Copyright(c) 2015
 * @author      iProg
-* @version     1.0
+* @version     1.1
 *************************************************************************
 
 一、系统目录和主要文件如下： 
@@ -70,8 +70,7 @@
       如果类在这些文件夹下面，只需正常操作即可，比如 $model = new model();
 
     2.手动加载，这种需做配置，主要用于对自己写的类进行加载，步骤：
-      a、先建一个public文件夹，比如将文件夹建在与mvc文件夹同级的位置（原则上可以任意位置）,并在
-        public下建立类文件MyTest.php文件
+      a、先建一个文件夹，可自己随意命名，比如叫public，将文件夹建在与mvc文件夹同级的位置（其他位置也行，原则上可以任意位置）         ,并在public下建立类文件MyTest.php文件
       b、然后在config/params.config.php里面配置public的路径，配置如下：
         $CONFIG['system']['newClassPath'] = array(
             'public' => '/ZxwFramework/public'
