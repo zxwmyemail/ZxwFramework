@@ -82,6 +82,55 @@ class Controller {
 	header("Cache-Control: post-check=0, pre-check=0",false);
 	header("Pragma: no-cache");
     }
+
+    /*-------------------------------------------------------------------------------------------------------------------------
+     | 客户端缓存控制函数 
+     |-------------------------------------------------------------------------------------------------------------------------
+     | $type  缓存类型 
+     | $interval  客户端缓存过期时间 
+     | $mktime  设置Last-Modified 
+     | $etag  设置ETag标志 
+     -------------------------------------------------------------------------------------------------------------------------*/    
+    public function  http_cache_control( $type = 'nocache' , $interval =0, $mktime = '' , $etag = '' ){       
+       if ( $type == 'nocache' )  
+       {       
+           header('Expires: -1' );  //设置 -1为立刻过期      
+           header('Pragma: no-cache' );       
+           header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0' );       
+       }  
+       else   
+       {   //检查  ETag: 值   $_SERVER [ 'HTTP_IF_NONE_MATCH' ]  
+           if (isset( $_SERVER [ 'HTTP_IF_NONE_MATCH' ]) &&  $etag  &&  $_SERVER [ 'HTTP_IF_NONE_MATCH' ] ==  $etag )  
+           {       
+                header('HTTP/1.1 304 Not Modfied' );       
+           }//检查  Last-Modified: 值   $_SERVER [ 'HTTP_IF_MODIFIED_SINCE' ]  
+           elseif (isset( $_SERVER [ 'HTTP_IF_MODIFIED_SINCE' ]) &&  $mktime  &&  $_SERVER [ 'HTTP_IF_MODIFIED_SINCE' ] ==  gmdate ( 'r' , $mktime ). ' GMT' )  
+           {       
+               header('HTTP/1.1 304 Not Modfied' );       
+           }  
+           else   
+           {     //根据修改时间加过期时间，算出过期时间点  
+                if ( $mktime )  
+                {       
+                   $gmtime  =  gmdate ( 'r' , $mktime + $interval ). ' GMT' ;       
+                   header('Expires: ' . $gmtime );       
+                }       
+                if ( $type == 'public' )//设置缓存类型为public  
+                {       
+                   header('Cache-Control: public,max-age=' . $interval );       
+                }  
+                elseif ( $type == 'private' )//设置缓存类型为 private  
+                {       
+                   header('Cache-Control: private,max-age=' . $interval . ',s-maxage=0' );       
+                }elseif ( $type == 'none' )  
+                {       
+                   header('Cache-Control: must-revalidate,proxy-revalidate' );       
+                }       
+            }       
+            $mktime && header( 'Last-Modified: ' . gmdate ( 'r' , $mktime ) . ' GMT' );       
+            $etag   && header( 'ETag: ' . $etag );       
+       }       
+    }   
     
     /*---------------------------------------------------------------------------------------
     | 设置smarty的路径配置参数
