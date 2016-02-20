@@ -45,7 +45,7 @@ class Controller {
 
         $whichCache = empty($param[1]) ? 'master' : $param[1];
 
-        switch ($param) {
+        switch ($name) {
             case 'session':
                 $cache = new CacheFactory();
                 return  $cache->session;
