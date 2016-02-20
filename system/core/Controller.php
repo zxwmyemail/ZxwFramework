@@ -35,7 +35,7 @@ class Controller {
     |                            3、如果获取memcache实例：
     |                               $memcache = $this->memcache;
     ----------------------------------------------------------------------------------------*/
-    final public function __get($Param){
+    public function __get($Param){
 
         $param = empty($Param) ? 'session' : $Param;
 
@@ -233,21 +233,21 @@ class Controller {
     | @access      final   protected
     | @param       string  $config 配置名  
     --------------------------------------------------------------------------------------*/
-    final protected function config($config){
+    protected function config($config){
         return Application::$_config[$config];
     }
 
     /*--------------------------------------------------------------------------------------
     | 加载redis参数配置
     --------------------------------------------------------------------------------------*/
-    final protected function setRedisConfig(){
+    protected function setRedisConfig(){
         $this->_redisConfig = Application::$_config['redis'][CUR_ENV];
     }
 
     /*--------------------------------------------------------------------------------------
     | 加载memcache参数配置
     --------------------------------------------------------------------------------------*/
-    final protected function setMemcacheConfig(){
+    protected function setMemcacheConfig(){
         $this->_memcacheConfig = Application::$_config['memcache'][CUR_ENV];
     }
 
