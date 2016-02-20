@@ -28,7 +28,7 @@ $_CONFIG['system']['mysql'] = array(
             'db_password'      => '',
             'db_database'      => 'mysql',
             'db_table_prefix'  => 'app_',
-            'db_charset'       => 'urf8',
+            'db_charset'       => 'utf8',
             'db_conn'          => 0
         ),
         'other'  => array(
@@ -38,7 +38,7 @@ $_CONFIG['system']['mysql'] = array(
             'db_password'      => '',
             'db_database'      => 'mysql',
             'db_table_prefix'  => 'app_',
-            'db_charset'       => 'urf8',
+            'db_charset'       => 'utf8',
             'db_conn'          => 0
         )
     ),
@@ -50,7 +50,7 @@ $_CONFIG['system']['mysql'] = array(
             'db_password'      => '',
             'db_database'      => 'mysql',
             'db_table_prefix'  => 'app_',
-            'db_charset'       => 'urf8',
+            'db_charset'       => 'utf8',
             'db_conn'          => 0
         ),
         'other'  => array(
@@ -60,7 +60,7 @@ $_CONFIG['system']['mysql'] = array(
             'db_password'      => '',
             'db_database'      => 'mysql',
             'db_table_prefix'  => 'app_',
-            'db_charset'       => 'urf8',
+            'db_charset'       => 'utf8',
             'db_conn'          => 0
         )
     ),
@@ -72,7 +72,7 @@ $_CONFIG['system']['mysql'] = array(
             'db_password'      => '',
             'db_database'      => 'mysql',
             'db_table_prefix'  => 'app_',
-            'db_charset'       => 'urf8',
+            'db_charset'       => 'utf8',
             'db_conn'          => 0
         ),
         'other'  => array(
@@ -82,7 +82,7 @@ $_CONFIG['system']['mysql'] = array(
             'db_password'      => '',
             'db_database'      => 'mysql',
             'db_table_prefix'  => 'app_',
-            'db_charset'       => 'urf8',
+            'db_charset'       => 'utf8',
             'db_conn'          => 0
         )
     )
@@ -110,7 +110,7 @@ $_CONFIG['system']['oracle'] = array(
             'db_server_name'   => '',
             'db_user'          => '',
             'db_password'      => '',
-            'db_charset'       => 'urf8',
+            'db_charset'       => 'utf8',
             'db_conn'          => 0
         ),
         'other'   => array(
@@ -119,7 +119,7 @@ $_CONFIG['system']['oracle'] = array(
             'db_server_name'   => '',
             'db_user'          => '',
             'db_password'      => '',
-            'db_charset'       => 'urf8',
+            'db_charset'       => 'utf8',
             'db_conn'          => 0
         )
     ),
@@ -130,7 +130,7 @@ $_CONFIG['system']['oracle'] = array(
             'db_server_name'   => '',
             'db_user'          => '',
             'db_password'      => '',
-            'db_charset'       => 'urf8',
+            'db_charset'       => 'utf8',
             'db_conn'          => 0
         ),
         'other'   => array(
@@ -139,7 +139,7 @@ $_CONFIG['system']['oracle'] = array(
             'db_server_name'   => '',
             'db_user'          => '',
             'db_password'      => '',
-            'db_charset'       => 'urf8',
+            'db_charset'       => 'utf8',
             'db_conn'          => 0
         )
     ),
@@ -150,7 +150,7 @@ $_CONFIG['system']['oracle'] = array(
             'db_server_name'   => '',
             'db_user'          => '',
             'db_password'      => '',
-            'db_charset'       => 'urf8',
+            'db_charset'       => 'utf8',
             'db_conn'          => 0
         ),
         'other'   => array(
@@ -159,7 +159,7 @@ $_CONFIG['system']['oracle'] = array(
             'db_server_name'   => '',
             'db_user'          => '',
             'db_password'      => '',
-            'db_charset'       => 'urf8',
+            'db_charset'       => 'utf8',
             'db_conn'          => 0
         )
     )
