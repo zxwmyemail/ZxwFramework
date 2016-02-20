@@ -41,9 +41,8 @@ class BaseRedis
         }
 
         $this->_redis = new Redis();
-        $this->_redis->connect($config['server'], $config['port']);
-        $this->_redis->auth($config['auth']);
-        return $this->redis;
+        $this->_redis->connect($config['host'], $config['port']);
+        // $this->_redis->auth($config['auth']);
     }
 
 
