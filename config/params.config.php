@@ -21,7 +21,7 @@ if (!defined('BASE_PATH'))
 -------------------------------------------------------------------------------------------*/
 $_CONFIG['system']['mysql'] = array(
     'development' => array(
-        'default' => array(
+        'master' => array(
             'db_host'          => 'localhost',
             'db_user'          => 'root',
             'db_port'          => '3306',
@@ -31,7 +31,7 @@ $_CONFIG['system']['mysql'] = array(
             'db_charset'       => 'utf8',
             'db_conn'          => 0
         ),
-        'other'  => array(
+        'slave'  => array(
             'db_host'          => 'localhost',
             'db_user'          => 'root',
             'db_port'          => '3306',
@@ -43,7 +43,7 @@ $_CONFIG['system']['mysql'] = array(
         )
     ),
     'test' => array(
-        'default' => array(
+        'master' => array(
             'db_host'          => 'localhost',
             'db_user'          => 'root',
             'db_port'          => '3306',
@@ -53,7 +53,7 @@ $_CONFIG['system']['mysql'] = array(
             'db_charset'       => 'utf8',
             'db_conn'          => 0
         ),
-        'other'  => array(
+        'slave'  => array(
             'db_host'          => 'localhost',
             'db_user'          => 'root',
             'db_port'          => '3306',
@@ -65,7 +65,7 @@ $_CONFIG['system']['mysql'] = array(
         )
     ),
     'product' => array(
-        'default' => array(
+        'master' => array(
             'db_host'          => 'localhost',
             'db_user'          => 'root',
             'db_port'          => '3306',
@@ -75,7 +75,7 @@ $_CONFIG['system']['mysql'] = array(
             'db_charset'       => 'utf8',
             'db_conn'          => 0
         ),
-        'other'  => array(
+        'slave'  => array(
             'db_host'          => 'localhost',
             'db_user'          => 'root',
             'db_port'          => '3306',
@@ -104,7 +104,7 @@ $_CONFIG['system']['mysql'] = array(
 -------------------------------------------------------------------------------------------*/
 $_CONFIG['system']['oracle'] = array(
     'development' => array(
-        'default' => array(
+        'master' => array(
             'db_host'          => 'localhost', 
             'db_port'          => '1521',
             'db_server_name'   => '',
@@ -113,7 +113,7 @@ $_CONFIG['system']['oracle'] = array(
             'db_charset'       => 'utf8',
             'db_conn'          => 0
         ),
-        'other'   => array(
+        'slave'   => array(
             'db_host'          => 'localhost', 
             'db_port'          => '1521',
             'db_server_name'   => '',
@@ -124,7 +124,7 @@ $_CONFIG['system']['oracle'] = array(
         )
     ),
     'test' => array(
-        'default' => array(
+        'master' => array(
             'db_host'          => 'localhost', 
             'db_port'          => '1521',
             'db_server_name'   => '',
@@ -133,7 +133,7 @@ $_CONFIG['system']['oracle'] = array(
             'db_charset'       => 'utf8',
             'db_conn'          => 0
         ),
-        'other'   => array(
+        'slave'   => array(
             'db_host'          => 'localhost', 
             'db_port'          => '1521',
             'db_server_name'   => '',
@@ -144,7 +144,7 @@ $_CONFIG['system']['oracle'] = array(
         )
     ),
     'product' => array(
-        'default' => array(
+        'master' => array(
             'db_host'          => 'localhost', 
             'db_port'          => '1521',
             'db_server_name'   => '',
@@ -153,7 +153,7 @@ $_CONFIG['system']['oracle'] = array(
             'db_charset'       => 'utf8',
             'db_conn'          => 0
         ),
-        'other'   => array(
+        'slave'   => array(
             'db_host'          => 'localhost', 
             'db_port'          => '1521',
             'db_server_name'   => '',
@@ -199,7 +199,7 @@ $_CONFIG['system']['redis'] = array(
             'auth'=>'123456',
             'port'=>'6379'
         ),
-        'slave1' => array(
+        'slave' => array(
             'host'=>'127.0.0.1',
             'auth'=>'123456',
             'port'=>'6379'
@@ -211,7 +211,7 @@ $_CONFIG['system']['redis'] = array(
             'auth'=>'123456',
             'port'=>'6379'
         ),
-        'slave1' => array(
+        'slave' => array(
             'host'=>'127.0.0.1',
             'auth'=>'123456',
             'port'=>'6379'
@@ -223,7 +223,7 @@ $_CONFIG['system']['redis'] = array(
             'auth'=>'123456',
             'port'=>'6379'
         ),
-        'slave1' => array(
+        'slave' => array(
             'host'=>'127.0.0.1',
             'auth'=>'123456',
             'port'=>'6379'
