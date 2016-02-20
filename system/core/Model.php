@@ -73,7 +73,7 @@ class Model {
                 return  $cache->session;
                 break;
             case 'redis':
-                $cache = new CacheFactory($this->_redisConfig);
+                $cache = new CacheFactory($this->_redisConfig, $whichDB);
                 return  $cache->redis;
                 break;
             case 'memcache':
