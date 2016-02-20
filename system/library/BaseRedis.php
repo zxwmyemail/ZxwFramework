@@ -148,7 +148,7 @@ class BaseRedis
         $rs = $this->_redis->setex($key, $realExpireTime, json_encode($arg, TRUE));
 
         //加锁，加锁情况下，都读取缓存数据
-        $this->_redis->del($key . ".lock");
+        $this->_redis->delete($key . ".lock");
 
         return $rs;
     }
