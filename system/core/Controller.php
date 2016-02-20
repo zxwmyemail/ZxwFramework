@@ -38,6 +38,12 @@ class Controller {
     public function __get($Param){
 
         $param = empty($Param) ? 'session' : $Param;
+        
+        $param = explode('_', $param);
+
+        $name = $param[0];
+
+        $whichCache = empty($param[1]) ? 'master' : $param[1];
 
         switch (strtolower($param)) {
             case 'session':
@@ -45,7 +51,7 @@ class Controller {
                 return  $cache->session;
                 break;
             case 'redis':
-                $cache = new CacheFactory($this->_redisConfig);
+                $cache = new CacheFactory($this->_redisConfig, $whichCache);
                 return  $cache->redis;
                 break;
             case 'memcache':
