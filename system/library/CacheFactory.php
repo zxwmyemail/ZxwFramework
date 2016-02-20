@@ -18,14 +18,14 @@ class CacheFactory {
 
     private $_cacheConfig   = null;
 
-    function __construct($Config=null) 
+    function __construct($Config=null, $whichCache=null) 
     {
-        $this->_cacheConfig = $Config;
+        $this->_cacheConfig = $whichCache ? $Config[$whichCache] : $Config;
     }
 
     public function __get($cacheName='session') 
     {
-        switch (strtolower($cacheName)) {          
+        switch ($cacheName) {          
             case 'session' :
                 if (!isset( $this->_sessionInstance ))
                 {
