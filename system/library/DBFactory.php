@@ -25,9 +25,9 @@ class DBFactory {
 
     public function __get($dbName='mysql') 
     {
-        switch (strtolower($dbName)) {      	
+        switch ($dbName) {      	
             case 'mysql' :
-                if (!isset( $this->_MysqlInstance ))
+                if (empty( $this->_MysqlInstance ))
                 {
                 	$mysql = new MySQL();
 
@@ -45,7 +45,7 @@ class DBFactory {
                 return $this->_MysqlInstance;
                 break;
             case 'mysqlPDO' :
-                if (!isset( $this->_MysqlPDOInstance ))
+                if (empty( $this->_MysqlPDOInstance ))
                 {   
                     $DB_DNS = 'mysql:host='.$this->_DBConfig['db_host'].';port='.$this->_DBConfig['db_port'].';dbname='.$this->_DBConfig['db_database'];
                     $pdoConfig = array( 
@@ -61,7 +61,7 @@ class DBFactory {
                 return $this->_MysqlPDOInstance;
                 break;
             case 'oracle' :
-                if (!isset( $this->_oracleInstance ))
+                if (empty( $this->_oracleInstance ))
                 {
                     $oracle = new Oracle();
 
@@ -78,7 +78,7 @@ class DBFactory {
                 return $this->_oracleInstance;
                 break;
             case 'oraclePDO' :
-                if (!isset( $this->_oraclePDOInstance ))
+                if (empty( $this->_oraclePDOInstance ))
                 {   
                     $tns = "(DESCRIPTION =
                                 (ADDRESS_LIST =
