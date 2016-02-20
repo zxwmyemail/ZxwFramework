@@ -17,7 +17,7 @@ class Model {
     protected $_redisConfig    = null;
     protected $_memcacheConfig = null;
 
-    final public function __construct() {
+    public function __construct() {
         $this->setDbConfig();
         $this->setRedisConfig(); 
         $this->setMemcacheConfig();              
@@ -43,7 +43,7 @@ class Model {
     |                               如果获取memcache实例：
     |                               $memcache = $this->memcache;
     --------------------------------------------------------------------------------------*/
-    final public function __get($Param){
+    public function __get($Param){
 
         $param = explode('_', $Param);
 
@@ -94,7 +94,7 @@ class Model {
     | @access      final   protected
     | @param       string  $table_name    表名
     -----------------------------------------------------------------------------------*/
-    final protected function table($table_name){
+    protected function table($table_name){
         $config_db = $this->config('db');
         return $config_db['db_table_prefix'].$table_name;
     }
@@ -105,14 +105,14 @@ class Model {
     | @access      final   protected
     | @param       string  $config 配置名  
     -----------------------------------------------------------------------------------*/
-    final protected function config($config){
+    protected function config($config){
         return Application::$_config[$config];
     }
 
     /*-----------------------------------------------------------------------------------
     | 加载数据库DB参数配置
     -----------------------------------------------------------------------------------*/
-    final protected function setDbConfig(){
+    protected function setDbConfig(){
         $this->_mysqlConfig  = Application::$_config['mysql'][CUR_ENV];
         $this->_oracleConfig = Application::$_config['oracle'][CUR_ENV];
     }
@@ -120,14 +120,14 @@ class Model {
     /*-----------------------------------------------------------------------------------
     | 加载redis参数配置
     -----------------------------------------------------------------------------------*/
-    final protected function setRedisConfig(){
+    protected function setRedisConfig(){
         $this->_redisConfig = Application::$_config['redis'][CUR_ENV];
     }
 
     /*-----------------------------------------------------------------------------------
     | 加载memcache参数配置
     -----------------------------------------------------------------------------------*/
-    final protected function setMemcacheConfig(){
+    protected function setMemcacheConfig(){
         $this->_memcacheConfig = Application::$_config['memcache'][CUR_ENV];
     }
         
