@@ -41,9 +41,8 @@ class DBFactory {
                 	);
 
                 	$this->_MysqlInstance = $mysql;
-
-                    return $this->_MysqlInstance;
                 }
+                return $this->_MysqlInstance;
                 break;
             case 'mysqlPDO' :
                 if (!isset( $this->_MysqlPDOInstance ))
@@ -58,9 +57,8 @@ class DBFactory {
                     );
 
                     $this->_MysqlPDOInstance = BasePDO::getInstance($pdoConfig);
-
-                    return $this->_MysqlPDOInstance;
                 }
+                return $this->_MysqlPDOInstance;
                 break;
             case 'oracle' :
                 if (!isset( $this->_oracleInstance ))
@@ -76,9 +74,8 @@ class DBFactory {
                     );
 
                     $this->_oracleInstance = $oracle;
-
-                    return $this->_oracleInstance;
                 }
+                return $this->_oracleInstance;
                 break;
             case 'oraclePDO' :
                 if (!isset( $this->_oraclePDOInstance ))
@@ -102,9 +99,10 @@ class DBFactory {
                     );
 
                     $this->_oraclePDOInstance = BasePDO::getInstance($pdoConfig);
-
-                    return $this->_oraclePDOInstance;
                 }
+
+                return $this->_oraclePDOInstance;
+
                 break;
             default :
                 # code
