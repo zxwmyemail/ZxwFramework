@@ -101,13 +101,15 @@ class BaseRedis
             //第一个人请求，$key . ".lock"===1，为没加锁，返回false，程序去数据库取数据
             //第二个人请求，$key . ".lock"===2，为加锁，直接取缓存旧数据
             //第三个人请求，和上面第二个人一样
-            if (intval($sth['expire']) <= time()) {    
+            if (intval($sth['expire']) <= time() < intval($sth['realExpire'])) {    
                 $lock = $this->_redis->incr($key . ".lock");
                 if ($lock === 1) {
                     return false;
                 } else {
                     return $sth['data'];
                 }
+            } else if (intval($sth['realExpire']) <= time()) {
+                return false;
             } else {
                 return $sth['data'];
             }
@@ -142,7 +144,7 @@ class BaseRedis
         $realExpireTime = $timeOut + self::$_cacheTime;
         
         //制造数据
-        $arg = array("data" => $value, "expire" => $fakeExpireTime);
+        $arg = array("data" => $value, "expire" => $fakeExpireTime, 'realExpire'=> $fakeExpireTime+self::$_cacheTime);
 
         //设置缓存
         $rs = $this->_redis->setex($key, $realExpireTime, json_encode($arg, TRUE));
