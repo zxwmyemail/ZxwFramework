@@ -31,7 +31,7 @@ class Controller {
     |                            1、如果获取session实例：
     |                               $session = $this->session;
     |                            2、如果获取redis实例：
-    |                               $redis = $this->redis;
+    |                               $redis = $this->redis_master;
     |                            3、如果获取memcache实例：
     |                               $memcache = $this->memcache;
     ----------------------------------------------------------------------------------------*/
