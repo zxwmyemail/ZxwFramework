@@ -30,16 +30,16 @@ class Model {
     | @param   string  $Param    数据库和缓存参数
     |                            1、对于数据库：
     |                               对于配置文件params.config.php文件中
-    |                               如果想获取mysql的default数据库连接实例，
-    |                               那么$Param = mysql_default,获取实例代码：
-    |                               $mysql = $this->mysql_default;
-    |                               $mysqlPDO = $this->mysqlPDO_default;
-    |                               $oracle = $this->oracle_default;
+    |                               如果想获取mysql的master数据库连接实例，
+    |                               那么$Param = mysql_master,获取实例代码：
+    |                               $mysql = $this->mysql_master;
+    |                               $mysqlPDO = $this->mysqlPDO_master;
+    |                               $oracle = $this->oracle_master;
     |                            2、对于缓存
     |                               如果获取session实例：
     |                               $session = $this->session;
     |                               如果获取redis实例：
-    |                               $redis = $this->redis;
+    |                               $redis = $this->redis_master;
     |                               如果获取memcache实例：
     |                               $memcache = $this->memcache;
     --------------------------------------------------------------------------------------*/
@@ -49,7 +49,7 @@ class Model {
 
         $name = $param[0];
 
-        $whichDB = empty($param[1]) ? 'default' : $param[1];
+        $whichDB = empty($param[1]) ? 'master' : $param[1];
 
         switch ($name) {
             case 'mysql':
