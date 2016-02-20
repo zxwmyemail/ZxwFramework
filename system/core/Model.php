@@ -51,7 +51,7 @@ class Model {
 
         $whichDB = empty($param[1]) ? 'default' : $param[1];
 
-        switch (strtolower($name)) {
+        switch ($name) {
             case 'mysql':
                 $DB = new DBFactory($this->_mysqlConfig, $whichDB);
                 return  $DB->mysql;
