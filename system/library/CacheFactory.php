@@ -12,10 +12,6 @@ if (!defined('BASE_PATH'))
 
 class CacheFactory {
     
-    private $_sessionInstance = null;
-    private $_redisInstance = null;
-    private $_memcacheInstance = null;
-
     private $_cacheConfig   = null;
 
     function __construct($Config=null, $whichCache=null) 
@@ -27,25 +23,13 @@ class CacheFactory {
     {
         switch ($cacheName) {          
             case 'session' :
-                if (!isset( $this->_sessionInstance ))
-                {
-                    $this->_sessionInstance = new BaseSession();
-                }
-                return $this->_sessionInstance;
+                return new BaseSession();
                 break;
             case 'redis' :
-                if (!isset( $this->_redisInstance ))
-                {
-                    $this->_redisInstance = BaseRedis::getInstance($this->_cacheConfig);
-                }
-                return $this->_redisInstance;
+                return BaseRedis::getInstance($this->_cacheConfig);
                 break;
             case 'memcache' :
-                if (!isset( $this->_memcacheInstance ))
-                {
-                    $this->_memcacheInstance = new BaseMemcache($this->_cacheConfig);
-                }
-                return $this->_memcacheInstance;
+                return new BaseMemcache($this->_cacheConfig);
                 break;
             default :
                 # code
