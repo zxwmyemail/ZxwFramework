@@ -101,7 +101,7 @@ class BasePDO {
     --------------------------------------------------------------------------------------*/  
     public function updateRecord($table, $updatedata, $wheredata) 
     { 
-        if (empty($table) || empty($data) || !is_array($data)) {
+        if (empty($table) || empty($updatedata) || !is_array($updatedata)) {
             throw new Exception("添加一条记录函数传递的参数异常", 1);
         }
 
