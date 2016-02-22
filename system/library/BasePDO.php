@@ -111,9 +111,10 @@ class BasePDO {
         }
 
         $setFields = implode(',', $dataArr);  
-        $whereFields = $this->handleWhere($wheredata);
+        $where = $this->handleWhere($wheredata);
+        $whereFields = $where['where'];
 
-        $sql = "update {$table} set {$setFields} where {$whereFields}";  
+        $sql = "update {$table} set {$setFields} where 1=1 {$whereFields}";  
         return $this->execSQL($sql);  
     }
 
