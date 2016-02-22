@@ -113,7 +113,7 @@ class BasePDO {
         $setFields = implode(',', $dataArr);  
         $whereFields = $this->handleWhere($wheredata);
 
-        $sql = "update {$table} set {$addFields} where {$whereFields}";  
+        $sql = "update {$table} set {$setFields} where {$whereFields}";  
         return $this->execSQL($sql);  
     }
 
