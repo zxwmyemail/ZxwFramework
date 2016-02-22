@@ -29,9 +29,9 @@ if (!defined('BASE_PATH'))
  
 class BaseRedis
 {
-    private $_redis;                     //redis对象
-    private static $_instance = null;    //本类实例
-    private static $_cacheTime = 300;    //超时缓冲时间
+    private $_redis;                         //redis对象
+    private static $_instance  = array();    //本类实例
+    private static $_cacheTime = 300;        //超时缓冲时间
 
 
     private function __construct($config = array())
@@ -59,12 +59,13 @@ class BaseRedis
     |
     | @return object
     --------------------------------------------------------------------------------------*/
-    public static function getInstance($config = array())
+    public static function getInstance($config = array(), $whichCache='master')
     {
-        if (!(self::$_instance instanceof self)) {
-            self::$_instance = new self ($config);
+        if(!isset(self::$_instance[$whichCache])){  
+            self::$_instance[$whichCache] = new self($config);   
         }
-        return self::$_instance;
+
+        return self::$_instance[$whichCache];
     }
 
 
@@ -101,7 +102,7 @@ class BaseRedis
             //第一个人请求，$key . ".lock"===1，为没加锁，返回false，程序去数据库取数据
             //第二个人请求，$key . ".lock"===2，为加锁，直接取缓存旧数据
             //第三个人请求，和上面第二个人一样
-            if (intval($sth['expire']) <= time() < intval($sth['realExpire'])) {    
+            if (intval($sth['expire']) <= time() && time() < intval($sth['realExpire'])) {    
                 $lock = $this->_redis->incr($key . ".lock");
                 if ($lock === 1) {
                     return false;
@@ -149,7 +150,6 @@ class BaseRedis
         //设置缓存
         $rs = $this->_redis->setex($key, $realExpireTime, json_encode($arg, TRUE));
 
-        //加锁，加锁情况下，都读取缓存数据
         $this->_redis->delete($key . ".lock");
 
         return $rs;
