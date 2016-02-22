@@ -12,13 +12,13 @@ if (!defined('BASE_PATH'))
 
 class BaseSession {  
   
-    private static $key_userdata = '|-(+)-|userdata|-(+)-|';  
-    private static $key_flashmem = '|-(+)-|flashmem|-(+)-|';  
+    private static $key_session_data = '|-(+)-|userdata|-(+)-|';     // 持久session
+    private static $key_flashmem_data = '|-(+)-|flashmem|-(+)-|';    // 闪存session，只对本次请求有效
       
     /*------------------------------------------------------------------------------------------
     | 构造函数，打开session
     ------------------------------------------------------------------------------------------*/
-    function __construct(){  
+    public function __construct(){  
         if (!headers_sent()){ session_start();}  
     }  
 
@@ -26,12 +26,22 @@ class BaseSession {
     /*------------------------------------------------------------------------------------------
     | 析构函数，删除session中的闪存数据
     ------------------------------------------------------------------------------------------*/
-    function __destruct(){  
+    public function __destruct(){  
         // 析构函数,删除 flashmem  
-        if (isset($_SESSION[self::$key_flashmem])){  
-            unset($_SESSION[self::$key_flashmem]);  
+        if (isset($_SESSION[self::$key_flashmem_data])){  
+            unset($_SESSION[self::$key_flashmem_data]);  
         }  
     } 
+
+
+    /*------------------------------------------------------------------------------------------
+    | 初始化session存储数组
+    ------------------------------------------------------------------------------------------*/
+    private function _initSessionData(){  
+        if (isset($_SESSION[self::$key_session_data]) && is_array($_SESSION[self::$key_session_data]))  
+            return true;  
+        $_SESSION[self::$key_session_data] = array();  
+    }  
 
     
     /*------------------------------------------------------------------------------------------
@@ -41,21 +51,11 @@ class BaseSession {
     |
     | return: 返回键所对应的值
     -------------------------------------------------------------------------------------------*/
-    function userdata($item){  
-        $D = isset($_SESSION[self::$key_userdata]) ? $_SESSION[self::$key_userdata] : FALSE;  
+    public function getSessionData($item){  
+        $D = isset($_SESSION[self::$key_session_data]) ? $_SESSION[self::$key_session_data] : FALSE;  
         return $D && is_array($D) && isset($D[$item]) ? $D[$item] : FALSE;  
     }  
-      
-
-    /*------------------------------------------------------------------------------------------
-    | 初始化session存储数组
-    ------------------------------------------------------------------------------------------*/
-    private function init_userdata(){  
-        if (isset($_SESSION[self::$key_userdata]) && is_array($_SESSION[self::$key_userdata]))  
-            return true;  
-        $_SESSION[self::$key_userdata] = array();  
-    }  
-      
+    
 
     /*------------------------------------------------------------------------------------------
     | 设置session数据
@@ -63,9 +63,9 @@ class BaseSession {
     | 1.直接传入一个数组，数组元素是键值形式
     | 2.传入一个键值对，$newdata键名，$newval为值
     ------------------------------------------------------------------------------------------*/
-    function set_userdata($newdata = array(), $newval = '')
+    public function setSessionData($newdata = array(), $newval = '')
     {  
-        $this->init_userdata();  
+        $this->_initSessionData();  
           
         if (is_string($newdata))  
         {  
@@ -76,7 +76,7 @@ class BaseSession {
         {  
             foreach ($newdata as $key => $val)  
             {  
-                $_SESSION[self::$key_userdata][$key] = $val;  
+                $_SESSION[self::$key_session_data][$key] = $val;  
             }  
         }  
     }  
@@ -88,9 +88,9 @@ class BaseSession {
     | 1.直接传入一个数组，数组元素是键值形式
     | 2.传入一个键，$newdata键名
     ------------------------------------------------------------------------------------------*/
-    function unset_userdata($newdata = array())  
+    public function deleteSessiondata($newdata = array())  
     {  
-        $this->init_userdata();  
+        $this->_initSessionData();  
           
         if (is_string($newdata))  
         {  
@@ -101,7 +101,7 @@ class BaseSession {
         {  
             foreach ($newdata as $key => $val)  
             {  
-                unset($_SESSION[self::$key_userdata][$key]);  
+                unset($_SESSION[self::$key_session_data][$key]);  
             }  
         }  
     }  
@@ -110,16 +110,16 @@ class BaseSession {
     /*----------------------------------------------------------------------------------------
     | 获取所有session的数据
     ----------------------------------------------------------------------------------------*/
-    function all_userdata()  
+    public function getAllSessionData()  
     {  
-        return isset($_SESSION[self::$key_userdata]) ? $_SESSION[self::$key_userdata]:FALSE;  
+        return isset($_SESSION[self::$key_session_data]) ? $_SESSION[self::$key_session_data]:FALSE;  
     }  
     
 
     /*----------------------------------------------------------------------------------------
-    | func  : sess_destroy() 销毁session
+    | func  : destroySession() 销毁session
     ----------------------------------------------------------------------------------------*/
-    function sess_destroy(){  
+    public function destroySession(){  
         session_destroy();  
     }     
     
@@ -127,10 +127,10 @@ class BaseSession {
     /*-----------------------------------------------------------------------------------------
     | 初始化session的闪存存储数组
     -----------------------------------------------------------------------------------------*/
-    private function init_flashdata(){  
-        if (isset($_SESSION[self::$key_flashmem]) && is_array($_SESSION[self::$key_flashmem]))  
+    private function _initFlashData(){  
+        if (isset($_SESSION[self::$key_flashmem_data]) && is_array($_SESSION[self::$key_flashmem_data]))  
             return true;  
-        $_SESSION[self::$key_flashmem] = array();  
+        $_SESSION[self::$key_flashmem_data] = array();  
     }  
     
 
@@ -140,9 +140,9 @@ class BaseSession {
     | 1.直接传入一个数组，数组元素是键值形式
     | 2.传入一个键值对，$newdata键名，$newval为值
     ------------------------------------------------------------------------------------------*/
-    function set_flashdata($newdata = array(), $newval = '')  
+    public function setFlashData($newdata = array(), $newval = '')  
     {  
-        $this->init_flashdata();  
+        $this->_initFlashData();  
           
         if (is_string($newdata))  
         {  
@@ -153,7 +153,7 @@ class BaseSession {
         {  
             foreach ($newdata as $key => $val)  
             {  
-                $_SESSION[self::$key_flashmem][$key] = $val;  
+                $_SESSION[self::$key_flashmem_data][$key] = $val;  
             }  
         }  
     }  
@@ -166,9 +166,9 @@ class BaseSession {
     |
     | return: 返回键所对应的值
     -----------------------------------------------------------------------------------------*/
-    function flashdata($item)  
+    public function getFlashData($item)  
     {  
-        $D = isset($_SESSION[self::$key_flashmem]) ? $_SESSION[self::$key_flashmem] : FALSE;  
+        $D = isset($_SESSION[self::$key_flashmem_data]) ? $_SESSION[self::$key_flashmem_data] : FALSE;  
         return $D && is_array($D) && isset($D[$item]) ? $D[$item] : FALSE;  
     }  
       
