@@ -11,21 +11,22 @@ if (!defined('BASE_PATH'))
 
 class BasePDO { 
   
-    private $_pdo = null;                        //pdo实例
-    private $_pdoStmt = null;                    //pdo执行资源实例 
+    private $_pdo = null;                        // pdo实例
+    private $_pdoStmt = null;                    // pdo执行资源实例 
 
-    private static $_pdoInstance = null;         //单例模式，保存本类实例       
+    private static $_pdoInstance = array();      // 单例模式，保存本类实例       
 
 
     /*--------------------------------------------------------------------------------------- 
     | 公共静态方法获取实例化的对象
     ---------------------------------------------------------------------------------------*/  
-    public static function getInstance($pdoConfig = '') 
+    public static function getInstance($pdoConfig = '', $whichDB='master') 
     {  
-        if (!(self::$_pdoInstance instanceof self)) {  
-            self::$_pdoInstance = new self($pdoConfig);  
-        }  
-        return self::$_pdoInstance;  
+        if(!isset(self::$_pdoInstance[$whichDB])){  
+            self::$_pdoInstance[$whichDB] = new self($pdoConfig);   
+        }
+
+        return self::$_pdoInstance[$whichDB];  
     }  
 
 
