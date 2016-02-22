@@ -12,11 +12,13 @@ if (!defined('BASE_PATH'))
 
 class DBFactory {
 
-    private $_DBConfig   = null;
+    private $_DBConfig = null;
+    private $_whichDB  = null;
 
     function __construct($DBConfig, $whichDB='master') 
     {
         $this->_DBConfig = $DBConfig[$whichDB];
+        $this->_whichDB  = $whichDB;
     }
 
     public function __get($dbName='mysql') 
@@ -46,7 +48,7 @@ class DBFactory {
                     'dns'       => $DB_DNS
                 );
 
-                return BasePDO::getInstance($pdoConfig);
+                return BasePDO::getInstance($pdoConfig, $this->_whichDB);
                 break;
             case 'oracle' :
                 $oracle = new Oracle();
@@ -80,7 +82,7 @@ class DBFactory {
                     'dns'       => $DB_DNS
                 );
 
-                return BasePDO::getInstance($pdoConfig);
+                return BasePDO::getInstance($pdoConfig, $this->_whichDB);
                 break;
             default :
                 # code
