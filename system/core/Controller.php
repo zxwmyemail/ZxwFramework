@@ -54,6 +54,10 @@ class Controller {
                 $cache = new CacheFactory($this->_redisConfig, $whichCache);
                 return  $cache->redis;
                 break;
+            case 'hashRedis':
+                $cache = new CacheFactory($this->_redisConfig);
+                return  $cache->hashRedis;
+                break;
             case 'memcache':
                 $cache = new CacheFactory($this->_memcacheConfig);
                 return  $cache->memcache;
