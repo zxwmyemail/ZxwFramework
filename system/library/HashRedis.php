@@ -29,11 +29,11 @@ $redis_servers = array(
       ),
 );
 
-$redisCache = new RedisCache($redis_servers);
+$HashRedis = new HashRedis($redis_servers);
 $testKey = 'test_key';
 $testValue = 'test_value_object';
-$redisCache->setValue($testKey, $testValue, 3600);
-$value = $redisCache->getValue($testKey);
+$HashRedis->setValue($testKey, $testValue, 3600);
+$value = $HashRedis->getValue($testKey);
 *******************************************************************************************/
 
 class HashRedis {
