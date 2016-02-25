@@ -14,6 +14,8 @@ class CacheFactory {
     
     private $_cacheConfig = null;
     private $_whichCache  = null;
+    
+    private $_hashRedis = null;
 
     function __construct($Config=null, $whichCache=null) 
     {
@@ -29,6 +31,18 @@ class CacheFactory {
                 break;
             case 'redis' :
                 return BaseRedis::getInstance($this->_cacheConfig[$this->_whichCache], $this->_whichCache);
+                break;
+            case 'hashRedis' :
+                if (empty($this->_hashRedis)) {
+                    $redisConfig = array();
+
+                    foreach ($this->_cacheConfig as $key => $value) {
+                        $redisConfig[] = array('host' => $value['host'], 'port' => $value['port']);
+                    }
+
+                    $this->_hashRedis = new HashRedis($redisConfig);
+                }
+                return $this->_hashRedis;
                 break;
             case 'memcache' :
                 return new BaseMemcache($this->_cacheConfig);
