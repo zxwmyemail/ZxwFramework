@@ -76,6 +76,10 @@ class Model {
                 $cache = new CacheFactory($this->_redisConfig, $whichDB);
                 return  $cache->redis;
                 break;
+            case 'hashRedis':
+                $cache = new CacheFactory($this->_redisConfig);
+                return  $cache->hashRedis;
+                break;
             case 'memcache':
                 $cache = new CacheFactory($this->_memcacheConfig);
                 return  $cache->memcache;
