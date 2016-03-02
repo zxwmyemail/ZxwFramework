@@ -89,6 +89,32 @@ class BasePDO {
         $sql = "INSERT INTO {$table} {$addFields} VALUES {$addValues}";  
         return $this->execSQL($sql);  
     }
+    
+    
+    /*-------------------------------------------------------------------------------------- 
+    | 删除记录
+    |---------------------------------------------------------------------------------------
+    | @param    string  $table        表名
+    | @param    array   $wheredata    array(
+    |                                   'id' => array('=', $zone_id),
+    |                                   'name' => array('like', $name),
+    |                                   'age' => array('>=', $status)
+    |                                  );
+    |
+    | @return   int     影响记录数
+    --------------------------------------------------------------------------------------*/  
+    public function deleteRecord($table, $wheredata) 
+    { 
+        if (empty($table) || !is_array($wheredata)) {
+            throw new Exception("删除记录函数传递的参数异常", 1);
+        }
+ 
+        $where = $this->handleWhere($wheredata);
+        $whereFields = $where['where'];
+
+        $sql = "delete from {$table} where 1=1 {$whereFields}";  
+        return $this->execSQL($sql);  
+    }
 
 
     /*-------------------------------------------------------------------------------------- 
