@@ -132,7 +132,7 @@ final class Application {
         } elseif (file_exists($sys_core)){     
             require_once($sys_core);     
         } else {
-            trigger_error('加载 '.$classname.' 类库不存在');
+            trigger_error('加载 '.$classname.' 类库不存在');die();
         }
     }
 
@@ -158,16 +158,16 @@ final class Application {
             require $controller_file;
             $controller = new $controller;
         }else{
-            die('控制器不存在');
+            trigger_error('控制器方法不存在');die();
         }
 
         if($action){
             if(method_exists($controller, $action))
                 isset($params) ? $controller ->$action($params) : $controller ->$action();
             else
-                die('控制器方法不存在');
+                trigger_error('控制器方法不存在');die();
         }else{
-            die('url参数中无控制器方法参数！');
+            trigger_error('url参数中无控制器方法参数!');die();
         }
 
     }
