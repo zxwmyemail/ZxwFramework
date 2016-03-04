@@ -155,7 +155,7 @@ final class Application {
         $params = empty($url_array['params']) ? '' : $url_array['params'];
         
         if(file_exists($controller_file)){
-            require $controller_file;
+            require_once $controller_file;
             $controller = new $controller;
         }else{
             trigger_error('控制器方法不存在');die();
