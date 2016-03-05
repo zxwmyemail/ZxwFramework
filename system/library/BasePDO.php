@@ -241,9 +241,9 @@ class BasePDO {
     public function execSQL($sql='',$params=array()) 
     {
     	if($this->isMainIps($sql)) { 
-    		return $this->execute($sql, $params=array()); 
+    		return $this->execute($sql, $params); 
     	} else { 
-    		return $this->fetchAll($sql, $params=array()); 
+    		return $this->fetchAll($sql, $params); 
     	} 
     }
 
