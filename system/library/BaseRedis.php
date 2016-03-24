@@ -31,18 +31,25 @@ class BaseRedis
 {
     private $_redis;                         //redis对象
     private static $_instance  = array();    //本类实例
+    public $_isConnectOk = true;             //是否连接成功，成功为true，失败为false
     private static $_cacheTime = 300;        //超时缓冲时间
 
 
     private function __construct($config = array())
     {
         if (empty($config)) {
-            return false;
+            trigger_error('redis配置参数不存在！');die(0);
         }
 
         $this->_redis = new Redis();
-        $this->_redis->connect($config['host'], $config['port']);
-        // $this->_redis->auth($config['auth']);
+        $this->_isConnectOk = $this->_redis->connect($config['host'], $config['port']);
+        if ($this->_isConnectOk && $config['auth']) {
+            $this->_isConnectOk = $this->_redis->auth($config['auth']);
+        }
+
+        if (!$this->_isConnectOk) {
+            error_log('[' . date('Y-m-d H:i:s') . '] redis连接失败，请维护人员检查!');
+        }
     }
 
 
