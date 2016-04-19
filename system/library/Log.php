@@ -89,7 +89,7 @@ class Log {
         $msg = str_replace(array("\n","\t"),array("",""),$msg);
         $module = str_replace(array("\n","\t"),array("",""),$module);
 
-        $logLine = "[$time][$logLevel][$module]:$msg\r\n\r\n";
+        $logLine = "[$time][$logLevel][$module]:$msg\r\n";
         
         fwrite($this->LogFile,$logLine);
     }
