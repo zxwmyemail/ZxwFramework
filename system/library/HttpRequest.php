@@ -18,11 +18,11 @@ class HttpRequest {
 	public function doHttpRequest($method = 'get', $url, $param = array()){
 		switch ($method) {
 			case 'post':
-				return $this->post($url, $param=array());
+				return $this->post($url);
 				break;
 			case 'get':
 			default:
-				return $this->get($url, $param=array());
+				return $this->get($url);
 				break;
 		}
 	}
