@@ -298,7 +298,7 @@ class Verify {
     | 绘制背景图片（注：如果验证码输出图片比较大，将占用比较多的系统资源）
     |-----------------------------------------------------------------------------------------*/
     private function _background() {
-        $path = dirname(__FILE__).'/Verify/bgs/';
+        $path = RESOURCE_PATH . '/font/Verify/bgs/';
         $dir = dir($path);
 
         $bgs = array();   
