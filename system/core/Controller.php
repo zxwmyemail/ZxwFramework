@@ -24,6 +24,50 @@ class Controller {
     }
     
     /*---------------------------------------------------------------------------------------
+    | 返回接口json数据，进行gzip压缩
+    ----------------------------------------------------------------------------------------*/
+    public function renderJSON($data){
+        ob_end_clean();
+
+        // 启用gzip压缩输出
+        if(function_exists('ob_gzhandler')) {
+            ob_start('ob_gzhandler');
+        } else {
+            ob_start();
+        }
+        
+        header('Content-Type:text/plain; charset=utf-8');
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        // echo json_encode($data);
+
+        ob_flush();
+        flush();
+        die(0);
+    }
+    
+    /*---------------------------------------------------------------------------------------
+    | 直接使用php潜入html的方式渲染模板
+    ----------------------------------------------------------------------------------------*/
+    public function display($htmlFile, $data = array()){
+
+        $reqParams = Application::$_reqParams;
+        $routeConfig = $this->config('route');
+
+        $default_module = $routeConfig['default_module'];
+        $default_controller = $routeConfig['default_controller'];
+        $_module = isset($reqParams['module']) ? $reqParams['module'] . 'Module' : $default_module . 'Module';
+        
+        $_controller = isset($reqParams['controller']) ? $reqParams['controller'] : $default_controller;
+        
+        //设置各个目录的路径，这里是配置smarty的路径参数
+        $templatePath = VIEW_PATH . '/' . $_module . '/' . $_controller . '/' . $htmlFile . '.php';
+
+        extract($data); 
+        include($templatePath);
+        die(0);
+    }
+    
+    /*---------------------------------------------------------------------------------------
     | 获取缓存实例
     |----------------------------------------------------------------------------------------
     | @access  final   public
