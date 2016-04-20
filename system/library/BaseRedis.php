@@ -4,7 +4,7 @@ if (!defined('BASE_PATH'))
     exit('<H2 style="margin-top:200px;text-align:center;">Your request was forbidden!</H2>');
 
 /********************************************************************************************
-    BaseRedis类，可以防止惊群现象发生
+    BaseRedis类，可以防止惊群现象发生(高并发时作用明显)
 
     防止惊群原理：
     1.伪造一个过期时间，比如为5分钟过期，所以fakeTime = time()+300
@@ -62,11 +62,11 @@ class BaseRedis
     /*--------------------------------------------------------------------------------------
     | 获取redis单例
     |---------------------------------------------------------------------------------------
-    | @param array $config
+    | @param  array    $config
     |
     | @return object
     --------------------------------------------------------------------------------------*/
-    public static function getInstance($config = array(), $whichCache='master')
+    public static function getInstance($config = array(), $whichCache = 'master')
     {
         if(!isset(self::$_instance[$whichCache])){  
             self::$_instance[$whichCache] = new self($config);   
@@ -130,7 +130,7 @@ class BaseRedis
     |--------------------------------------------------------------------------------------------
     | @param  string    $key
     | @param  string,array,object,number,boolean    $value 缓存值
-    | @param  number $timeOut 过期时间，如果不设置，则使用默认时间，如果为 infinity 则为永久保存
+    | @param  int     $timeOut 过期时间，如果不设置，则使用默认时间，如果为 infinity 则为永久保存
     |
     | @return bool
     |--------------------------------------------------------------------------------------------
@@ -205,19 +205,21 @@ class BaseRedis
     -------------------------------------------------------------------------------------*/  
     public function hmget($hash, $keys) {  
         $list = $this->_redis->hmget($hash, $keys);  
-        $ret = $noexist = array();
+        $ret = $no_exist_keys = $ok_exist_keys = array();
 
         foreach ($list as $key => $value) {
             if ($value) {
                 $ret[] = json_decode($value, true);
+                $ok_exist_keys[] = $keys[$key];
             } else {
-                $noexist[] = $keys[$key];
+                $no_exist_keys[] = $keys[$key];
             }
         }
 
         return array(
-            'ret' => $ret,
-            'noexist' => $noexist
+            'ok_exist' => $ret,
+            'no_exist_keys' => $no_exist_keys,
+            'ok_exist_keys' => $ok_exist_keys
         );  
     }
 
@@ -262,19 +264,21 @@ class BaseRedis
     -------------------------------------------------------------------------------------*/  
     public function mget($keys) {  
         $list = $this->_redis->mget($keys);  
-        $ret = $noexist = array();
+        $ret = $no_exist_keys = $ok_exist_keys = array();
 
         foreach ($list as $key => $value) {
             if ($value) {
                 $ret[] = json_decode($value, true);
+                $ok_exist_keys[] = $keys[$key];
             } else {
-                $noexist[] = $keys[$key];
+                $no_exist_keys[] = $keys[$key];
             }
         }
         return array(
-            'ret' => $ret,
-            'noexist' => $noexist
-        );   
+            'ok_exist' => $ret,
+            'no_exist_keys' => $no_exist_keys,
+            'ok_exist_keys' => $ok_exist_keys,
+        );  
     }
 
     /*-------------------------------------------------------------------------------------
