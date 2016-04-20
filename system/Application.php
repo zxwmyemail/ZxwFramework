@@ -165,11 +165,12 @@ final class Application {
             if(method_exists($controller, $action))
                 isset($params) ? $controller ->$action($params) : $controller ->$action();
             else
-                trigger_error('控制器方法不存在');die();
+                trigger_error('控制器方法不存在');
         }else{
-            trigger_error('url参数中无控制器方法参数!');die();
+            trigger_error('url参数中无控制器方法参数!');
         }
-
+        
+        die(0);
     }
     
     /*---------------------------------------------------------------------------------------
