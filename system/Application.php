@@ -158,7 +158,7 @@ final class Application {
             require_once $controller_file;
             $controller = new $controller;
         }else{
-            trigger_error('控制器方法不存在');die();
+            trigger_error('控制器对应的类不存在，请检查！');die();
         }
 
         if($action){
