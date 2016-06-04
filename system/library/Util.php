@@ -505,7 +505,7 @@ class Util {
      * @return string 返回截取的内容
      */
      
-    function cut_str($str,$sign,$number){
+    public static function cut_str($str,$sign,$number){
         $array=explode($sign, $str);
         $length=count($array);
         if($number<0){
