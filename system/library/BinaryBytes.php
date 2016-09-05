@@ -3,14 +3,14 @@
 <?php
 class BinaryBytes {
         
-        public static function toString($string){ 
+        public static function toString($string, $length, $ispack = true, $type = 'a'){ 
             $result = '';
-            $length = strlen($string); 
-            $str = array_map('ord', str_split($string)); 
-            foreach($str as $vo){ 
-                $result .= pack('c', $vo); 
-            } 
-            return $result . pack('c', '0'); 
+            if ($type == 'a') {
+                $result = $ispack ? pack("a".$length, $string . "\0") : unpack("a".$length, $string);   
+            } else {
+                $result = $ispack ? pack("A".$length, $string . "\0") : unpack("A".$length, $string);      
+            }
+            return $result; 
         } 
     
         public static function int8($i) {
