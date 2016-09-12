@@ -1,17 +1,17 @@
 <?php
-define("CONNECTED", true);
-define("DISCONNECTED", false);
-
 /**
  * Socket class
  */
 Class Socket
 {
+    const CONNECTED = true;
+    const DISCONNECTED = false;
+    
     private static $instance;
 
     private $connection = null;
     
-    private $connectionState = DISCONNECTED;
+    private $connectionState = false;
     
     private $defaultHost = "127.0.0.1";
     
@@ -72,7 +72,7 @@ Class Socket
             $this->_throwMsg("Socket connected!");
         }
         
-        $this->connectionState = CONNECTED;
+        $this->connectionState = self::CONNECTED;
     }
     
     /**
@@ -85,7 +85,7 @@ Class Socket
         if($this->validateConnection())
         {
             socket_close($this->connection);
-            $this->connectionState = DISCONNECTED;
+            $this->connectionState = self::DISCONNECTED;
             $this->_throwMsg("Socket disconnected!");
             return true;
         }
@@ -164,7 +164,7 @@ Class Socket
      */
     private function validateConnection()
     {
-        return (is_resource($this->connection) && ($this->connectionState != DISCONNECTED));
+        return (is_resource($this->connection) && ($this->connectionState != self::DISCONNECTED));
     }
 
 
