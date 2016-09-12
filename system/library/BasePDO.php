@@ -306,7 +306,7 @@ class BasePDO {
     |
     | @return  返回结果集
     --------------------------------------------------------------------------------------- */ 
-    public static function fetchOne($sql='', $params=array()) 
+    public function fetchOne($sql='', $params=array()) 
     { 
     	$this->select($sql, $params);
 
@@ -327,7 +327,7 @@ class BasePDO {
     |
     | @return  返回结果集条数
     --------------------------------------------------------------------------------------- */ 
-    public static function getRowCount($sql='', $params=array()) 
+    public function getRowCount($sql='', $params=array()) 
     { 
         $this->select($sql, $params);
 
