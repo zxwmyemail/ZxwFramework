@@ -173,7 +173,7 @@ $_CONFIG['system']['oracle'] = array(
 | 1.default_controller  系统默认控制器
 | 2.default_action      系统默认控制器方法
 | 3.url_type            定义URL的形式
-|                       1为普通模式   index.php?c=controller&a=action&id=2
+|                       1为普通模式   index.php?r=controller.action&id=2
 |                       2为PATHINFO   index.php/controller/action/?id=2
 --------------------------------------------------------------------------------------------*/
 $_CONFIG['system']['route'] = array(
