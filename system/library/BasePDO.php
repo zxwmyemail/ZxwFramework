@@ -365,13 +365,7 @@ class BasePDO {
 	    if ( !empty($this->_pdoStmt)) $this->_pdoStmt = null;
 
             $this->_pdoStmt = $this->_pdo->prepare($sql); 
-
-            if (!empty($params)) {
-            	foreach ($params as $key => $value) {
-            		$this->_pdoStmt->bindParam($key, $value);
-            	}
-            }
-            $this->_pdoStmt->execute(); 
+            $this->_pdoStmt->execute($params); 
         } catch (PDOException  $e) {  
             exit('SQL语句：'.$sql.'<br />错误信息：'.$e->getMessage());  
         }  
