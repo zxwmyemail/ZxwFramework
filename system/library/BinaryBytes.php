@@ -1,6 +1,5 @@
-/*  需要php5.6以上版本才支持64位整形  */
-
 <?php
+// 需要php5.6以上版本才支持64位整形 
 class BinaryBytes {
         
         public static function toString($string, $length, $ispack = true, $type = 'a'){ 
