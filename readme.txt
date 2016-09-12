@@ -55,7 +55,7 @@
       则需在对应的视图层：mvc/view/homeModule/下先建立home文件夹，然后把html页面放在home下面
 
     4.路由访问，有两种:
-      (1) http://localhost/ZxwFramework/index.php?m=home&c=home&a=index&id=2
+      (1) http://localhost/ZxwFramework/index.php?m=home&r=home.index&id=2
       (2) http://localhost/ZxwFramework/index.php/home/controller/action/?id=2
 
       说明，默认的系统模块为home（见config/params.config.php中关于默认路由配置），
