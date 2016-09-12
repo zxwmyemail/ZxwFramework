@@ -69,14 +69,13 @@ final class Route {
                 $this->_reqParams['module'] = $array['m'];
                 unset($array['m']);
             }
-            if (isset($array['c'])) {
-                $this->_reqParams['controller'] = $array['c'];
-                unset($array['c']);
+            if (isset($array['r'])) {
+                $route = explode('.', $array['r']);
+                $this->_reqParams['controller'] = $route[0];
+                $this->_reqParams['action'] = $route[1];
+                unset($array['r']);
             } 
-            if (isset($array['a'])) {
-                $this->_reqParams['action'] = $array['a'];
-                unset($array['a']);
-            }
+            
             if(count($array) > 0){
                 $this->_reqParams['params'] = $array;
             }
