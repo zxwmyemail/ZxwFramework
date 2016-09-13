@@ -504,21 +504,21 @@ class Util {
     | @param int $number 如是正数以0为起点从左向右截  负数则从右向左截
     | @return string 返回截取的内容
     |-------------------------------------------------------------------------------------------------------*/
-    public static function cut_str($str,$sign,$number){
-        $array=explode($sign, $str);
-        $length=count($array);
-        if($number<0){
-            $new_array=array_reverse($array);
-            $abs_number=abs($number);
-            if($abs_number>$length){
+    public static function cut_string($str, $sign, $number){
+        $array = explode($sign, $str);
+        $length = count($array);
+        if ($number < 0) {
+            $new_array = array_reverse($array);
+            $abs_number = abs($number);
+            if ($abs_number > $length) {
                 return 'error';
-            }else{
+            } else {
                 return $new_array[$abs_number-1];
             }
-        }else{
-            if($number>=$length){
+        } else {
+            if ($number >= $length) {
                 return 'error';
-            }else{
+            } else {
                 return $array[$number];
             }
         }
