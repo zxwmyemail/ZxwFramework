@@ -497,14 +497,13 @@ class Util {
         ];
     }
     
-    /**
-     * 按符号截取字符串的指定部分
-     * @param string $str 需要截取的字符串
-     * @param string $sign 需要截取的符号
-     * @param int $number 如是正数以0为起点从左向右截  负数则从右向左截
-     * @return string 返回截取的内容
-     */
-     
+    /*-------------------------------------------------------------------------------------------------------
+    | 按符号截取字符串的指定部分
+    | @param string $str 需要截取的字符串
+    | @param string $sign 需要截取的符号
+    | @param int $number 如是正数以0为起点从左向右截  负数则从右向左截
+    | @return string 返回截取的内容
+    |-------------------------------------------------------------------------------------------------------*/
     public static function cut_str($str,$sign,$number){
         $array=explode($sign, $str);
         $length=count($array);
@@ -523,6 +522,122 @@ class Util {
                 return $array[$number];
             }
         }
+    }
+
+
+    /*---------------------------------------------------------------------------------------------------------
+    | 处理搜索条件函数
+    |---------------------------------------------------------------------------------------------------------*/
+    public static function where($data){
+        if (empty($data)) {
+            return false;
+        }
+
+        $where = '';
+        $searchData = array();
+
+        foreach ($data as $key => $value) {
+            if ($value[0] == '=') {
+                if (!empty($value[1])) {
+                    $where .= " and ".$key." ".$value[0]." '".$value[1]."' "; 
+                }
+                $searchData[$key] = $value[1];
+            } elseif ($value[0] == 'like') {
+                if (!empty($value[1])) {
+                    $where .= " and ".$key." ".$value[0]." '%".$value[1]."%' "; 
+                }
+                $searchData[$key] = $value[1];
+            } elseif ($value[0] == 'datetime'){
+                if (!empty($value[1][1]) && !empty($value[2][1])) {
+                    $where .= " and ".$key.">=".$value[1][1]." and ".$key."<".$value[2][1]." "; 
+                } elseif (!empty($value[1][1]) && empty($value[2][1])) {
+                    $where .= " and ".$key.">=".$value[1][1]." "; 
+                } elseif (empty($value[1][1]) && !empty($value[2][1])) {
+                    $where .= " and ".$key."<".$value[2][1]." ";
+                }
+
+                $searchData[$value[1][0]] = $value[1][1];
+                $searchData[$value[2][0]] = $value[2][1];
+            }
+        }
+
+        return array(
+            'where'      => $where,
+            'searchData' => $searchData,
+        );
+    }
+
+    /*---------------------------------------------------------------------------------------------------------
+    | 按照两个时间差生成以小时为间隔的数组
+    | $DateTime1 开始时间格式：2011-03-01 14:00
+    | $DateTime2 结束时间格式：2011-03-01 14:00
+    |---------------------------------------------------------------------------------------------------------*/
+    public static function genDateByPerHour($DateTime1, $DateTime2){
+
+        $start = $DateTime1 <= $DateTime2 ? $DateTime1 : $DateTime2;
+        $end = $DateTime1 <= $DateTime2 ? $DateTime2 : $DateTime1;
+
+        $startDate = explode(' ', $start);
+        $endDate = explode(' ', $end);
+
+        $firstDayStartHour = explode(':', $startDate[1]);
+        $firstDayStartHour = (int)$firstDayStartHour[0];
+
+        $endDayStartHour = explode(':', $endDate[1]);
+        $endDayStartHour = (int)$endDayStartHour[0];
+
+        $begin = new DateTime( $startDate[0] );
+        $end = new DateTime( $endDate[0] );
+        $end = $end->modify( '+1 day' ); 
+
+        $interval = new DateInterval('P1D');
+        $daterange = new DatePeriod($begin, $interval ,$end);
+
+        $tempData = array();
+        foreach($daterange as $date){ 
+            $tempData[] = $date->format("Ymd"); 
+        }
+
+        $result = array();
+        if (count($tempData) == 1) {
+            for ($h = $firstDayStartHour; $h <= $endDayStartHour; $h++) { 
+                if ($h<10) {
+                    $result[] = $tempData[0].'0'.$h;
+                }else{
+                    $result[] = $tempData[0].$h;
+                }
+            }
+        }else{
+            for ($i=0; $i < count($tempData); $i++) { 
+                if ($i == 0) {
+                    for ($h = $firstDayStartHour; $h < 24; $h++) { 
+                        if ($h<10) {
+                            $result[] = $tempData[$i].'0'.$h;
+                        }else{
+                            $result[] = $tempData[$i].$h;
+                        }
+                    }
+                } elseif ($i == (count($tempData)-1)) {
+                    for ($j = 0; $j <= $endDayStartHour; $j++) { 
+                        if ($j<10) {
+                            $result[] = $tempData[$i].'0'.$j;
+                        }else{
+                            $result[] = $tempData[$i].$j;
+                        }
+                    }
+                } else {
+                    for ($k = 0; $k < 24; $k++) { 
+                        if ($k<10) {
+                            $result[] = $tempData[$i].'0'.$k;
+                        }else{
+                            $result[] = $tempData[$i].$k;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $result;
     }
     
 }
