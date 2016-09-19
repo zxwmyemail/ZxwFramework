@@ -30,7 +30,7 @@ final class Application {
         self::isDisplayErrors();
 
         //防止sql注入检查
-        self::checkRequestParams();
+        //self::checkRequestParams();
 
         //加载config/下的参数配置params.config.php
         self::$_config = $config['system'];
