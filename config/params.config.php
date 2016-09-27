@@ -290,7 +290,7 @@ $_CONFIG['system']['memcache'] = array(
 |-------------------------------------------------------------------------------------------
 | 使用说明 
 | 1.先注册文件夹路径，如下所示
-| 2.然后创建对象使用：$mytest = Application::newClass('MyTest','public');
+| 2.然后创建对象使用：$mytest = Application::newObject('MyTest','public');
 -------------------------------------------------------------------------------------------*/
 $_CONFIG['system']['newClassPath'] = array(
     'public'    => APP_PUBLIC_PATH,
