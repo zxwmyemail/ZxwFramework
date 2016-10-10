@@ -15,14 +15,14 @@ class HttpRequest {
    	/*-----------------------------------------------------------------------------
 	| 发起请求
 	-----------------------------------------------------------------------------*/
-	public function doHttpRequest($method = 'get', $url, $param = array()){
+	public function doHttpRequest($method = 'get', $url, $param = array(), $timeout=30, $header = 0){
 		switch ($method) {
 			case 'post':
-				return $this->post($url, $param);
+				return $this->post($url, $param, $timeout, $header);
 				break;
 			case 'get':
 			default:
-				return $this->get($url, $param);
+				return $this->get($url, $param, $timeout, $header);
 				break;
 		}
 	}
@@ -30,7 +30,7 @@ class HttpRequest {
    	/*-----------------------------------------------------------------------------
 	| 发起get请求
 	-----------------------------------------------------------------------------*/
-	private function get($url, $param=array(), $timeout=30, $header = 0)
+	private function get($url, $param, $timeout, $header)
 	{
      		if(!is_array($param)){
          		throw new Exception("参数必须为array");
@@ -63,7 +63,7 @@ class HttpRequest {
    	/*------------------------------------------------------------------------------
 	| 发起post请求
 	-----------------------------------------------------------------------------*/
- 	private function post($url, $param=array(), $timeout=30, $header = 0)
+ 	private function post($url, $param, $timeout, $header)
  	{
 	     	if(!is_array($param)){
 	         	throw new Exception("参数必须为array");
