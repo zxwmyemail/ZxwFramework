@@ -2,30 +2,25 @@
 // 需要php5.6以上版本才支持64位整形 
 class BinaryBytes {
         
+        // 转换字符串为j二进制流，$type的值有a和A两种
         public static function toString($string, $length, $ispack = true, $type = 'a'){ 
-            $result = '';
-            if ($type == 'a') {
-                $result = $ispack ? pack("a".$length, $string . "\0") : unpack("a".$length, $string);   
-            } else {
-                $result = $ispack ? pack("A".$length, $string . "\0") : unpack("A".$length, $string);      
-            }
-            return $result; 
+            return $ispack ? pack($type.$length, $string) : unpack($type.$length, $string);  
         } 
     
         public static function int8($i) {
-            return is_int($i) ? pack("c", $i) : unpack("c", $i)[1];
+            return is_numeric($i) ? pack("c", $i) : unpack("c", $i)[1];
         }
 
         public static function uInt8($i) {
-            return is_int($i) ? pack("C", $i) : unpack("C", $i)[1];
+            return is_numeric($i) ? pack("C", $i) : unpack("C", $i)[1];
         }
 
         public static function int16($i) {
-            return is_int($i) ? pack("s", $i) : unpack("s", $i)[1];
+            return is_numeric($i) ? pack("s", $i) : unpack("s", $i)[1];
         }
 
         public static function uInt16($i, $endianness=false) {
-            $f = is_int($i) ? "pack" : "unpack";
+            $f = is_numeric($i) ? "pack" : "unpack";
 
             if ($endianness === true) {  // big-endian
                 $i = $f("n", $i);
@@ -41,11 +36,11 @@ class BinaryBytes {
         }
 
         public static function int32($i) {
-            return is_int($i) ? pack("l", $i) : unpack("l", $i)[1];
+            return is_numeric($i) ? pack("l", $i) : unpack("l", $i)[1];
         }
 
         public static function uInt32($i, $endianness=false) {
-            $f = is_int($i) ? "pack" : "unpack";
+            $f = is_numeric($i) ? "pack" : "unpack";
 
             if ($endianness === true) {  // big-endian
                 $i = $f("N", $i);
@@ -61,11 +56,11 @@ class BinaryBytes {
         }
 
         public static function int64($i) {
-            return is_int($i) ? pack("q", $i) : unpack("q", $i)[1];
+            return is_numeric($i) ? pack("q", $i) : unpack("q", $i)[1];
         }
 
         public static function uInt64($i, $endianness=false) {
-            $f = is_int($i) ? "pack" : "unpack";
+            $f = is_numeric($i) ? "pack" : "unpack";
 
             if ($endianness === true) {  // big-endian
                 $i = $f("J", $i);
