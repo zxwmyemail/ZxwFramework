@@ -63,6 +63,7 @@ Class Socket
             $timeOut = $this->defaultTimeout;
         }
         $this->connection = socket_create(AF_INET,SOCK_STREAM,SOL_TCP); 
+        socket_set_option($socket,SOL_SOCKET,SO_RCVTIMEO,array("sec"=>5, "usec"=>0 ));
         
         if(socket_connect($this->connection,$serverHost,$serverPort) == false)
         {
