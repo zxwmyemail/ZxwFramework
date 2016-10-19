@@ -96,12 +96,11 @@ class HttpCURL{
             $curl_loops = 0;
             return false;
         }
-        $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_REFERER, $referer);
+        // curl_setopt($ch, CURLOPT_REFERER, $referer);
         $data = curl_exec($ch);
         $ret = $data;
         list($header, $data) = explode("\r\n\r\n", $data, 2);
@@ -118,7 +117,7 @@ class HttpCURL{
             }
             $new_url = $url['scheme'] . '://' . $url['host'] . $url['path']. (isset($url['query']) ? '?' . $url['query'] : '');
             $new_url = stripslashes($new_url);
-            return curl_get_file_contents($new_url, $last_url);
+            return $this->curl_redir_exec($ch, $new_url);
         } else {
             $curl_loops = 0;
             list($header, $data) = explode("\r\n\r\n", $ret, 2);
