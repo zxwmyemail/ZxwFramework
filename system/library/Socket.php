@@ -139,10 +139,17 @@ Class Socket
      * 
      * @return string Server response
      */
-    public function getResponse()
+    public function getResponse($totalBytes)
     {
-        $ret = @socket_read($this->connection, 8192, PHP_BINARY_READ);       
-        return $ret;
+        $everyReadBytes = 1024;
+        $byteStr = '';
+        $haveReadBytes = 0;
+        while ($haveReadBytes < $totalBytes) {
+            $ret = socket_read($this->connection, $everyReadBytes, PHP_BINARY_READ); 
+            $byteStr .= $ret;
+            $haveReadBytes += strlen($ret);
+        }     
+        return $byteStr;
     }
 
 
