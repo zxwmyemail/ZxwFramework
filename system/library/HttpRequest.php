@@ -83,6 +83,39 @@ class HttpRequest {
 		curl_close($httph);
 		return $output;
  	}
+	
+	/*------------------------------------------------------------------------------
+	| 发起带有请求头的post请求，头样式：
+	| $headerData[] = "Connection: keep-alive"; 
+	| $headerData[] = "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7";
+	-----------------------------------------------------------------------------*/
+	public function postWithHeaderData($url, $param=array(), $headerData = [], $timeout=30, $header=0)
+	{
+		if(!is_array($param)){
+		    throw new Exception("参数必须为array");
+		}
+		$httph =curl_init($url);
+		curl_setopt($httph,CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($httph, CURLOPT_TIMEOUT,$timeout);
+		curl_setopt($httph, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($httph, CURLOPT_SSL_VERIFYHOST, 2);
+
+		$httpHeader = array(); 
+		if (!empty($param)) {
+		    curl_setopt($httph, CURLOPT_POST, 1);
+		    $httpHeader[] = 'Expect:';
+		    curl_setopt($httph, CURLOPT_POSTFIELDS, $param);
+		}
+
+		$httpHeader = array_merge($httpHeader, $headerData);
+		if (!empty($httpHeader)) {
+		    curl_setopt($httph, CURLOPT_HTTPHEADER, $httpHeader);
+		}
+		curl_setopt($httph, CURLOPT_HEADER, $header);
+		$output=curl_exec($httph);
+		curl_close($httph);
+		return $output;
+	}
 }
 
 ?>
