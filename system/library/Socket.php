@@ -148,7 +148,7 @@ Class Socket
     }
 
 
-    public function waitForResponse()
+    public function waitForResponse($totalBytes)
     {
         if($this->validateConnection())
         {
