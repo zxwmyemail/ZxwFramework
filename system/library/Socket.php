@@ -7,6 +7,8 @@ Class Socket
     const CONNECTED = true;
     const DISCONNECTED = false;
     
+    const BUFFER_SIZE = 10240;
+    
     private static $instance;
 
     private $connection = null;
@@ -135,11 +137,10 @@ Class Socket
      */
     public function getResponse($totalBytes)
     {
-        $everyReadBytes = 1024;
         $byteStr = '';
         $haveReadBytes = 0;
         while ($haveReadBytes < $totalBytes) {
-            $ret = socket_read($this->connection, $everyReadBytes, PHP_BINARY_READ); 
+            $ret = socket_read($this->connection, self::BUFFER_SIZE, PHP_BINARY_READ); 
             $byteStr .= $ret;
             $haveReadBytes += strlen($ret);
         }     
@@ -151,7 +152,14 @@ Class Socket
     {
         if($this->validateConnection())
         {
-            return socket_read($this->connection, 8192);
+            $byteStr = '';
+            $haveReadBytes = 0;
+            while ($haveReadBytes < $totalBytes) {
+                $ret = socket_read($this->connection, self::BUFFER_SIZE, PHP_BINARY_READ); 
+                $byteStr .= $ret;
+                $haveReadBytes += strlen($ret);
+            }     
+            return $byteStr;
         }
         
         $this->_throwError("Receiving response from server failed.<br>Reason: Not connected");
