@@ -46,18 +46,8 @@ Class Socket
      */
     public function connect($serverHost=false, $serverPort=false, $timeOut=false)
     {        
-        if($serverHost == false)
-        {
-            $serverHost = $this->defaultHost;
-        }
-        
-        if($serverPort == false)
-        {
-            $serverPort = $this->defaultPort;
-        }
-        $this->defaultHost = $serverHost;
-        $this->defaultPort = $serverPort;
-        
+        $serverHost = ($serverHost == false) ? $this->defaultHost : $serverHost;
+        $serverPort = ($serverPort == false) ? $this->defaultPort : $serverPort;
         $timeOut = ($timeOut == false) ? $this->defaultTimeout : $timeOut;
         
         $this->connection = socket_create(AF_INET,SOCK_STREAM,SOL_TCP); 
