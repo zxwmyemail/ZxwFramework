@@ -17,7 +17,7 @@ Class Socket
     
     private $defaultPort = 10101;
     
-    private $defaultTimeout = 10;
+    private $defaultTimeout = 3;
     
     public  $debug = false;
     
@@ -58,22 +58,26 @@ Class Socket
         $this->defaultHost = $serverHost;
         $this->defaultPort = $serverPort;
         
-        if($timeOut == false)
-        {
-            $timeOut = $this->defaultTimeout;
-        }
+        $timeOut = ($timeOut == false) ? $this->defaultTimeout : $timeOut;
+        
         $this->connection = socket_create(AF_INET,SOCK_STREAM,SOL_TCP); 
-        socket_set_option($socket,SOL_SOCKET,SO_RCVTIMEO,array("sec"=>5, "usec"=>0 ));
-        
-        if(socket_connect($this->connection,$serverHost,$serverPort) == false)
+        socket_set_nonblock($this->connection) or die(0);
+        $time = time();
+        while (socket_connect($this->connection,$serverHost,$serverPort) == false)    //如果没有连接上就一直死循环
         {
-            $errorString = socket_strerror(socket_last_error($this->connection));
-            $this->_throwError("Connecting to {$serverHost}:{$serverPort} failed.<br>Reason: {$errorString}");
-        }else{
-            $this->_throwMsg("Socket connected!");
+            if ((time() - $time) >= $timeOut)    //每次都需要去判断一下是否超时了
+            {
+                socket_close($this->connection);
+                return false;
+            } else {
+                sleep(1);
+                continue; 
+            }
         }
-        
+
+        socket_set_option($this->connection, SOL_SOCKET, SO_RCVTIMEO, array("sec"=>$timeOut, "usec"=>0));
         $this->connectionState = self::CONNECTED;
+        return true;
     }
     
     /**
