@@ -83,8 +83,6 @@ class Log {
             return;
         }
 
-        date_default_timezone_set('PRC'); 
-
         $time = date('Y-m-d H:i:s');
         $msg = str_replace(array("\n","\t"),array("",""),$msg);
         $module = str_replace(array("\n","\t"),array("",""),$module);
