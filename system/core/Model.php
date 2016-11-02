@@ -27,30 +27,17 @@ class Model {
     | 获取数据库和缓存实例
     |---------------------------------------------------------------------------------------
     | @access  final   public
-    | @param   string  $Param    数据库和缓存参数
+    | @param   string  $name    数据库名字：mysql 、mysqlPDO 、oracle 、oraclePDO 、redis 、hashRedis 、memcache
+    | @param   string  $whichDB  哪一个配置：
     |                            1、对于数据库：
     |                               对于配置文件params.config.php文件中
     |                               如果想获取mysql的master数据库连接实例，
-    |                               那么$Param = mysql_master,获取实例代码：
-    |                               $mysql = $this->mysql_master;
-    |                               $mysqlPDO = $this->mysqlPDO_master;
-    |                               $oracle = $this->oracle_master;
+    |                               那么$whichDB = master
     |                            2、对于缓存
-    |                               如果获取session实例：
-    |                               $session = $this->session;
-    |                               如果获取redis实例：
-    |                               $redis = $this->redis_master;
-    |                               如果获取memcache实例：
-    |                               $memcache = $this->memcache;
+    |                               如果获取redis的master实例：
+    |                               那么$whichDB = 'master'
     --------------------------------------------------------------------------------------*/
-    public function __get($Param){
-
-        $param = explode('_', $Param);
-
-        $name = $param[0];
-
-        $whichDB = empty($param[1]) ? 'master' : $param[1];
-
+    public function getDB($name, $whichDB = 'master'){
         switch ($name) {
             case 'mysql':
                 $DB = new DBFactory($this->_mysqlConfig, $whichDB);
