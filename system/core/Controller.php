@@ -66,29 +66,35 @@ class Controller {
         include($templatePath);
         die(0);
     }
+	
+    /*---------------------------------------------------------------------------------------
+    | 获取smarty实例
+    |---------------------------------------------------------------------------------------*/
+    public function __get($name = ''){
+        switch ($name) {
+            case 'smarty':
+                if (empty($this->_smarty)) {
+                    $this->setSmarty(); 
+                }
+                return $this->_smarty;
+                break;    
+            default:
+                echo '参数错误';exit();
+                break;
+            }
+    }
     
     /*---------------------------------------------------------------------------------------
     | 获取缓存实例
     |----------------------------------------------------------------------------------------
     | @access  final   public
-    | @param   string  $Param    缓存参数，控制层如何获取缓存：
-    |                            1、如果获取session实例：
-    |                               $session = $this->session;
-    |                            2、如果获取redis实例：
-    |                               $redis = $this->redis_master;
-    |                            3、如果获取memcache实例：
-    |                               $memcache = $this->memcache;
+    | @param   string  $name    缓存名字：session、redis、hashRedis、memcache、jsonRPCClient
+    | @param   string  $whichCache    哪一个缓存：
+    |                                 2、如果获取redis的master实例：
+    |                                    $whichCache = 'master';
     ----------------------------------------------------------------------------------------*/
-    public function __get($Param){
-
-        $param = empty($Param) ? 'session' : $Param;
-        
-        $param = explode('_', $param);
-
-        $name = $param[0];
-
-        $whichCache = empty($param[1]) ? 'master' : $param[1];
-
+    public function getCache($name, $whichCache = 'master'){
+        $name = empty($name) ? 'session' : $name;
         switch ($name) {
             case 'session':
                 $cache = new CacheFactory();
@@ -106,12 +112,6 @@ class Controller {
                 $cache = new CacheFactory($this->_memcacheConfig);
                 return  $cache->memcache;
                 break;
-            case 'smarty':
-                if (empty($this->_smarty)) {
-                    $this->setSmarty(); 
-                }
-                return $this->_smarty;
-                break;
             case 'jsonRPCClient':
             	if (empty($this->_jsonRPCClient)) {
                     $this->_jsonRPCClient = Application::newObject('jsonRPCClient', 'jsonRPC');
@@ -122,7 +122,6 @@ class Controller {
                 echo '参数错误';exit();
                 break;
         }
-
     }
     
     /*---------------------------------------------------------------------------------------
