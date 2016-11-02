@@ -17,7 +17,7 @@ class homeModel extends Model{
     }
     
     function testResult(){
-        var_dump($this->mysql);
+        var_dump($this->getDB('mysqlPDO'));
     }
 
 }
