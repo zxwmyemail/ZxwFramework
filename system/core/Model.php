@@ -24,20 +24,15 @@ class Model {
     }
 
     /*--------------------------------------------------------------------------------------
-    | 获取数据库和缓存实例
+    | 获取数据库实例
     |---------------------------------------------------------------------------------------
     | @access  final   public
     | @param   string  $name    数据库名字：mysql 、mysqlPDO 、oracle 、oraclePDO 、redis 、hashRedis 、memcache
     | @param   string  $whichDB  哪一个配置：
-    |                            1、对于数据库：
-    |                               对于配置文件params.config.php文件中
-    |                               如果想获取mysql的master数据库连接实例，
-    |                               那么$whichDB = master
-    |                            2、对于缓存
-    |                               如果获取redis的master实例：
-    |                               那么$whichDB = 'master'
+    |                            对于配置文件params.config.php文件中,如果想获取mysql的master数据库连接实例，
+    |                            那么$whichDB = master
     --------------------------------------------------------------------------------------*/
-    public function getDB($name, $whichDB = 'master'){
+    public function getDB($name = 'mysqlPDO', $whichDB = 'master'){
         switch ($name) {
             case 'mysql':
                 $DB = new DBFactory($this->_mysqlConfig, $whichDB);
@@ -54,13 +49,29 @@ class Model {
             case 'oraclePDO':
                 $DB = new DBFactory($this->_oracleConfig, $whichDB);
                 return  $DB->oraclePDO;
+                break; 
+            default:
+                echo '参数错误';exit();
                 break;
+            }
+    }
+    
+    /*---------------------------------------------------------------------------------------
+    | 获取缓存实例
+    |----------------------------------------------------------------------------------------
+    | @access  final   public
+    | @param   string  $name    缓存名字：session、redis、hashRedis、memcache、jsonRPCClient
+    | @param   string  $whichCache    哪一个缓存：
+    |                                 如果获取redis的master实例：$whichCache = 'master';
+    ----------------------------------------------------------------------------------------*/
+    public function getCache($name = 'session', $whichCache = 'master'){
+        switch ($name) {
             case 'session':
                 $cache = new CacheFactory();
                 return  $cache->session;
                 break;
             case 'redis':
-                $cache = new CacheFactory($this->_redisConfig, $whichDB);
+                $cache = new CacheFactory($this->_redisConfig, $whichCache);
                 return  $cache->redis;
                 break;
             case 'hashRedis':
@@ -71,12 +82,15 @@ class Model {
                 $cache = new CacheFactory($this->_memcacheConfig);
                 return  $cache->memcache;
                 break;
-                    
+            case 'jsonRPCClient':
+                if (empty($this->_jsonRPCClient)) {
+                    $this->_jsonRPCClient = Application::newObject('jsonRPCClient', 'jsonRPC');
+                }
+                return $this->_jsonRPCClient;
             default:
                 echo '参数错误';exit();
                 break;
-            }
-
+        }
     }
 
     /*-----------------------------------------------------------------------------------
