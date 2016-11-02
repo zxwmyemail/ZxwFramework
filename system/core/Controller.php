@@ -93,8 +93,7 @@ class Controller {
     |                                 2、如果获取redis的master实例：
     |                                    $whichCache = 'master';
     ----------------------------------------------------------------------------------------*/
-    public function getCache($name, $whichCache = 'master'){
-        $name = empty($name) ? 'session' : $name;
+    public function getCache($name = 'session', $whichCache = 'master'){
         switch ($name) {
             case 'session':
                 $cache = new CacheFactory();
