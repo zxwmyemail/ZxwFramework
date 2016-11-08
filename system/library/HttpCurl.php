@@ -1,4 +1,14 @@
 <?php
+if (!defined('BASE_PATH'))
+    exit('<H2 style="margin-top:200px;text-align:center;">Your request was forbidden!</H2>');
+/***********************************************************************************************
+ 简单封装curl请求类
+ 
+ @author    iProg
+ @version   1.0
+ @date      2015-05-28
+************************************************************************************************/
+
 class HttpCURL{
 
     const DEFAULT_PORT = 80;
