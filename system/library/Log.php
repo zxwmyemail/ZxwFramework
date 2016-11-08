@@ -1,8 +1,6 @@
 <?php
-
 if (!defined('BASE_PATH'))
     exit('<H2 style="margin-top:200px;text-align:center;">Your request was forbidden!</H2>');
-
 /********************************************************************************************
   PHP Log 类 
 
@@ -24,7 +22,6 @@ class Log {
     const CRITICAL = 'CRITICAL';    //严重级别
     
     private function __construct() {
-
         $dir = LOG_PATH.'/app_log/'.date('Y');
         if (!is_dir($dir)) 
             mkdir($dir, 0777); 
@@ -44,9 +41,7 @@ class Log {
         if(!is_resource($this->LogFile)){
             throw new Exception('无效的文件路径');
         }
-        
     }
-
 
     /*------------------------------------------------------------------------------------------
     | 析构函数，删除文件资源句柄
@@ -59,7 +54,6 @@ class Log {
         } 
     } 
 
-
     /*------------------------------------------------------------------------------------------
     | 获取日志单例
     ------------------------------------------------------------------------------------------*/
@@ -70,7 +64,6 @@ class Log {
         }
         return self::$_logInstance;
     }
-
 
     /*------------------------------------------------------------------------------------------
     | 写日志信息
@@ -88,7 +81,6 @@ class Log {
         $module = str_replace(array("\n","\t"),array("",""),$module);
 
         $logLine = "[$time][$logLevel][$module]:$msg\r\n";
-        
         fwrite($this->LogFile,$logLine);
     }
 
