@@ -1,16 +1,14 @@
 <?php
 if (!defined('BASE_PATH'))
     exit('<H2 style="margin-top:200px;text-align:center;">Your request was forbidden!</H2>');
-    
 /***********************************************************************************************
  简单的tcp套接字类
- 
  @author    iProg
  @version   1.0
  @date      2015-05-28
 ************************************************************************************************/
-Class Socket
-{
+
+Class Socket {
     const CONNECTED = true;
     const DISCONNECTED = false;
     const BUFFER_SIZE = 10240;
