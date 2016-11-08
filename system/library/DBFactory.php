@@ -1,8 +1,6 @@
 <?php
-
 if (!defined('BASE_PATH'))
     exit('<H2 style="margin-top:200px;text-align:center;">Your request was forbidden!</H2>');
-
 /*********************************************************************************************
  * 数据库工厂
  * @copyright   Copyright(c) 2015
