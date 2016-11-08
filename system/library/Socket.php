@@ -6,32 +6,23 @@ Class Socket
 {
     const CONNECTED = true;
     const DISCONNECTED = false;
-    
     const BUFFER_SIZE = 10240;
     
     private static $instance;
-
     private $connection = null;
-    
     private $connectionState = false;
     
     private $defaultHost = "127.0.0.1";
-    
     private $defaultPort = 10101;
-    
     private $defaultTimeout = 3;
     
     public  $debug = false;
     
-    function __construct()
-    {
-        
-    }
-    /**
-     * Singleton pattern. Returns the same instance to all callers
-     *
-     * @return Socket
-     */
+    function __construct(){}
+    
+    /*---------------------------------------------------------------------------------------------
+    | 采用单例模式
+    ---------------------------------------------------------------------------------------------*/
     public static function singleton()
     {
         if (self::$instance == null || ! self::$instance instanceof Socket)
@@ -41,11 +32,10 @@ Class Socket
         }
         return self::$instance;
     }
-    /**
-     * Connects to the socket with the given address and port
-     * 
-     * @return void
-     */
+    
+    /*---------------------------------------------------------------------------------------------
+    | 连接tcp服务器，参数依次为ip地址或域名、端口、超时时间
+    ---------------------------------------------------------------------------------------------*/
     public function connect($serverHost=false, $serverPort=false, $timeOut=false)
     {        
         $serverHost = ($serverHost == false) ? $this->defaultHost : $serverHost;
@@ -72,11 +62,9 @@ Class Socket
         return true;
     }
     
-    /**
-     * Disconnects from the server
-     * 
-     * @return True on succes, false if the connection was already closed
-     */
+    /*---------------------------------------------------------------------------------------------
+    | 断开与tcp服务器的连接
+    ---------------------------------------------------------------------------------------------*/
     public function disconnect()
     {
         if($this->validateConnection())
@@ -88,11 +76,10 @@ Class Socket
         }
         return false;
     }
-    /**
-     * Sends a command to the server
-     * 
-     * @return string Server response
-     */
+    
+    /*---------------------------------------------------------------------------------------------
+    | 向tcp服务器发送数据
+    ---------------------------------------------------------------------------------------------*/
     public function sendRequest($command)
     {
         if($this->validateConnection())
@@ -103,23 +90,26 @@ Class Socket
         $this->_throwError("Sending command \"{$command}\" failed.<br>Reason: Not connected");
     }
     
-    
-    
+    /*---------------------------------------------------------------------------------------------
+    | 判断是否成功连接到tcp服务器，成功返回true，失败返回false
+    ---------------------------------------------------------------------------------------------*/
     public function isConn()
     {
         return $this->connectionState;
     }
     
-    
+    /*---------------------------------------------------------------------------------------------
+    | 返回未读的字节数
+    ---------------------------------------------------------------------------------------------*/
     public function getUnreadBytes()
     {
-        
         $info = socket_get_status($this->connection);
         return $info['unread_bytes'];
-
     }
 
-    
+    /*---------------------------------------------------------------------------------------------
+    | 获取连接的套接字的名字
+    ---------------------------------------------------------------------------------------------*/
     public function getConnName(&$addr, &$port)
     {
         if ($this->validateConnection())
@@ -129,12 +119,9 @@ Class Socket
     }
     
    
-    
-    /**
-     * Gets the server response (not multilined)
-     * 
-     * @return string Server response
-     */
+    /*---------------------------------------------------------------------------------------------
+    | 获取tcp服务器返回的字节流数据
+    ---------------------------------------------------------------------------------------------*/
     public function getResponse($totalBytes)
     {
         $byteStr = '';
@@ -147,7 +134,9 @@ Class Socket
         return $byteStr;
     }
 
-
+    /*---------------------------------------------------------------------------------------------
+    | 在连接有效的情况下，获取tcp服务器返回的字节流数据
+    ---------------------------------------------------------------------------------------------*/
     public function waitForResponse($totalBytes)
     {
         if($this->validateConnection())
@@ -166,32 +155,25 @@ Class Socket
         return false;
     }
 
-
-    /**
-     * Validates the connection state
-     * 
-     * @return bool
-     */
+    /*---------------------------------------------------------------------------------------------
+    | 返回是否成功连接，校验连接的有效性
+    ---------------------------------------------------------------------------------------------*/
     private function validateConnection()
     {
         return (is_resource($this->connection) && ($this->connectionState != self::DISCONNECTED));
     }
 
-
-    /**
-     * Throws an error
-     * 
-     * @return void
-     */
+    /*---------------------------------------------------------------------------------------------
+    | 一个简单额异常抛出函数
+    ---------------------------------------------------------------------------------------------*/
     private function _throwError($errorMessage)
     {
         echo "Socket error: " . $errorMessage;
     }
-    /**
-     * Throws an message
-     * 
-     * @return void
-     */
+    
+    /*---------------------------------------------------------------------------------------------
+    | 在调试模式下，一个简单额异常抛出函数
+    ---------------------------------------------------------------------------------------------*/
     private function _throwMsg($msg)
     {
         if ($this->debug)
@@ -199,9 +181,10 @@ Class Socket
             echo "Socket message: " . $msg . "\n\n";
         }
     }
-    /**
-     * If there still was a connection alive, disconnect it
-     */
+    
+    /*---------------------------------------------------------------------------------------------
+    | 析构函数，断开连接
+    ---------------------------------------------------------------------------------------------*/
     public function __destruct()
     {
         $this->disconnect();
