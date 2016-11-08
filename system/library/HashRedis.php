@@ -1,8 +1,6 @@
 <?php
-
 if (!defined('BASE_PATH'))
     exit('<H2 style="margin-top:200px;text-align:center;">Your request was forbidden!</H2>');
-
 /********************************************************************************************
 redis的一致性hash类
 @copyright   Copyright(c) 2015
@@ -38,13 +36,9 @@ $value = $HashRedis->getValue($testKey);
 
 class HashRedis {
     public $servers = array();        //真实服务器
-
     private $_servers = array();      //虚拟节点
-
     private $_serverKeys = array();
-   
     private $_badServers = array();   //故障服务器列表
-   
     private $_count = 0;
 
     const SERVER_REPLICAS = 10000;    //服务器副本数量，提高一致性哈希算法的数据分布均匀程度
