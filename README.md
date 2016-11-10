@@ -77,8 +77,8 @@
       如果类在这些文件夹下面，只需正常操作即可，比如 $model = new model();
 
     2.手动加载，这种需做配置，主要用于对自己写的类进行加载，步骤：
-      （1）先建一个文件夹，可自己随意命名，比如叫public，将文件夹建在与mvc文件夹同级的位置（其他位置也行，原则上可以任意位置）
-           ,并在public下建立类文件MyTest.php文件
+      （1）先建一个位置与mvc文件夹同级的文件夹public（其他位置也行，原则上可以任意位置，也可自己随意命名）；
+           并在public下建立类文件MyTest.php文件
       （2）然后在config/params.config.php里面配置public的路径，配置如下：
            $CONFIG['system']['newClassPath'] = array(
               'public' => '/ZxwFramework/public'
