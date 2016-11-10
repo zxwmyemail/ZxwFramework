@@ -7,16 +7,34 @@
 > - 描述： It is a PHP framework based on the MVC design pattern!
 
 <br>
-####使用方法
+####相关说明
 <br>
-（1）先导入js和jquery以及相关css文件：
+一、系统目录和主要文件如下：
 
 ```html
-<link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css"/>
-<link rel="stylesheet" type="text/css" href="css/jquery.nice-file-input.min.css"/>
-<script src="js/jquery.nice-file-input.min.js"></script>
-<script src="js/jquery-1.8.3.min.js"></script>
-<script src="js/jquery.checkForm.js"></script>
+    |-bootstrap                 web入口文件和静态资源所在文件夹
+        |--index.php            web入口文件
+        |--resource             静态资源所在文件夹
+            |---css             css文件存放位置 
+            |---js              js文件存放位置
+            |---images          images文件存放位置
+            |---font            font文件存放位置
+    |-config                    存放配置文件  
+        |--const.config.php     系统预定义常量 
+        |--params.config.php    系统参数配置文件
+    |-log                       日志文件夹
+        |--sys_log              系统日志
+        |--app_log              程序日志
+    |-mvc                       框架的mvc层
+        |--controller           控制器文件  
+        |--model                模型文件  
+        |--view                 视图文件     
+    |-public                    存放自定义公共类库  
+    |-system                    系统目录 
+        |--core                 系统核心类，例如控制层父类，model层父类、路由类
+        |--framework            第三方框架，例如smarty引擎
+        |--library              系统类库
+    |-readme.txt                框架说明文件，即本文件
 ```
 <br>
 （2）制作表单，以 **input[type=text]** 举例说明如下：
