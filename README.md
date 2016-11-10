@@ -10,7 +10,6 @@
 ####相关说明
 <br>
 一、系统目录和主要文件如下：
-
 ```html
     |-bootstrap                 web入口文件和静态资源所在文件夹
         |--index.php            web入口文件
@@ -37,37 +36,15 @@
     |-readme.txt                框架说明文件，即本文件
 ```
 <br>
-（2）制作表单，以 **input[type=text]** 举例说明如下：
-
+二、系统文件名命名规则：
 ```html
-<form id="demo">
-    <input type="text" name="name" 
-           required="true" 
-           validate-type="chinese" 
-           min='2' max='4' 
-           tipmsg="必填项" 
-           errmsg="只允许2-4个中文"
-    />
-    <span style="color:red" id="name-tip"></span>
-  
-    <input type="button" id="saveBtn"/>
-</form>
-  
-1. required：是否必填；validate-type校验类型；min字符串最小长度；max字符串最大长度；tipmsg为input中没有文本时的提示语；
-   errmsg为用户输入错误时的提示语；
-2. 上面的提示语显示位置需要开发人员自己单独指定，比如上面的id值为name-tip的span标签就是显示提示语的，该标签需指定id属性
-   值，属性值的规则为input的name属性值拼接上"-tip"，比如上例中为 name-tip.
+    所有自定义类，文件名和类名必须一样，如：类名为MyTest，则文件名也应为MyTest
 ```
 <br>
-（3）对表单验证添加js的初始化校验代码，如下：
-
-```js
-$('#demo').checkForm({
-    submitBtnId : 'saveBtn',       // 提交按钮的id值
-    onSubmitHandle : function(){   // 校验完毕后的提交事件，可发送ajax请求之类的
-        alert('校验通过');          // #code 这里做验证通过后的操作，如提交表单等
-    }
-});
+三、系统集成了smarty引擎，在控制层中使用方法如下：
+```html
+    $this->smarty->assign('name','zxw');
+    $this->smarty->display('home.html');
 ```
 
 
