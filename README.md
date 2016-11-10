@@ -67,7 +67,7 @@
 
       说明，默认的系统模块为home（见config/params.config.php中关于默认路由配置），
       所以可以不写，即为：
-      (1) http://localhost/ZxwFramework/index.php?c=home&a=index&id=2
+      (1) http://localhost/ZxwFramework/index.php?r=home.index&id=2
       (2) http://localhost/ZxwFramework/index.php/controller/action/?id=2  
 ```
 五、类加载机制：
