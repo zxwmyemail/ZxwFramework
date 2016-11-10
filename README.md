@@ -77,18 +77,18 @@
       如果类在这些文件夹下面，只需正常操作即可，比如 $model = new model();
 
     2.手动加载，这种需做配置，主要用于对自己写的类进行加载，步骤：
-      a、先建一个文件夹，可自己随意命名，比如叫public，将文件夹建在与mvc文件夹同级的位置（其他位置也行，原则上可以任意位置）
-        ,并在public下建立类文件MyTest.php文件
-      b、然后在config/params.config.php里面配置public的路径，配置如下：
-        $CONFIG['system']['newClassPath'] = array(
-            'public' => '/ZxwFramework/public'
-        );
-      c、如果想创建public下面的MyTest对象的时候，可做如下操作：
-        $myTestObj = Application::newObject('MyTest','public');
-        说明：第一个参数为类名，第二个为上面配置的键名public。成功返回MyTest对象，失败返回false。
-      d、如果只是想加载类文件，不new对象时，可做如下操作：
-        $flag = Application::newObject('MyTest','public','static');
-        说明：成功返回true，失败返回false。
+      （1）先建一个文件夹，可自己随意命名，比如叫public，将文件夹建在与mvc文件夹同级的位置（其他位置也行，原则上可以任意位置）
+           ,并在public下建立类文件MyTest.php文件
+      （2）然后在config/params.config.php里面配置public的路径，配置如下：
+           $CONFIG['system']['newClassPath'] = array(
+              'public' => '/ZxwFramework/public'
+           );
+      （3）如果想创建public下面的MyTest对象的时候，可做如下操作：
+           $myTestObj = Application::newObject('MyTest','public');
+           说明：第一个参数为类名，第二个为上面配置的键名public。成功返回MyTest对象，失败返回false。
+      （4）如果只是想加载类文件，不new对象时，可做如下操作：
+           $flag = Application::newObject('MyTest','public','static');
+           说明：成功返回true，失败返回false。
 ```
 
 
