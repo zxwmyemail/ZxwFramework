@@ -42,7 +42,7 @@
 ```
 <br>
 三、系统集成了smarty引擎，在控制层中使用方法如下：
-```html
+```php
   $this->smarty->assign('name','zxw');
   $this->smarty->display('home.html');
 ```
