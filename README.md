@@ -12,12 +12,12 @@
 一、系统目录和主要文件如下：
 ```html
   | — bootstrap                 web入口文件和静态资源所在文件夹
-       | —— index.php                web入口文件
-       | —— resource                 静态资源所在文件夹
-            | ——— css                    css文件存放位置 
-            | ——— js                     js文件存放位置
-            | ——— images                 images文件存放位置
-            | ——— font                   font文件存放位置
+       | —— index.php               web入口文件
+       | —— resource                静态资源所在文件夹
+            | ——— css                   css文件存放位置 
+            | ——— js                    js文件存放位置
+            | ——— images                images文件存放位置
+            | ——— font                  font文件存放位置
   | — config                    存放配置文件  
       | —— const.config.php         系统预定义常量 
       | —— params.config.php        系统参数配置文件
