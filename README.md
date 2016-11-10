@@ -47,7 +47,7 @@
   $this->smarty->display('home.html');
 ```
 四、文件夹mvc/view/视图层下面，建立文件夹的规则和控制层类的对应关系举例如下：
-```html
+```php
   1.该框架支持模块，比如有网站前台（module名为home）和网站后台管理（module名为backend）
     两个系统，所以要有两个控制层，先在mvc/controller下面建立两个文件夹，规则如下：
     网站前台：mvc/controller/homeModule/
@@ -71,7 +71,7 @@
     (2) http://localhost/ZxwFramework/index.php/controller/action/?id=2  
 ```
 五、类加载机制：
-```html
+```php
   1.自动加载，这种加载，只对下面文件夹下的类有用
     mvc/model 、system/library 和  system/core
     如果类在这些文件夹下面，只需正常操作即可，比如 $model = new model();
