@@ -7,7 +7,7 @@
 > - 描述： It is a PHP framework based on the MVC design pattern!
 
 <br>
-###框架相关说明
+##框架相关说明
 <br>
 一、系统目录和主要文件如下：
 ```html
