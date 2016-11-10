@@ -33,7 +33,7 @@
       |--core                 系统核心类，例如控制层父类，model层父类、路由类
       |--framework            第三方框架，例如smarty引擎
       |--library              系统类库
-  |-readme.txt                框架说明文件，即本文件
+  |-README.md                 框架说明文件，即本文件
 ```
 <br>
 二、系统文件名命名规则：
