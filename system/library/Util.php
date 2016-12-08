@@ -632,24 +632,26 @@ class Util {
     /*---------------------------------------------------------------------------------------------------------
     | 获取http请求头部数据
     |---------------------------------------------------------------------------------------------------------*/
-    public static function getRequestHeaders(){
-        $arh = array();
-        $rx_http = '/\AHTTP_/';
-        foreach($_SERVER as $key => $val) {
-            if( preg_match($rx_http, $key) ) {
-                $arh_key = preg_replace($rx_http, '', $key);
-                $rx_matches = array();
-                // do some nasty string manipulations to restore the original letter case
-                // this should work in most cases
-                $rx_matches = explode('_', $arh_key);
-                if( count($rx_matches) > 0 and strlen($arh_key) > 2 ) {
-                    foreach($rx_matches as $ak_key => $ak_val) $rx_matches[$ak_key] = ucfirst($ak_val);
-                    $arh_key = implode('-', $rx_matches);
-                }
-                $arh[$arh_key] = $val;
+    public static function getHttpHeaders(){
+        $headers = array(); 
+        foreach ($_SERVER as $key => $value) { 
+            if ('HTTP_' == substr($key, 0, 5)) { 
+                $headers[str_replace('_', '-', substr($key, 5))] = $value; 
+            } 
+            if (isset($_SERVER['PHP_AUTH_DIGEST'])) { 
+                $header['AUTHORIZATION'] = $_SERVER['PHP_AUTH_DIGEST']; 
+            } elseif (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) { 
+                $header['AUTHORIZATION'] = base64_encode($_SERVER['PHP_AUTH_USER'] . ':' . $_SERVER['PHP_AUTH_PW']); 
+            } 
+            if (isset($_SERVER['CONTENT_LENGTH'])) { 
+                $header['CONTENT-LENGTH'] = $_SERVER['CONTENT_LENGTH']; 
+            } 
+            if (isset($_SERVER['CONTENT_TYPE'])) { 
+                $header['CONTENT-TYPE'] = $_SERVER['CONTENT_TYPE']; 
             }
         }
-		return $arh;
+
+        return $headers;
     }
     
 }
