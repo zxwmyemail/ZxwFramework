@@ -61,11 +61,8 @@ class HttpRequest {
    	/*------------------------------------------------------------------------------
 	| 发起post请求
 	-----------------------------------------------------------------------------*/
- 	private function post($url, $param, $timeout, $header)
+ 	private function post($url, $param = '', $timeout, $header)
  	{
-	     	if(!is_array($param)){
-		    throw new Exception("参数必须为array");
-		}
 		$httph =curl_init($url);
 		curl_setopt($httph,CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($httph, CURLOPT_TIMEOUT,$timeout);
@@ -87,11 +84,8 @@ class HttpRequest {
 	| $headerData[] = "Connection: keep-alive"; 
 	| $headerData[] = "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7";
 	-----------------------------------------------------------------------------*/
-	public function postWithHeaderData($url, $param=array(), $headerData = [], $timeout=30, $header=0)
+	public function postWithHeaderData($url, $param = '', $headerData = [], $timeout=30, $header=0)
 	{
-		if(!is_array($param)){
-		    throw new Exception("参数必须为array");
-		}
 		$httph =curl_init($url);
 		curl_setopt($httph,CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($httph, CURLOPT_TIMEOUT,$timeout);
