@@ -116,22 +116,22 @@ class Model {
     | 加载数据库DB参数配置
     -----------------------------------------------------------------------------------*/
     protected function setDbConfig(){
-        $this->_mysqlConfig  = Application::$_config['mysql'][CUR_ENV];
-        $this->_oracleConfig = Application::$_config['oracle'][CUR_ENV];
+        $this->_mysqlConfig  = Application::$_config['mysql'];
+        $this->_oracleConfig = Application::$_config['oracle'];
     }
 
     /*-----------------------------------------------------------------------------------
     | 加载redis参数配置
     -----------------------------------------------------------------------------------*/
     protected function setRedisConfig(){
-        $this->_redisConfig = Application::$_config['redis'][CUR_ENV];
+        $this->_redisConfig = Application::$_config['redis'];
     }
 
     /*-----------------------------------------------------------------------------------
     | 加载memcache参数配置
     -----------------------------------------------------------------------------------*/
     protected function setMemcacheConfig(){
-        $this->_memcacheConfig = Application::$_config['memcache'][CUR_ENV];
+        $this->_memcacheConfig = Application::$_config['memcache'];
     }
         
 }
