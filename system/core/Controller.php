@@ -291,14 +291,14 @@ class Controller {
     | 加载redis参数配置
     --------------------------------------------------------------------------------------*/
     protected function setRedisConfig(){
-        $this->_redisConfig = Application::$_config['redis'][CUR_ENV];
+        $this->_redisConfig = Application::$_config['redis'];
     }
 
     /*--------------------------------------------------------------------------------------
     | 加载memcache参数配置
     --------------------------------------------------------------------------------------*/
     protected function setMemcacheConfig(){
-        $this->_memcacheConfig = Application::$_config['memcache'][CUR_ENV];
+        $this->_memcacheConfig = Application::$_config['memcache'];
     }
 
 
