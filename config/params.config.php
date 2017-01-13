@@ -18,72 +18,26 @@ if (!defined('BASE_PATH'))
 | db_conn   数据库连接表示，1为长久链接，0为即时链接
 -------------------------------------------------------------------------------------------*/
 $_CONFIG['system']['mysql'] = array(
-    'development' => array(
-        'master' => array(
-            'db_host'          => 'localhost',
-            'db_user'          => 'root',
-            'db_port'          => '3306',
-            'db_password'      => '',
-            'db_database'      => 'mysql',
-            'db_table_prefix'  => 'app_',
-            'db_charset'       => 'utf8',
-            'db_conn'          => 0
-        ),
-        'slave'  => array(
-            'db_host'          => 'localhost',
-            'db_user'          => 'root',
-            'db_port'          => '3306',
-            'db_password'      => '',
-            'db_database'      => 'mysql',
-            'db_table_prefix'  => 'app_',
-            'db_charset'       => 'utf8',
-            'db_conn'          => 0
-        )
+    'master' => array(
+        'db_host'          => 'localhost',
+        'db_user'          => 'root',
+        'db_port'          => '3306',
+        'db_password'      => '',
+        'db_database'      => 'mysql',
+        'db_table_prefix'  => 'app_',
+        'db_charset'       => 'utf8',
+        'db_conn'          => 0
     ),
-    'test' => array(
-        'master' => array(
-            'db_host'          => 'localhost',
-            'db_user'          => 'root',
-            'db_port'          => '3306',
-            'db_password'      => '',
-            'db_database'      => 'mysql',
-            'db_table_prefix'  => 'app_',
-            'db_charset'       => 'utf8',
-            'db_conn'          => 0
-        ),
-        'slave'  => array(
-            'db_host'          => 'localhost',
-            'db_user'          => 'root',
-            'db_port'          => '3306',
-            'db_password'      => '',
-            'db_database'      => 'mysql',
-            'db_table_prefix'  => 'app_',
-            'db_charset'       => 'utf8',
-            'db_conn'          => 0
-        )
-    ),
-    'product' => array(
-        'master' => array(
-            'db_host'          => 'localhost',
-            'db_user'          => 'root',
-            'db_port'          => '3306',
-            'db_password'      => '',
-            'db_database'      => 'mysql',
-            'db_table_prefix'  => 'app_',
-            'db_charset'       => 'utf8',
-            'db_conn'          => 0
-        ),
-        'slave'  => array(
-            'db_host'          => 'localhost',
-            'db_user'          => 'root',
-            'db_port'          => '3306',
-            'db_password'      => '',
-            'db_database'      => 'mysql',
-            'db_table_prefix'  => 'app_',
-            'db_charset'       => 'utf8',
-            'db_conn'          => 0
-        )
-    )
+    'slave'  => array(
+        'db_host'          => 'localhost',
+        'db_user'          => 'root',
+        'db_port'          => '3306',
+        'db_password'      => '',
+        'db_database'      => 'mysql',
+        'db_table_prefix'  => 'app_',
+        'db_charset'       => 'utf8',
+        'db_conn'          => 0
+    ）
 );
 
 
@@ -101,65 +55,23 @@ $_CONFIG['system']['mysql'] = array(
 | 'db_password'         数据库密码 
 -------------------------------------------------------------------------------------------*/
 $_CONFIG['system']['oracle'] = array(
-    'development' => array(
-        'master' => array(
-            'db_host'          => 'localhost', 
-            'db_port'          => '1521',
-            'db_server_name'   => '',
-            'db_user'          => '',
-            'db_password'      => '',
-            'db_charset'       => 'utf8',
-            'db_conn'          => 0
-        ),
-        'slave'   => array(
-            'db_host'          => 'localhost', 
-            'db_port'          => '1521',
-            'db_server_name'   => '',
-            'db_user'          => '',
-            'db_password'      => '',
-            'db_charset'       => 'utf8',
-            'db_conn'          => 0
-        )
+    'master' => array(
+        'db_host'          => 'localhost', 
+        'db_port'          => '1521',
+        'db_server_name'   => '',
+        'db_user'          => '',
+        'db_password'      => '',
+        'db_charset'       => 'utf8',
+        'db_conn'          => 0
     ),
-    'test' => array(
-        'master' => array(
-            'db_host'          => 'localhost', 
-            'db_port'          => '1521',
-            'db_server_name'   => '',
-            'db_user'          => '',
-            'db_password'      => '',
-            'db_charset'       => 'utf8',
-            'db_conn'          => 0
-        ),
-        'slave'   => array(
-            'db_host'          => 'localhost', 
-            'db_port'          => '1521',
-            'db_server_name'   => '',
-            'db_user'          => '',
-            'db_password'      => '',
-            'db_charset'       => 'utf8',
-            'db_conn'          => 0
-        )
-    ),
-    'product' => array(
-        'master' => array(
-            'db_host'          => 'localhost', 
-            'db_port'          => '1521',
-            'db_server_name'   => '',
-            'db_user'          => '',
-            'db_password'      => '',
-            'db_charset'       => 'utf8',
-            'db_conn'          => 0
-        ),
-        'slave'   => array(
-            'db_host'          => 'localhost', 
-            'db_port'          => '1521',
-            'db_server_name'   => '',
-            'db_user'          => '',
-            'db_password'      => '',
-            'db_charset'       => 'utf8',
-            'db_conn'          => 0
-        )
+    'slave'   => array(
+        'db_host'          => 'localhost', 
+        'db_port'          => '1521',
+        'db_server_name'   => '',
+        'db_user'          => '',
+        'db_password'      => '',
+        'db_charset'       => 'utf8',
+        'db_conn'          => 0
     )
 );
 
@@ -191,42 +103,16 @@ $_CONFIG['system']['route'] = array(
 | 3.port             端口号
 ------------------------------------------------------------------------------------------*/
 $_CONFIG['system']['redis'] = array(
-    'development' => array(
-        'master' => array(
-            'host'=>'127.0.0.1',
-            'auth'=>'123456',
-            'port'=>'6379'
-        ),
-        'slave' => array(
-            'host'=>'127.0.0.1',
-            'auth'=>'123456',
-            'port'=>'6379'
-        )
+    'master' => array(
+        'host'=>'127.0.0.1',
+        'auth'=>'123456',
+        'port'=>'6379'
     ),
-    'test' => array(
-        'master' => array(
-            'host'=>'127.0.0.1',
-            'auth'=>'123456',
-            'port'=>'6379'
-        ),
-        'slave' => array(
-            'host'=>'127.0.0.1',
-            'auth'=>'123456',
-            'port'=>'6379'
-        )
-    ),
-    'product' => array(
-        'master' => array(
-            'host'=>'127.0.0.1',
-            'auth'=>'123456',
-            'port'=>'6379'
-        ),
-        'slave' => array(
-            'host'=>'127.0.0.1',
-            'auth'=>'123456',
-            'port'=>'6379'
-        )
-    ),
+    'slave' => array(
+        'host'=>'127.0.0.1',
+        'auth'=>'123456',
+        'port'=>'6379'
+    )
 );
 
 
@@ -244,42 +130,16 @@ $_CONFIG['system']['redis'] = array(
 |                      默认值是0.2表示20%压缩率。
 -------------------------------------------------------------------------------------------*/
 $_CONFIG['system']['memcache'] = array(
-    'development' => array(
-        'server' => array(
-            array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1),
-            array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1)
-        ),
-        'expiration'    =>  18600, 
-        'prefix'        =>  'zxw_', 
-        'compression'   =>  false,
-        'isAutoTresh'   =>  true,
-        'threshold'     =>  20000, 
-        'thresavings'   =>  0.2 
+    'server' => array(
+        array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1),
+        array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1)
     ),
-    'test' => array(
-        'server' => array(
-            array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1),
-            array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1)
-        ),
-        'expiration'    =>  18600, 
-        'prefix'        =>  'zxw_', 
-        'compression'   =>  false,
-        'isAutoTresh'   =>  true,
-        'threshold'     =>  20000, 
-        'thresavings'   =>  0.2 
-    ),
-    'product' => array(
-        'server' => array(
-            array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1),
-            array('host' => '127.0.0.1', 'port' => '11211', 'weight' => 1)
-        ),
-        'expiration'    =>  18600, 
-        'prefix'        =>  'zxw_', 
-        'compression'   =>  false,
-        'isAutoTresh'   =>  true,
-        'threshold'     =>  20000, 
-        'thresavings'   =>  0.2 
-    ),
+    'expiration'    =>  18600, 
+    'prefix'        =>  'zxw_', 
+    'compression'   =>  false,
+    'isAutoTresh'   =>  true,
+    'threshold'     =>  20000, 
+    'thresavings'   =>  0.2 
 );
 
 
