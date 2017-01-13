@@ -60,9 +60,9 @@ final class Application {
         error_reporting(E_ALL);
         switch (CUR_ENV) {
             case 'development':
+            case 'test':
                 ini_set('display_errors',1);
                 break;
-            case 'test':
             case 'product':
                 ini_set('display_errors',0);
                 break;
