@@ -37,7 +37,7 @@ $_CONFIG['system']['mysql'] = array(
         'db_table_prefix'  => 'app_',
         'db_charset'       => 'utf8',
         'db_conn'          => 0
-    ）
+    )
 );
 
 
