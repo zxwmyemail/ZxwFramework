@@ -84,7 +84,7 @@ ZxwFramework - 基于MVC的php框架
         并在public下建立类文件MyTest.php文件
     (2) 然后在config/params.config.php里面配置public的路径，配置如下：
         $CONFIG['system']['newClassPath'] = array(
-            'public' => '/ZxwFramework/public'
+            'public' => BASE_PATH . '/public'
         );
     (3) 如果想创建public下面的MyTest对象的时候，可做如下操作：
         $myTestObj = Application::newObject('MyTest','public');
