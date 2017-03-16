@@ -60,7 +60,7 @@ ZxwFramework - 基于MVC的php框架
     网站后台：mvc/view/backendModule/
 
   3.无论哪个模块，如果在控制层建立了一个控制层类，对应的，在视图层要先建立文件夹，比如：
-    在网站前台的控制层：mvc/controller/homeModule/下建立了一个控制层homeController.php
+    在网站前台的控制层：mvc/controller/homeModule/下建立了一个控制层类文件homeController.php
     则需在对应的视图层：mvc/view/homeModule/下先建立home文件夹，然后把html页面放在home下面
 
   4.路由访问，有两种:
