@@ -64,13 +64,13 @@ ZxwFramework - 基于MVC的php框架
     则需在对应的视图层：mvc/view/homeModule/下先建立home文件夹，然后把html页面放在home下面
 
   4.路由访问，有两种:
-    (1) http://localhost/ZxwFramework/index.php?m=home&r=home.index&id=2
-    (2) http://localhost/ZxwFramework/index.php/home/controller/action/?id=2
+    (1) http://localhost/bootstrap/index.php?m=home&r=home.index&id=2
+    (2) http://localhost/bootstrap/index.php/home/controller/action/?id=2
 
     说明，默认的系统模块为home（见config/params.config.php中关于默认路由配置），
     所以可以不写，即为：
-    (1) http://localhost/ZxwFramework/index.php?r=home.index&id=2
-    (2) http://localhost/ZxwFramework/index.php/controller/action/?id=2  
+    (1) http://localhost/bootstrap/index.php?r=home.index&id=2
+    (2) http://localhost/bootstrap/index.php/controller/action/?id=2  
 ```
 
 五、类加载机制：
