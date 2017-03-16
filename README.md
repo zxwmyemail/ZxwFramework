@@ -1,5 +1,5 @@
-##ZxwFramework - 基于MVC的php框架
-
+ZxwFramework - 基于MVC的php框架
+===
 > - 作者： iProg
 > - 日期： 2015-01-12
 > - 版本： 1.1.1
