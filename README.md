@@ -1,5 +1,6 @@
 ZxwFramework - 基于MVC的php框架
-===
+---
+
 > - 作者： iProg
 > - 日期： 2015-01-12
 > - 版本： 1.1.1
@@ -36,12 +37,12 @@ ZxwFramework - 基于MVC的php框架
       | —— library                  系统类库
   | — README.md                 框架说明文件，即本文件
 ```
-<br>
+
 二、系统文件名命名规则：
 ```html
   所有自定义类，文件名和类名必须一样，如：类名为MyTest，则文件名也应为MyTest
 ```
-<br>
+
 三、系统集成了smarty引擎，在控制层中使用方法如下：
 ```php
   $this->smarty->assign('name','zxw');
@@ -71,6 +72,7 @@ ZxwFramework - 基于MVC的php框架
     (1) http://localhost/ZxwFramework/index.php?r=home.index&id=2
     (2) http://localhost/ZxwFramework/index.php/controller/action/?id=2  
 ```
+
 五、类加载机制：
 ```php
   1.自动加载，这种加载，只对下面文件夹下的类有用
