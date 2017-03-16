@@ -8,7 +8,8 @@ ZxwFramework - 基于MVC的php框架
 
 
 框架相关说明 - 轻量级、易使用
-===
+---
+
 一、系统目录和主要文件如下：
 ```php
   | — bootstrap                 web入口文件和静态资源所在文件夹
