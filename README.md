@@ -6,7 +6,7 @@ ZxwFramework - 基于MVC的php框架
 > - 邮箱： zxwmyemail@126.com
 > - 描述： It is a PHP framework based on the MVC design pattern!
 
-<br>
+
 框架相关说明 - 轻量级、易使用
 ===
 一、系统目录和主要文件如下：
