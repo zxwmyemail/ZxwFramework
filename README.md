@@ -50,8 +50,9 @@ ZxwFramework - 基于MVC的php框架
 ```
 四、文件夹mvc/view/视图层下面，建立文件夹的规则和控制层类的对应关系举例如下：
 ```php
-  1.该框架支持模块，比如有网站前台（module名为home）和网站后台管理（module名为backend）
-    两个系统，所以要有两个控制层，先在mvc/controller下面建立两个文件夹，规则如下：
+  1.该框架支持多个模块，比如有网站前台（module名为home）和网站后台管理（module名为backend）
+    两个系统（一个系统对应一个模块），所以要有两个控制层，先在mvc/controller下面建立两个文件夹，
+    规则如下：
     网站前台：mvc/controller/homeModule/
     网站后台：mvc/controller/backendModule/
 
