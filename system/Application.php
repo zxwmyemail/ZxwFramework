@@ -21,6 +21,9 @@ final class Application {
     ----------------------------------------------------------------------------------------*/
     public static function run($config)
     {
+        //加载config/下的参数配置params.config.php
+        self::$_config = $config['system'];
+        
         //自动类加载函数
         self::registerAutoload(); 
 
@@ -29,9 +32,6 @@ final class Application {
 
         //防止sql注入检查
         //self::checkRequestParams();
-
-        //加载config/下的参数配置params.config.php
-        self::$_config = $config['system'];
 
         //获取路由对象
         $route = new Route(self::$_config['route']['url_type']);
@@ -117,21 +117,21 @@ final class Application {
     ----------------------------------------------------------------------------------------*/
     public static function classLoader($classname)     
     {     
-        $mvc_model = MODEL_PATH.'/'.$classname.".php"; 
-
-        $sys_lib = SYS_LIB_PATH.'/'.$classname.'.php';
-
-        $sys_core = SYS_CORE_PATH.'/'.$classname.'.php';
-
-        if (file_exists($mvc_model)){     
-            require_once($mvc_model);     
-        } elseif (file_exists($sys_lib)){     
-            require_once($sys_lib);     
-        } elseif (file_exists($sys_core)){     
-            require_once($sys_core);     
-        } else {
-            trigger_error('加载 '.$classname.' 类库不存在');die();
+        $config = self::$_config;
+        $flag = false;
+        if(isset($config['autoLoadPath']) && $config['autoLoadPath']){
+            foreach($config['autoLoadPath'] as $key => $path){
+                $filePath = $path . '/' . $classname . ".php";
+                if (file_exists($filePath)){
+                    $flag = true;
+                    require_once($filePath); 
+                    break;
+                } 
+            }
         }
+
+        if (!$flag)    
+            trigger_error('加载 '.$classname.' 类库不存在');die(); 
     }
 
     /*---------------------------------------------------------------------------------------
