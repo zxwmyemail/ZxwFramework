@@ -117,21 +117,23 @@ final class Application {
     ----------------------------------------------------------------------------------------*/
     public static function classLoader($classname)     
     {     
-        $config = self::$_config;
-        $flag = false;
-        if(isset($config['autoLoadPath']) && $config['autoLoadPath']){
-            foreach($config['autoLoadPath'] as $key => $path){
+        $autoLoadConfig = self::$_config['autoLoadPath'];
+        $classFile = '';
+        if($autoLoadConfig){
+            foreach($autoLoadConfig as $path){
                 $filePath = $path . '/' . $classname . ".php";
                 if (file_exists($filePath)){
-                    $flag = true;
-                    require_once($filePath); 
+                    $classFile = $filePath;
                     break;
                 } 
             }
         }
 
-        if (!$flag)    
+        if ($classFile) {
+            require_once($filePath); 
+        } else {
             trigger_error('加载 '.$classname.' 类库不存在');die(); 
+        }   
     }
 
     /*---------------------------------------------------------------------------------------
