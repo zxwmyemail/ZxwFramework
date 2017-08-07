@@ -81,7 +81,6 @@ ZxwFramework - 基于MVC的php框架
         'model'       => MODEL_PATH,
         'library'     => SYS_LIB_PATH,
         'core'        => SYS_CORE_PATH,
-        'adminModule' => CONTROLLER_PATH . '/adminModule',
     );
     上面键自定义，值则为类路径。如需创建对象，只需正常new即可，比如 $model = new model();
 
