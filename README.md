@@ -76,9 +76,14 @@ ZxwFramework - 基于MVC的php框架
 
 五、类加载机制：
 ```php
-  1.自动加载，这种加载，只对下面文件夹下的类有用
-    mvc/model 、system/library 和  system/core
-    如果类在这些文件夹下面，只需正常操作即可，比如 $model = new model();
+  1.自动加载，这种加载，需要在配置文件sys_params.php的如下代码段中配置自动加载路径，如下：
+    $_CONFIG['system']['autoLoadPath'] = array(
+        'model'       => MODEL_PATH,
+        'library'     => SYS_LIB_PATH,
+        'core'        => SYS_CORE_PATH,
+        'adminModule' => CONTROLLER_PATH . '/adminModule',
+    );
+    上面键自定义，值则为类路径。如需创建对象，只需正常new即可，比如 $model = new model();
 
   2.手动加载，这种需做配置，主要用于对自己写的类进行加载，步骤：
     (1) 先建一个位置与mvc文件夹同级的文件夹public（其他位置也行，原则上可以任意位置，也可自己随意命名）；
