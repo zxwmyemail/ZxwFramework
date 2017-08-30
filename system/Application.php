@@ -161,15 +161,11 @@ final class Application {
             trigger_error('控制器对应的类不存在，请检查！');die();
         }
 
-        if($action){
-            if(method_exists($controller, $action))
-                isset($params) ? $controller ->$action($params) : $controller ->$action();
-            else
-                trigger_error('控制器方法不存在');
-        }else{
-            trigger_error('url参数中无控制器方法参数!');
+        if($action && method_exists($controller, $action)){
+            isset($params) ? $controller ->$action($params) : $controller ->$action();
+        } else {
+            trigger_error('无效路由参数，无法访问!');
         }
-        
         die(0);
     }
     
