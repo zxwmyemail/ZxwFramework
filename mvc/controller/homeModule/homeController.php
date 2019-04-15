@@ -59,7 +59,6 @@ class homeController extends Controller {
             'server_engine'          => $_SERVER['SERVER_SOFTWARE'],
             'server_hostname'        => '/'== DIRECTORY_SEPARATOR ? $os[1] : $os[2],
             'server_flag'            => $sysInfo['win_n'] != '' ? $sysInfo['win_n'] : @php_uname(),
-            'server_lang'            => getenv("HTTP_ACCEPT_LANGUAGE"),
             'server_port'            => $_SERVER['SERVER_PORT'],
         );
 
