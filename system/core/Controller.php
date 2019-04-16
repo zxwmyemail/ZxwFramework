@@ -243,10 +243,10 @@ class Controller {
         if ($defaultRoute['url_type'] == 1) {
             $url = empty($reqParams['module']) ? 'index.php?' : 'index.php?m='.$reqParams['module'].'&';
             if (count($action) == 2) {
-                $url .= 'c='.$action[0].'&a='.$action[1];
+                $url .= 'r='.$action[0].'.'.$action[1];
             } elseif (count($action) == 1) {
-                $url .= empty($reqParams['controller']) ? 'c='.$defaultRoute['default_controller'].'&' : 'c='.$reqParams['controller'].'&';
-                $url .= 'a='.$action[0];
+                $url .= empty($reqParams['controller']) ? 'r='.$defaultRoute['default_controller'].'.' : 'r='.$reqParams['controller'].'.';
+                $url .= $action[0];
             } else {
                 trigger_error('重定向失败，路由参数【 '.$action.' 】解析失败！');die();
             }
