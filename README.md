@@ -1,9 +1,9 @@
-ZxwFramework - 基于MVC的php框架
+ZxwFramework - 基于MVC的php框架，支持composer，懒加载
 ---
 
 > - 作者： iProg
-> - 日期： 2015-01-12
-> - 版本： 1.1.2
+> - 日期： 2019-07-12
+> - 版本： 2.0.1
 > - 邮箱： zxwmyemail@126.com
 > - 描述： It is a PHP framework based on the MVC design pattern!
 
@@ -13,29 +13,43 @@ ZxwFramework - 基于MVC的php框架
 
 一、系统目录和主要文件如下：
 ```php
-  | — bootstrap                 web入口文件和静态资源所在文件夹
-       | —— index.php               web入口文件
-       | —— resource                静态资源所在文件夹
-            | ——— css                   css文件存放位置 
-            | ——— js                    js文件存放位置
-            | ——— images                images文件存放位置
-            | ——— font                  font文件存放位置
-  | — config                    存放配置文件  
-      | —— const.config.php         系统预定义常量 
-      | —— params.config.php        系统参数配置文件
-  | — log                       日志文件夹
-      | —— sys_log                  系统日志
-      | —— app_log                  程序日志
-  | — mvc                       框架的mvc层
-      | —— controller               控制器文件  
-      | —— model                    模型文件  
-      | —— view                     视图文件     
-  | — public                    存放自定义公共类库  
-  | — system                    系统目录 
-      | —— core                     系统核心类，例如控制层父类，model层父类、路由类
-      | —— framework                第三方框架，例如smarty引擎
-      | —— library                  系统类库
-  | — README.md                 框架说明文件，即本文件
+  | — app                        应用程序所在目录
+       | —— home                     home模块目录，框架支持模块，app目录下建立一个文件夹，即为一个目录
+            | ——— controllers            控制层
+            | ——— models                 model层
+            | ——— views                  视图层
+       | —— runtime                  日志文件夹
+            | ——— sys_log                系统日志
+            | ——— app_log                程序日志
+  | — web                        web入口文件和静态资源所在文件夹
+       | —— index.php                web入口文件
+       | —— alibaba                  阿里巴巴支付通知文件所在文件夹
+       | —— qrcode                   二维码生成图片默认存储文件夹
+       | —— wechat                   微信支付通知文件所在文件夹
+       | —— asset                    静态资源所在文件夹
+            | ——— css                    css文件存放位置 
+            | ——— js                     js文件存放位置
+            | ——— images                 images文件存放位置
+            | ——— font                   font文件存放位置
+  | — config                     存放配置文件  
+      | —— const.php                 系统预定义常量 
+      | —— config.php                系统参数配置文件
+      | —— alibaba.php               阿里巴巴支付配置文件
+      | —— wechat.php                微信支付配置文件
+      | —— database.php              mysql数据库连接参数配置文件
+      | —— email.php                 邮件配置文件
+      | —— redis.php                 redis配置文件
+  | — mvc                        框架的mvc层
+      | —— controller                 控制器文件  
+      | —— model                     模型文件  
+      | —— view                      视图文件  
+      
+  | — core                       框架核心类目录 
+      | —— extend                    扩展类
+      | —— system                    系统核心类
+      | —— library                   框架类库
+      | —— vendor                    composer类库
+  | — README.md                  框架说明文件，即本文件
 ```
 
 二、系统文件名命名规则：
@@ -48,55 +62,39 @@ ZxwFramework - 基于MVC的php框架
   $this->smarty->assign('name','zxw');
   $this->smarty->display('home.html');
 ```
-四、文件夹mvc/view/视图层下面，建立文件夹的规则和控制层类的对应关系举例如下：
+四、文件夹app/module/view/视图层下面，建立文件夹的规则和控制层类的对应关系举例如下：
 ```php
   1.该框架支持多个模块，比如有网站前台（module名为home）和网站后台管理（module名为backend）
-    两个系统（一个系统对应一个模块），所以要有两个控制层，先在mvc/controller下面建立两个文件夹，
+    两个系统（一个系统对应一个模块），所以要有两个控制层，先在app/文件夹下面建立两个文件夹，
     规则如下：
-    网站前台：mvc/controller/homeModule/
-    网站后台：mvc/controller/backendModule/
+    网站前台：app/home/
+    网站后台：app/backend/
 
-  2.对应的视图层也要建立和上面一样的两个文件夹，建立规则如下：
-    网站前台：mvc/view/homeModule/
-    网站后台：mvc/view/backendModule/
+    每个模块下面都有controllers、models、views三个文件夹
 
-  3.无论哪个模块，如果在控制层建立了一个控制层类，对应的，在视图层要先建立文件夹，比如：
-    在网站前台的控制层：mvc/controller/homeModule/下建立了一个控制层类文件homeController.php
-    则需在对应的视图层：mvc/view/homeModule/下先建立home文件夹，然后把html页面放在home下面
+  2.无论哪个模块，如果在控制层建立了一个控制层类，对应的，在视图层要先建立文件夹，比如：
+    在网站前台的控制层：app/home/controllers/下建立了一个控制层类文件home.php
+    则需在对应的视图层：app/home/views/下先建立home文件夹(与控制层类名一样，首字母小写)，html页面就放在home下面
 
-  4.路由访问，有两种:
-    (1) http://localhost/bootstrap/index.php?m=home&r=home.index&id=2
-    (2) http://localhost/bootstrap/index.php/home/controller/action/?id=2
+  3.路由访问，有两种:
+    (1) http://localhost/web/index.php?m=home&r=home.index&id=2
+    (2) http://localhost/web/index.php/home/controller/action/?id=2
 
-    说明，默认的系统模块为home（见config/params.config.php中关于默认路由配置），
+    说明，默认的系统模块为home（见config/config.php中关于默认路由配置），
     所以可以不写，即为：
-    (1) http://localhost/bootstrap/index.php?r=home.index&id=2
-    (2) http://localhost/bootstrap/index.php/controller/action/?id=2  
+    (1) http://localhost/web/index.php?r=home.index&id=2
+    (2) http://localhost/web/index.php/controller/action/?id=2  
 ```
 
 五、类加载机制：
 ```php
-  1.自动加载，这种加载，需要在配置文件sys_params.php的如下代码段中配置自动加载路径，如下：
-    $_CONFIG['system']['autoLoadPath'] = array(
-        'model'       => MODEL_PATH,
-        'library'     => SYS_LIB_PATH,
-        'core'        => SYS_CORE_PATH,
-    );
-    上面键自定义，值则为类路径。如需创建对象，只需正常new即可，比如 $model = new model();
-
-  2.手动加载，这种需做配置，主要用于对自己写的类进行加载，步骤：
-    (1) 先建一个位置与mvc文件夹同级的文件夹public（其他位置也行，原则上可以任意位置，也可自己随意命名）；
-        并在public下建立类文件MyTest.php文件
-    (2) 然后在config/params.config.php里面配置public的路径，配置如下：
-        $CONFIG['system']['newClassPath'] = array(
-            'public' => BASE_PATH . '/public'
-        );
-    (3) 如果想创建public下面的MyTest对象的时候，可做如下操作：
-        $myTestObj = Application::newObject('MyTest','public');
-        说明：第一个参数为类名，第二个为上面配置的键名public。成功返回MyTest对象，失败返回false。
-    (4) 如果只是想加载类文件，不new对象时，可做如下操作：
-        $flag = Application::newObject('MyTest','public','static');
-        说明：成功返回true，失败返回false。
+  1.使用composer类自动加载机制，其中框架预先有两个全局命名空间：
+    1） app： 对应app文件夹；
+    2） core： 对应core文件夹；
+    
+    推荐在app下面扩展自己的类，举例：
+    比如在app文件夹下建立一个文件夹为public，然后，在public下构建自己的类，类的命名空间就是：app\public;
+    命名空间需要与类文件所在的路径一致，比如类在app/public/Test.php，则Test.php的命名空间就是 app\public；
 ```
 
 
