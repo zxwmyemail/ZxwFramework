@@ -62,7 +62,7 @@ ZxwFramework - 基于MVC的php框架，支持composer，懒加载
   $this->smarty->assign('name','zxw');
   $this->smarty->display('home.html');
 ```
-四、文件夹app/module/view/视图层下面，建立文件夹的规则和控制层类的对应关系举例如下：
+四、系统多模块使用说明：
 ```php
   1.该框架支持多个模块，比如有网站前台（module名为home）和网站后台管理（module名为backend）
     两个系统（一个系统对应一个模块），所以要有两个控制层，先在app/文件夹下面建立两个文件夹，
