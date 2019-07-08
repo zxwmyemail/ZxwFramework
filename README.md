@@ -44,6 +44,8 @@ ZxwFramework - 基于MVC的php框架，支持composer，懒加载
       | —— system                    系统核心类
       | —— library                   框架类库
       | —— vendor                    composer类库
+      | —— composer.json             composer的json文件，在core目录下执行composer update等命令
+      | —— composer.lock             composer的lock文件
   | — README.md                  框架说明文件，即本文件
 ```
 
