@@ -1,0 +1,129 @@
+ 本支付类编写，参考https://github.com/dedemao
+ 网上也有封装好的，可以composer安装的，推荐：https://github.com/yansongda/pay
+ 
+ ----------------------------------------------------------------------------------------------------
+ native订单（原生扫码支付订单）使用方法
+ 场景：比如电商平台，购买产品时，会动态生成支付二维码，用户扫描支付，二维码每次都不一样，多应用线上
+ $wxPay = new WxPay();
+    
+ //第一步，写一个接口，前端调用来创建订单，并将结果返回前端
+ $arr = $wxPay->createNativeOrder($payAmount,$outTradeNo,$orderName,$notifyUrl,$payTime);
+ 
+ //第二步，前端传递$arr['code_url']给后端，调用后端二维码接口来生成二维码，并返回客户端供用户扫描
+ use core\extend\qrcode\MyQrCode;
+ MyQrCode::get($arr['code_url'], $size = 300);
+
+
+-------------------------------------------------------------------------------------------------------
+ 公众号支付类
+ 场景：比如电商平台，购买产品时，会有按钮，让用户点击支付，但不生成二维码，用户点击后直接拉起微信支付，多应用线上
+ 
+ $openId = 'dfdfdfd';
+ $outTradeNo = uniqid();                               //你自己的商品订单号
+ $payAmount = 0.01;                                    //付款金额，单位:元
+ $orderName = '支付测试';                               //订单标题
+ $payTime = time();                                    //付款时间
+ $wxPay = new WxPay();
+ $jsApiParameters = $wxPay->createJsApiOrder($openId,$payAmount,$outTradeNo,$orderName,$payTime);
+
+ 前端拿到上面的$jsApiParameters数据，发起支付：
+ <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>微信支付样例-支付</title>
+        <script type="text/javascript">
+            //调用微信JS api 支付
+            function jsApiCall()
+            {
+                WeixinJSBridge.invoke(
+                    'getBrandWCPayRequest',
+                    <?php echo $jsApiParameters; ?>,
+                    function(res){
+                        WeixinJSBridge.log(res.err_msg);
+                        if(res.err_msg=='get_brand_wcpay_request:ok'){
+                            alert('支付成功！');
+                        }else{
+                            alert('支付失败：'+res.err_code+res.err_desc+res.err_msg);
+                        }
+                    }
+                );
+            }
+            function callpay()
+            {
+                if (typeof WeixinJSBridge == "undefined"){
+                    if( document.addEventListener ){
+                        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+                    }else if (document.attachEvent){
+                        document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+                    }
+                }else{
+                    jsApiCall();
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <font color="#9ACD32"><b>该笔订单支付金额为<span style="color:#f00;font-size:50px"><?php echo $payAmount?>元</span>钱</b></font><br/><br/>
+        <div align="center">
+            <button style="width:210px; height:50px; border-radius: 15px;background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" type="button" onclick="callpay()" >立即支付</button>
+        </div>
+    </body>
+</html>
+
+-------------------------------------------------------------------------------------------------------
+ H5支付，常见错误：
+ 1.网络环境未能通过安全验证，请稍后再试（原因：终端IP(spbill_create_ip)与用户实际调起支付时微信侧检测到的终端IP不一致）
+ 2.商家参数格式有误，请联系商家解决（原因：当前调起H5支付的referer为空）
+ 3.商家存在未配置的参数，请联系商家解决（原因：当前调起H5支付的域名与申请H5支付时提交的授权域名不一致）
+ 4.支付请求已失效，请重新发起支付（原因：有效期为5分钟，如超时请重新发起支付）
+ 5.请在微信外打开订单，进行支付（原因：H5支付不能直接在微信客户端内调起）
+    
+ 首先需在配置文件中配置如下三个选项
+ $h5ReturnUrl = 'http://www.baidu.com';                 //配置文件中配置，付款成功后，页面跳转的地址
+ $h5WapUrl = 'www.xxx.com';                             //配置文件中配置，WAP网站URL地址
+ $h5WapName = 'H5支付';                                 //配置文件中配置，WAP网站名
+    
+ $outTradeNo = uniqid();     //你自己的商品订单号
+ $payAmount = 0.01;          //付款金额，单位:元
+ $orderName = '支付测试';    //订单标题
+ $wxPay = new WxPay();
+ $mwebUrl= $wxPay->createH5Order($payAmount,$outTradeNo,$orderName);
+ echo "<h1><a href='{$mwebUrl}'>点击跳转至支付页面</a></h1>";
+ exit();
+
+
+ -------------------------------------------------------------------------------------------------------
+ 微信企业付款的说明
+ 1.微信企业付款要求必传证书，需要到https://pay.weixin.qq.com 账户中心->账户设置->API安全->下载证书，证书路径在第207行和210行修改
+ 2.错误码参照 ：https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_2
+
+ $wxPay = new WxPay();
+ $outTradeNo = uniqid();     //订单号
+ $payAmount = 1;             //转账金额，单位:元。转账最小金额为1元
+ $trueName = '张三';         //收款人真实姓名
+ $result = $wxPay->createEnterpriseOrder($openId,$payAmount,$outTradeNo,$trueName);
+ echo 'success';
+
+
+ -------------------------------------------------------------------------------------------------------
+ 付款码扫码支付，使用方法：
+ 场景：商户使用设备扫码用户的付款条码，进行扣款，多应用线下
+ 提醒：提交支付请求后微信会同步返回支付结果（没有异步回调通知）。
+      当返回结果为“系统错误”时，商户系统等待5秒后调用【查询订单API】，查询支付实际交易结果；
+      当返回结果为“USERPAYING”时，商户系统可设置间隔时间(建议10秒)重新查询支付结果，直到支付成功或超时(建议30秒)；
+ 
+ $outTradeNo = uniqid();    //你自己的商品订单号，不能重复
+ $payAmount = 0.01;         //付款金额，单位:元
+ $orderName = '支付测试';    //订单标题
+ $authCode = 'xxxxx';       //用户付款码（商户使用设备扫码用户的付款条码读取到的条码数字，或 打开微信-》我-》钱包-》收付款 点击可查看付款码数字）
+
+ $wxPay = new WxPay();
+ $arr = $wxPay->createBarCodeOrder($outTradeNo, $orderName, $payAmount, $authCode);
+ if($arr['return_code']=='SUCCESS'){
+    echo '付款成功！返回信息如下：<br><hr>';
+    echo '<pre>'.print_r($arr).'</pre>';
+    exit();
+ }
+ exit('error');

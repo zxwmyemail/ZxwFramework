@@ -1,0 +1,315 @@
+ 本支付类编写，参考https://github.com/dedemao
+ 网上也有封装好的，可以composer安装的，推荐：https://github.com/yansongda/pay
+ 
+ ----------------------------------------------------------------------------------------------------
+ 当面付（扫码支付）使用方法
+ use core\extend\qrcode\MyQrCode;
+    
+ //写一个接口，前端调用来创建订单，并输出前端二维码，供用户扫描付款
+ $outTradeNo = uniqid();     //你自己的商品订单号，不能重复
+ $payAmount = 0.01;          //付款金额，单位:元
+ $orderName = '支付测试';     //订单标题
+ $aliPay = new AliPay();
+ $ret = $aliPay->createQrcodePay($payAmount,$outTradeNo,$orderName);
+ $result = $ret['alipay_trade_precreate_response'];
+ if($result['code'] && $result['code'] == '10000'){
+    // 生成二维码并输出到前端
+    MyQrCode::get($result['qr_code'], $size = 300);
+ } else {
+    // 订单失败处理
+    echo $result['msg'].' : '.$result['sub_msg'];
+ }
+
+
+-------------------------------------------------------------------------------------------------------
+ 电脑网站支付，发起订单
+ 
+ $outTradeNo = uniqid();                               //商品订单号
+ $payAmount = 0.01;                                    //付款金额，单位:元
+ $orderName = '支付测试';                               //订单标题
+ $aliPay = new AliPay();
+ $html = $aliPay->createPcPay($payAmount,$outTradeNo,$orderName);
+ echo $sHtml;exit();
+
+
+ -------------------------------------------------------------------------------------------------------
+ wap网站支付，发起订单
+ 
+ $outTradeNo = uniqid();                               //商品订单号
+ $payAmount = 0.01;                                    //付款金额，单位:元
+ $orderName = '支付测试';                               //订单标题
+ $aliPay = new AliPay();
+ $html = $aliPay->createWapPay($payAmount,$outTradeNo,$orderName);
+ echo $sHtml;exit();
+
+
+-------------------------------------------------------------------------------------------------------
+ 当面付（条码支付）
+ 场景：商户使用设备扫码用户的付款条码，进行扣款，多应用线下
+ 
+ $outTradeNo = uniqid();    //你自己的商品订单号，不能重复
+ $payAmount = 0.01;         //付款金额，单位:元
+ $orderName = '支付测试';    //订单标题
+ $authCode = 'xxxxx';       //用户付款码（商户使用设备扫码用户的付款条码读取到的条码数字，或 打开微信-》我-》钱包-》收付款 点击可查看付款码数字）
+
+ $aliPay = new AliPay();
+ $ret = $aliPay->createBarCodePay($payAmount, $outTradeNo, $orderName, $authCode);
+ $result = $ret['alipay_trade_pay_response'];
+ if($result['code'] && $result['code']=='10000'){
+    echo '支付成功';
+ } elseif ($result['code'] && $result['code']=='10003'){
+    echo '等待用户付款';
+ } else {
+    echo $result['msg'].' : '.$result['sub_msg'];
+ }
+
+
+ -------------------------------------------------------------------------------------------------------
+ 订单分账
+ 
+ $outTradeNo = uniqid();         //结算请求流水号 开发者自行生成并保证唯一性
+ $tradeNo = '';                  //支付宝订单号
+ $tradeOut = '';                 //分账支出方账户，本参数为要分账的支付宝账号对应的支付宝唯一用户号。以2088开头的纯16位数字。
+ $tradeIn = '';                  //分账收入方账户，本参数为要分账的支付宝账号对应的支付宝唯一用户号。以2088开头的纯16位数字。
+ $amount = 0.01;                 //分账金额。即收款方实际收到的金额
+
+ $aliPay = new AliPay();
+ $ret = $aliPay->createSettlePay($amount, $outTradeNo, $tradeNo, $tradeOut, $tradeIn);
+ $result = $result['alipay_trade_order_settle_response'];
+ if($result['code'] && $result['code']=='10000'){
+    echo '分账成功';
+ } else {
+    echo $result['msg'].' : '.$result['sub_msg'];
+ }
+
+
+ -------------------------------------------------------------------------------------------------------
+ jsapi支付（APP支付）
+ 
+ $outTradeNo = uniqid();                               //你自己的商品订单号
+ $payAmount = 0.01;                                    //付款金额，单位:元
+ $orderName = '支付测试';                               //订单标题
+ $aliPay = new AliPay();
+ $jsApiParams = $aliPay->createJsapiPay($payAmount, $outTradeNo, $orderName);
+
+ 前端拿到上面的$jsApiParams数据，发起支付：
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>支付宝jsapi支付</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+    <script src="https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.1/alipayjsapi.min.js"></script>
+ </head>
+ <body>
+    <div class="container">
+        <h3>点击以下按钮唤起支付宝支付</h3>
+        <a href="javascript:void(0)" class="btn btn-primary btns-lg orderstrPay orderstr">点击调起支付宝支付</a>
+        <div class="alert alert-success" role="alert" style="margin-top:30px;display: none"></div>
+    </div>
+    <script>
+        function ready(callback) {
+            // 如果jsbridge已经注入则直接调用
+            if (window.AlipayJSBridge) {
+                callback && callback();
+            } else {
+                // 如果没有注入则监听注入的事件
+                document.addEventListener('AlipayJSBridgeReady', callback, false);
+            }
+        }
+        ready(function(){
+            document.querySelector('.orderstr').addEventListener('click', function() {
+                AlipayJSBridge.call("tradePay", {
+                    orderStr: "<?php echo $jsApiParams?>"
+                }, function(result) {
+                    if(result.resultCode!=9000){
+                        //支付失败
+                        alert(result.resultCode+"："+result.memo);
+                    }else{
+                        //支付成功
+                        var info = eval('(' + result.result + ')');
+                        $(".alert-success").html("<strong>支付成功！</strong> 订单号："+info.alipay_trade_app_pay_response.out_trade_no+" 支付金额：￥"+info.alipay_trade_app_pay_response.total_amount);
+                        $(".alert-success").show();
+                    }
+                    // alert(JSON.stringify(result));
+                });
+            });
+        });
+    </script>
+ </body>
+ </html>
+
+
+-------------------------------------------------------------------------------------------------------
+ jsapi支付（用户扫码支付）
+ 场景：比如电商平台，购买产品时，会有按钮，让用户点击支付，但不生成二维码，用户点击后直接拉起微信支付，多应用线上
+ 
+ $outTradeNo = uniqid();                               //你自己的商品订单号
+ $payAmount = 0.01;                                    //付款金额，单位:元
+ $orderName = '支付测试';                               //订单标题
+ $userId    = 'xxx';                                   //阿里授权用户id
+ $aliPay = new AliPay();
+ $jsApiParams = $aliPay->createJsapi2Pay($payAmount, $outTradeNo, $orderName, $userId);
+ $tradeNo = $jsApiParams['alipay_trade_create_response']['trade_no'];
+
+ 前端拿到上面的$tradeNo数据，发起支付：
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>支付宝jsapi支付</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+    <script src="https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.1/alipayjsapi.min.js"></script>
+ </head>
+ <body>
+    <div class="container">
+        <h3>点击唤起支付宝收银台</h3>
+        <a href="javascript:void(0)" class="btn btn-primary btns-lg orderstrPay orderstr">点击支付</a>
+
+        <div class="alert alert-success" role="alert" style="margin-top:30px;display: none"></div>
+    </div>
+    <p id="result"></p>
+
+    <script type="application/javascript">
+        // 调试时可以通过在页面定义一个元素，打印信息，使用alert方法不够优雅
+        function log(obj) {
+            $("#result").append(obj).append(" ").append("<br />");
+        }
+
+        $(document).ready(function(){
+            // 页面载入完成后即唤起收银台
+            // 点击payButton按钮后唤起收银台
+            $(".orderstr").click(function() {
+                tradePay("<?=$tradeNo?>");
+            });
+
+            // 通过jsapi关闭当前窗口，仅供参考，更多jsapi请访问
+            // /aod/54/104510
+            $("#closeButton").click(function() {
+                AlipayJSBridge.call('closeWebview');
+            });
+        });
+
+        // 由于js的载入是异步的，所以可以通过该方法，当AlipayJSBridgeReady事件发生后，再执行callback方法
+        function ready(callback) {
+            if (window.AlipayJSBridge) {
+                callback && callback();
+            } else {
+                document.addEventListener('AlipayJSBridgeReady', callback, false);
+            }
+        }
+
+        function tradePay(tradeNO) {
+            ready(function(){
+                // 通过传入交易号唤起快捷调用方式(注意tradeNO大小写严格)
+                AlipayJSBridge.call("tradePay", {
+                    tradeNO: tradeNO
+                }, function (data) {
+                    // log(JSON.stringify(data));
+                    if(data.resultCode!=9000){
+                        //支付失败
+                        alert(data.resultCode+"："+data.memo);
+                    }else{
+                        //支付成功
+                        $(".alert-success").html("<strong>支付成功！</strong> 订单号：<?=$tradeNo?>");
+                        $(".alert-success").show();
+                    }
+                });
+            });
+        }
+    </script>
+ </body>
+ </html>
+
+
+ -------------------------------------------------------------------------------------------------------
+ 转账订单
+ $outTradeNo = uniqid();     //商户转账唯一订单号
+ $payAmount = 0.1;           //转账金额，单位：元 （金额必须大于等于0.1元)
+ $remark = '转账测试';        //转帐备注
+ $account = '';              //收款方账户（支付宝登录号，支持邮箱和手机号格式。）
+ $realName = '';             //收款方真实姓名
+ $aliPay = new AliPay();
+ $result = $aliPay->createTransfersPay($payAmount, $outTradeNo, $account, $realName, $remark);
+ $result = $result['alipay_fund_trans_toaccount_transfer_response'];
+ if($result['code'] && $result['code']=='10000'){
+    echo '<h1>转账成功</h1>';
+ } else {
+    echo $result['msg'].' : '.$result['sub_msg'];
+ }
+
+
+ -------------------------------------------------------------------------------------------------------
+ 转账订单查询
+ $outBizBo = '';         //商户转账唯一订单号（商户转账唯一订单号、支付宝转账单据号 至少填一个）
+ $orderId = '';          //支付宝转账单据号（商户转账唯一订单号、支付宝转账单据号 至少填一个）
+ $aliPay = new AliPay();
+ $result = $aliPay->queryTransfersPay($outBizBo, $orderId);
+ $result = $result['alipay_fund_trans_order_query_response'];
+ if($result['code'] && $result['code']=='10000'){
+    echo '<h1>该笔款项转账成功</h1>';
+ } else {
+    echo $result['msg'].' : '.$result['sub_msg'];
+ }
+
+
+ -------------------------------------------------------------------------------------------------------
+ 关闭订单
+ $outTradeNo = uniqid();     //商户转账唯一订单号
+ $tradeNo = '';              //交易流水号
+ $aliPay = new AliPay();
+ $result = $aliPay->closePay($tradeNo, $outTradeNo);
+ $result = $result['alipay_trade_close_response'];
+ if($result['code'] && $result['code']=='10000'){
+    echo '<h1>订单已关闭</h1>';
+ } else {
+    echo $result['msg'].' : '.$result['sub_msg'];
+ }
+
+
+ -------------------------------------------------------------------------------------------------------
+ 订单交易状态查询
+ $outTradeNo = uniqid();     //商户转账唯一订单号
+ $tradeNo = '';              //交易流水号
+ $aliPay = new AliPay();
+ $result = $aliPay->queryPay($tradeNo, $outTradeNo);
+ if($result['alipay_trade_query_response']['code']!='10000'){
+    echo $result['alipay_trade_query_response']['msg'].'：'.$result['alipay_trade_query_response']['sub_code'].' '.$result['alipay_trade_query_response']['sub_msg'];
+ } else {
+    switch($result['alipay_trade_query_response']['trade_status']){
+        case 'WAIT_BUYER_PAY':
+            echo '交易创建，等待买家付款';
+            break;
+        case 'TRADE_CLOSED':
+            echo '未付款交易超时关闭，或支付完成后全额退款';
+            break;
+        case 'TRADE_SUCCESS':
+            echo '交易支付成功';
+            break;
+        case 'TRADE_FINISHED':
+            echo '交易结束，不可退款';
+            break;
+        default:
+            echo '未知状态';
+            break;
+    }
+}
+
+
+-------------------------------------------------------------------------------------------------------
+ 订单退款
+ $outTradeNo = uniqid();     //商户转账唯一订单号
+ $tradeNo = '';              //交易流水号
+ $refundAmount = 0.01;       //需要退款的金额，该金额不能大于订单金额,单位为元，支持两位小数
+ $aliPay = new AliPay();
+ $result = $aliPay->refundPay($refundAmount, $tradeNo, $outTradeNo);
+ $result = $result['alipay_trade_refund_response'];
+ if($result['code'] && $result['code']=='10000'){
+    echo '<h1>退款成功</h1>';
+ } else {
+    echo $result['msg'].' : '.$result['sub_msg'];
+ }

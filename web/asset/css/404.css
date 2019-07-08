@@ -1,0 +1,26 @@
+*{
+	font-family:"Microsoft Yahei";
+	margin:0 auto;
+	font-weight:lighter;
+	text-decoration:none;
+	text-align:center;
+}  
+
+a {
+	color: blue;
+}
+
+html,body{
+	height:100%;
+} 
+
+h1{
+	font-size:100px;
+	line-height:1em;
+} 
+
+.content {
+	line-height:2.2em;
+	padding-top: 150px;
+	width:100%;
+} 

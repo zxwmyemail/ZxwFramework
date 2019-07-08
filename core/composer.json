@@ -1,0 +1,26 @@
+{
+	"require": {
+		"illuminate/database": "*",
+		"illuminate/Events": "*",
+		"smarty/smarty": "^3.1",
+		"phpoffice/phpspreadsheet": "^1.7",
+		"gregwar/captcha": "^1.1",
+		"phpmailer/phpmailer": "^6.0",
+		"monolog/monolog": "^1.24",
+		"overtrue/pinyin": "~4.0",
+		"webgeeker/validation": "0.4",
+		"endroid/qr-code": "*"
+	},
+	"autoload": {
+		"psr-4": {
+	      	"app\\": "../app",
+	      	"core\\": "./"
+	    }
+	},
+	"repositories": {
+		"packagist": {
+			"type": "composer",
+			"url": "https://packagist.laravel-china.org"
+		}
+	}
+}
