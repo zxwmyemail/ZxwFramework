@@ -73,7 +73,7 @@ ZxwFramework - 基于MVC的php框架，支持composer，懒加载
     每个模块下面都有controllers、models、views三个文件夹
 
   2.无论哪个模块，如果在控制层建立了一个控制层类，对应的，在视图层要先建立文件夹，比如：
-    在网站前台的控制层：app/home/controllers/下建立了一个控制层类文件home.php
+    在网站前台的控制层：app/home/controllers/下建立了一个控制层类文件Home.php
     则需在对应的视图层：app/home/views/下先建立home文件夹(与控制层类名一样，首字母小写)，html页面就放在home下面
 
   3.路由访问，有两种:
@@ -88,13 +88,13 @@ ZxwFramework - 基于MVC的php框架，支持composer，懒加载
 
 五、类加载机制：
 ```php
-  1.使用composer类自动加载机制，其中框架预先有两个全局命名空间：
-    1） app： 对应app文件夹；
-    2） core： 对应core文件夹；
+  使用composer类自动加载机制，其中框架预先有两个全局命名空间：
+  1） app： 对应app文件夹；
+  2） core： 对应core文件夹；
     
-    推荐在app下面扩展自己的类，举例：
-    比如在app文件夹下建立一个文件夹为public，然后，在public下构建自己的类，类的命名空间就是：app\public;
-    命名空间需要与类文件所在的路径一致，比如类在app/public/Test.php，则Test.php的命名空间就是 app\public；
+  推荐在app下面扩展自己的类，举例：
+  比如在app文件夹下建立一个文件夹为public，然后，在public下构建自己的类，类的命名空间就是：app\public;
+  命名空间需要与类文件所在的路径一致，比如类在app/public/Test.php，则Test.php的命名空间就是 app\public；
 ```
 
 
