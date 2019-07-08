@@ -13,7 +13,7 @@
 | 2.测试模式(test)
 | 3.生产环境模式(product)
 ---------------------------------------------------------------------------------------------*/
-define('CUR_ENV','development');
+define('CUR_ENV', 'development');
 // define('CUR_ENV','test');
 // define('CUR_ENV','product');
 
