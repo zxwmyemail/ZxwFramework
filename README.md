@@ -4,6 +4,7 @@ ZxwFramework - 基于MVC的php框架，支持composer，懒加载
 > - 作者： iProg
 > - 日期： 2019-07-8
 > - 版本： 2.0.1
+> - php版本： >=7.2.x
 > - 邮箱： zxwmyemail@126.com
 > - 描述： It is a PHP framework based on the MVC design pattern!
 
