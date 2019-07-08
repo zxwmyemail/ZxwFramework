@@ -2,7 +2,7 @@ ZxwFramework - 基于MVC的php框架，支持composer，懒加载
 ---
 
 > - 作者： iProg
-> - 日期： 2019-07-12
+> - 日期： 2019-07-8
 > - 版本： 2.0.1
 > - 邮箱： zxwmyemail@126.com
 > - 描述： It is a PHP framework based on the MVC design pattern!
@@ -12,7 +12,7 @@ ZxwFramework - 基于MVC的php框架，支持composer，懒加载
 ---
 
 一、系统目录和主要文件如下：
-```php
+```
   | — app                        应用程序所在目录
        | —— home                     home模块目录，框架支持模块，app目录下建立一个文件夹，即为一个目录
             | ——— controllers            控制层
@@ -38,12 +38,7 @@ ZxwFramework - 基于MVC的php框架，支持composer，懒加载
       | —— wechat.php                微信支付配置文件
       | —— database.php              mysql数据库连接参数配置文件
       | —— email.php                 邮件配置文件
-      | —— redis.php                 redis配置文件
-  | — mvc                        框架的mvc层
-      | —— controller                 控制器文件  
-      | —— model                     模型文件  
-      | —— view                      视图文件  
-      
+      | —— redis.php                 redis配置文件 
   | — core                       框架核心类目录 
       | —— extend                    扩展类
       | —— system                    系统核心类
@@ -53,17 +48,17 @@ ZxwFramework - 基于MVC的php框架，支持composer，懒加载
 ```
 
 二、系统文件名命名规则：
-```html
+```
   所有自定义类，文件名和类名必须一样，如：类名为MyTest，则文件名也应为MyTest
 ```
 
 三、系统集成了smarty引擎，在控制层中使用方法如下：
-```php
+```
   $this->smarty->assign('name','zxw');
   $this->smarty->display('home.html');
 ```
 四、系统多模块使用说明：
-```php
+```
   1.该框架支持多个模块，比如有网站前台（module名为home）和网站后台管理（module名为backend）
     两个系统（一个系统对应一个模块），所以要有两个控制层，先在app/文件夹下面建立两个文件夹，
     规则如下：
@@ -87,7 +82,7 @@ ZxwFramework - 基于MVC的php框架，支持composer，懒加载
 ```
 
 五、类加载机制：
-```php
+```
   使用composer类自动加载机制，其中框架预先有两个全局命名空间：
   1） app： 对应app文件夹；
   2） core： 对应core文件夹；
