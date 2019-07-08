@@ -4,6 +4,7 @@ namespace core\extend\monolog;
  日志记录类，github地址： 
  https://github.com/Seldaek/monolog
 *********************************************************************************************/
+use core\system\Config;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
@@ -25,7 +26,9 @@ class Log {
     /**
      * 公共静态方法获取实例化的对象
      */
-    public static function getInstance($module = 'home') {  
+    public static function getInstance($module = '') {  
+        $routeConf = Config::get('config', 'route');
+        $module = $module ? $module : $routeConf['default_module'];
         if(!isset(self::$_instance[$module])){  
             self::$_instance[$module] = new self($module);   
         }
