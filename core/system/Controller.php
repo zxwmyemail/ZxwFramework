@@ -147,7 +147,7 @@ class Controller {
             }
 
             header("Location:".$url, true, $statusCode);
-        } elseif ($routeConf['use_pathinfo'] == 2) { {
+        } elseif ($routeConf['use_pathinfo'] == 2) {
             $url = 'index.php/' . $route['module'] . '/';
 
             if (count($action) == 2) {
