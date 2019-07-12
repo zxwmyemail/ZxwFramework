@@ -125,24 +125,45 @@ class Controller {
     --------------------------------------------------------------------------------------*/
     public function redirect($action, $param = [], $end = true, $statusCode = 302) {
         if (empty($action)) return false;
+
+        $routeConf = Config::get('config', 'route');
 	
         $action = explode('.', $action);
         $route = Application::$_routeParams;
 
-        $url = 'index.php?m=' . $route['module'] . '&';
-        if (count($action) == 2) {
-            $url .= 'r='.$action[0] . '.' . $action[1];
-        } elseif (count($action) == 1) {
-            $url .= 'r=' . $route['controller'] . '.' . $action[0];
-        } else {
-            trigger_error('重定向失败，路由参数【 '.$action.' 】解析失败！');die();
-        }
+        if ($routeConf['use_pathinfo'] == 1) {
+            $url = 'index.php?m=' . $route['module'] . '&';
 
-        if (!empty($param)) {
-            $url .= "&" . http_build_query($param);
-        }
+            if (count($action) == 2) {
+                $url .= 'r='.$action[0] . '.' . $action[1];
+            } elseif (count($action) == 1) {
+                $url .= 'r=' . $route['controller'] . '.' . $action[0];
+            } else {
+                trigger_error('重定向失败，路由参数【 '.$action.' 】解析失败！');die();
+            }
 
-        header("Location:".$url, true, $statusCode);
+            if (!empty($param)) {
+                $url .= "&" . http_build_query($param);
+            }
+
+            header("Location:".$url, true, $statusCode);
+        } elseif ($routeConf['use_pathinfo'] == 2) { {
+            $url = 'index.php/' . $route['module'] . '/';
+
+            if (count($action) == 2) {
+                $url .= $action[0] . '/' . $action[1];
+            } elseif (count($action) == 1) {
+                $url .= $route['controller'] . '/' . $action[0];
+            } else {
+                trigger_error('重定向失败，路由参数【 '.$action.' 】解析失败！');die();
+            }
+
+            if (!empty($param)) {
+                $url .= "?" . http_build_query($param);
+            }
+
+            header("Location:".$url, true, $statusCode);
+        }
 
         if ($end) exit(0);
     }
