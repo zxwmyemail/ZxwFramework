@@ -27,7 +27,7 @@ use core\extend\monolog\Log;
 
 class WxAuth extends Wechat {
 
-    private $scope = 'asnsapi_userinfo';
+    private $scope = 'snsapi_userinfo';
 
     const ACODE_URL           = 'https://api.weixin.qq.com/wxa/getwxacodeunlimit';
     const AUTHORIZE_URL       = 'https://open.weixin.qq.com/connect/oauth2/authorize';
@@ -41,7 +41,7 @@ class WxAuth extends Wechat {
      *                      如果只需要获取用户id，填写asnsapi_base即可；
      *                      如需获取头像、昵称等信息，填写asnsapi_userinfo；
      */
-    public function __construct($scope = 'asnsapi_userinfo', $whichConf = 'default') {
+    public function __construct($scope = 'snsapi_userinfo', $whichConf = 'default') {
         parent::__construct($whichConf);
         $this->scope = $scope;
     }
@@ -75,7 +75,7 @@ class WxAuth extends Wechat {
             return false;
         }
 
-        if ($this->scope == 'asnsapi_base') {
+        if ($this->scope == 'snsapi_base') {
             return ['openid' => $result['openid']];
         } 
 
@@ -110,9 +110,9 @@ class WxAuth extends Wechat {
     {
         $config = $this->_wxConfig;
         $urlObj["appid"]         = $config['appId'];
-        $urlObj["redirect_uri"]  = "$redirectUrl";
-        $urlObj["response_type"] = "code";
+        $urlObj["redirect_uri"]  = urlencode($redirectUrl);
         $urlObj["scope"]         = $this->scope;
+        $urlObj["response_type"] = "code";
         $urlObj["state"]         = "STATE";
         $bizString = $this->toUrlParams($urlObj);
         return self::AUTHORIZE_URL . '?' . $bizString;
