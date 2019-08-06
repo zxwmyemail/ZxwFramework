@@ -110,7 +110,7 @@ class WxAuth extends Wechat {
     {
         $config = $this->_wxConfig;
         $urlObj["appid"]         = $config['appId'];
-        $urlObj["redirect_uri"]  = urlencode($redirectUrl);
+        $urlObj["redirect_uri"]  = $redirectUrl;
         $urlObj["scope"]         = $this->scope;
         $urlObj["response_type"] = "code";
         $urlObj["state"]         = "STATE";
