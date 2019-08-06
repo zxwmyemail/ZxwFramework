@@ -69,7 +69,7 @@ class WxAuth extends Wechat {
         $url = $this->createOauthUrlForOpenid($code);        
         $result = json_decode(HttpCurl::get($url), true);
 
-        if(isset($result['openid'])) {
+        if(!isset($result['openid'])) {
             $log = Log::getInstance(); 
             $log->error('获取微信用户信息失败：' . json_encode($result));
             return false;
