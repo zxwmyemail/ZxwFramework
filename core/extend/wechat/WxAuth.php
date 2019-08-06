@@ -65,7 +65,7 @@ class WxAuth extends Wechat {
     public function getUserInfo()
     {
         //获取code码，以获取openid
-        $code = $_GET['code'];
+        $code = isset($_GET['code']) ? $_GET['code'] : '';
         $url = $this->createOauthUrlForOpenid($code);        
         $result = json_decode(HttpCurl::get($url), true);
 
