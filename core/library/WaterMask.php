@@ -183,4 +183,52 @@ class WaterMask {
 	   
 	   	return $newfilename;
 	}
+
+	/**
+     * 将图片变为圆形
+     */
+    public function cropToCircle($oldHeadPath, $newHeadPath, $isSave = true) {
+    	$imgInfo = getimagesize($oldHeadPath);
+		switch ($imgInfo[2]) {
+		  	case 1: 
+		  		$img = imagecreatefromgif($oldHeadPath);
+		  		imagepng ($img, $newHeadPath); 
+		  		break;
+		  	case 2: 
+		  		$img = imagecreatefromjpeg($oldHeadPath); 
+		  		imagepng ($img, $newHeadPath); 
+		  		break;
+		  	default:   
+		  		break;
+		}
+
+        $src_img = imagecreatefromstring(file_get_contents($newHeadPath));
+        $w = imagesx($src_img);
+        $h = imagesy($src_img);
+        $w = $h = min($w, $h);
+     
+        $img = imagecreatetruecolor($w, $h);
+        //这一句一定要有
+        imagesavealpha($img, true);
+        //拾取一个完全透明的颜色,最后一个参数127为全透明
+        $bg = imagecolorallocatealpha($img, 255, 255, 255, 127);
+        imagefill($img, 0, 0, $bg);
+        $r = $w / 2; //圆半径
+        for ($x = 0; $x < $w; $x++) {
+            for ($y = 0; $y < $h; $y++) {
+                $rgbColor = imagecolorat($src_img, $x, $y);
+                if (((($x - $r) * ($x - $r) + ($y - $r) * ($y - $r)) < ($r * $r))) {
+                    imagesetpixel($img, $x, $y, $rgbColor);
+                }
+            }
+        }
+        
+        //返回资源
+        if(!$isSave) return $img;
+        //输出图片到文件
+        imagepng($img, $newHeadPath);
+        //释放空间
+        imagedestroy($src_img);
+        imagedestroy($img);
+    }
 }
