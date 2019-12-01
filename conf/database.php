@@ -11,9 +11,9 @@ return [
         'driver'    => 'mysql',
         'host'      => 'localhost',
         'port'      => '3306',
-        'database'  => 'zxw_test',
+        'database'  => 'test',
         'username'  => 'root',
-        'password'  => 'ello-admin@163.com',
+        'password'  => 'root',
         'charset'   => 'utf8mb4',
         'collation' => 'utf8mb4_general_ci',
         'prefix'    => ''
@@ -22,9 +22,9 @@ return [
         'driver'    => 'mysql',
         'host'      => 'localhost',
         'port'      => '3306',
-        'database'  => 'zxw_test',
+        'database'  => 'test',
         'username'  => 'root',
-        'password'  => 'ello-admin@163.com',
+        'password'  => 'root',
         'charset'   => 'utf8mb4',
         'collation' => 'utf8mb4_general_ci',
         'prefix'    => ''

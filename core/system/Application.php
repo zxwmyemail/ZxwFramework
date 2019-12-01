@@ -9,6 +9,7 @@ namespace core\system;
 use core\system\Route;
 use core\system\Config;
 use FastRoute\Dispatcher;
+use core\extend\monolog\Log;
 use FastRoute\RouteCollector;
 use Illuminate\Database\Capsule\Manager;
 
@@ -42,7 +43,6 @@ final class Application {
         $dbConfig = Config::get('database');
 
         $capsule = new Manager();
-        // 循环创建所有链接
         foreach ($dbConfig as $name => $config) {
             $capsule->addConnection($config, $name);
         }

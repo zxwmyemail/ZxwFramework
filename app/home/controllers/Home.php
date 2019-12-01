@@ -118,7 +118,7 @@ class Home extends Base
      */
     public function testModel() {
         $article = Articles::getFirst();
-    	  var_dump($article);die();
+    	var_dump($article);die();
     }
 
     /**

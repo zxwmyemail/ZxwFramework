@@ -1,0 +1,4 @@
+[01-Dec-2019 19:21:54 Asia/Shanghai] PHP Error:  SQLSTATE[42S22]: Column not found: 1054 Unknown column 'title' in 'field list' (SQL: update `articles` set `title` = nihao, `articles`.`updated_at` = 2019-12-01 19:21:53 where `id` >= 1) in D:\WorkSpace\www\myframe\core\vendor\illuminate\database\Connection.php on line 664
+[01-Dec-2019 19:23:07 Asia/Shanghai] PHP Error:  SQLSTATE[42S22]: Column not found: 1054 Unknown column 'title' in 'field list' (SQL: update `articles` set `title` = nihao where `id` >= 1) in D:\WorkSpace\www\myframe\core\vendor\illuminate\database\Connection.php on line 664
+[01-Dec-2019 19:23:40 Asia/Shanghai] PHP Error:  Call to a member function toArray() on integer in D:\WorkSpace\www\myframe\app\home\models\Articles.php on line 34
+[01-Dec-2019 19:24:30 Asia/Shanghai] PHP Error:  Call to a member function getConnection() on integer in D:\WorkSpace\www\myframe\app\home\models\Articles.php on line 31

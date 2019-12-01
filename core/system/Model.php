@@ -7,6 +7,8 @@
  *******************************************************************************************/
 namespace core\system;
 
+use core\extend\monolog\Log;
+use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Eloquent\Model as IlluminateModel;
 
 class Model extends IlluminateModel {

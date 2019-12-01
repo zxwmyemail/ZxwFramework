@@ -1,0 +1,1 @@
+[2019-12-01 19:25:17] home.DEBUG: [{"query":"update `articles` set `title` = ? where `id` >= ?","bindings":["nihao",1],"time":1005.83}]
