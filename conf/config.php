@@ -29,7 +29,7 @@ return [
     	'open_fastroute'     => false,
     	// 1为common模式    index.php?m=module&r=controller.action&id=2
         // 2为pathinfo模式  index.php/module/controller/action/?id=2
-    	'use_pathinfo'       => 1,
+    	'use_pathinfo'       => 2,
         'default_module'     => 'home',
         'default_controller' => 'home', 
         'default_action'     => 'index',                                                                          

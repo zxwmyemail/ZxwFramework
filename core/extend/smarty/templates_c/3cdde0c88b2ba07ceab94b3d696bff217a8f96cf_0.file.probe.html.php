@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-12-01 16:11:32
+/* Smarty version 3.1.33, created on 2019-12-01 16:16:53
   from 'D:\WorkSpace\www\myframe\app\home\views\home\probe.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5de375b44b51c0_38074426',
+  'unifunc' => 'content_5de376f5c1e746_02297048',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3cdde0c88b2ba07ceab94b3d696bff217a8f96cf' => 
     array (
       0 => 'D:\\WorkSpace\\www\\myframe\\app\\home\\views\\home\\probe.html',
-      1 => 1575187880,
+      1 => 1575188205,
       2 => 'file',
     ),
   ),
@@ -20,14 +20,14 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5de375b44b51c0_38074426 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5de376f5c1e746_02297048 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html>
 <head>
     <title>littlePHP 探针</title>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="asset/css/probe.css">  
+    <link rel="stylesheet" type="text/css" href="/asset/css/probe.css">  
 </head>
 <body>
     <div id="page">
