@@ -8,6 +8,8 @@ namespace core\system;
  ********************************************************************************************/
 use core\system\Route;
 use core\system\Config;
+use FastRoute\Dispatcher;
+use FastRoute\RouteCollector;
 use Illuminate\Database\Capsule\Manager;
 
 final class Application {
@@ -28,11 +30,6 @@ final class Application {
 
         //注册数据库连接
         self::registerDbConn();
-
-        //获取请求参数
-        $params = Route::handleParams(); 
-        self::$_reqParams = $params['request'];
-        self::$_routeParams = $params['route'];
 
         //导向控制层
         self::routeToCtrl();
@@ -84,7 +81,15 @@ final class Application {
     /*---------------------------------------------------------------------------------------
     | 根据URL分发到Controller
     |---------------------------------------------------------------------------------------*/
-    public static function routeToCtrl() {   
+    public static function routeToCtrl() {  
+        $routeConf = Config::get('config', 'route');
+
+        if ($routeConf['open_fastroute']) {
+            self::parseFastRoute();
+        } else {
+            self::parseDefaultRoute();
+        }
+
         $route = self::$_routeParams;
 
         $module = $route['module'];
@@ -100,10 +105,70 @@ final class Application {
             $controllerObj->$action(self::$_reqParams);
         } catch (\Throwable $e) {
             error_log('PHP Error:  ' . $e->getMessage() . ' in ' . $e->getFile(). ' on line ' . $e->getLine());
-            header('Location: ?r=home.page500');
+            header("HTTP/1.1 404 Not Found", true, 404);
         }
-        
         exit(0);
+    }
+
+    /*---------------------------------------------------------------------------------------
+    | 解析系统自带默认路由
+    |---------------------------------------------------------------------------------------*/
+    public static function parseDefaultRoute() {  
+        //获取请求参数
+        $params = Route::handleParams(); 
+        self::$_reqParams = $params['request'];
+        self::$_routeParams = $params['route'];
+    }
+
+    /*---------------------------------------------------------------------------------------
+    | 解析FastRoute路由
+    |---------------------------------------------------------------------------------------*/
+    public static function parseFastRoute() {  
+        $fastRoute = Config::get('fastroute');
+        $dispatcher = \FastRoute\simpleDispatcher(function(RouteCollector $r) use ($fastRoute) {
+            foreach ($fastRoute as $route) {
+                $r->addRoute($route['method'], $route['uri'], $route['ctrl']);
+            }
+        });
+
+        $uri = $_SERVER['REQUEST_URI'];
+        $httpMethod = $_SERVER['REQUEST_METHOD'];
+        
+        // Strip query string (?foo=bar) and decode URI
+        if (false !== $pos = strpos($uri, '?')) {
+            $uri = substr($uri, 0, $pos);
+        }
+        $uri = rawurldecode($uri);
+
+        $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
+
+        switch ($routeInfo[0]) {
+            case Dispatcher::FOUND:
+                // 获得映射到的控制层和方法信息
+                $handler = $routeInfo[1];   
+
+                list($ctrlInfo, $methodName) = explode('@', $handler);
+
+                $ctrlInfo = explode('\\', $ctrlInfo);
+
+                self::$_routeParams = [
+                    'module'     => $ctrlInfo[1] ? $ctrlInfo[1] : '',
+                    'controller' => $ctrlInfo[3] ? $ctrlInfo[3] : '',
+                    'action'     => $methodName,
+                ];
+
+                // 获取请求参数
+                self::$_reqParams = $routeInfo[2]; 
+                break;
+            case Dispatcher::NOT_FOUND:
+                // 404 Not Found 没找到对应的方法
+                header("HTTP/1.1 404 Not Found", true, 404);
+                exit(0);
+            case Dispatcher::METHOD_NOT_ALLOWED:
+                // 405 Method Not Allowed  方法不允许
+                header("HTTP/1.1 405 Method Not Allowed", true, 405);
+                exit(0);
+        }
     }
     
     /*---------------------------------------------------------------------------------------

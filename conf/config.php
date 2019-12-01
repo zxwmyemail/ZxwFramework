@@ -11,14 +11,22 @@
  * <link rel="stylesheet" type="text/css" href="asset/css/404.css">
  * 改为绝对路径：
  * <link rel="stylesheet" type="text/css" href="/asset/css/404.css">
+ *
  * 然后nginx中server段配置如下代码：
  * location /asset/ {
  *      alias /path/to/asset/;
  * }
+ *
+ * 然后apache中配置的如下：
+ * <IfModule alias_module>
+ *    Alias /asset/  D:\WorkSpace\www\myframe\web\asset\
+ * </IfModule>
  ********************************************************************************************/
 
 return [
     'route' => [
+    	// 是否开启FastRoute路由，开启后，下面的use_pathinfo的两个模式失效
+    	'open_fastroute'     => false,
     	// 1为common模式    index.php?m=module&r=controller.action&id=2
         // 2为pathinfo模式  index.php/module/controller/action/?id=2
     	'use_pathinfo'       => 1,

@@ -74,11 +74,15 @@ final class Route {
     -------------------------------------------------------------------------------------*/
     public static function parsePathinfoRoute($routeConf) {
 
-        if (isset($_SERVER['PATH_INFO'])){
-            //获取 pathInfo
-            $pathInfo = trim($_SERVER['PATH_INFO'], '/');
-            $pathInfo = empty($pathInfo) ? [] : explode('/', $pathInfo);
+        $uri = $_SERVER['REQUEST_URI'];
+        if (false !== $pos = strpos($uri, '?')) {
+            $uri = substr($uri, 0, $pos);
+        }
+        $uri = rawurldecode($uri);
+        $pathInfo = trim($uri, '/');
+        $pathInfo = empty($pathInfo) ? [] : explode('/', $pathInfo);
 
+        if (!empty($pathInfo)){
             // 获取 module
             if (count($pathInfo) > 2 && isset($pathInfo[0])) {
                 self::$_routeParams['module'] = $pathInfo[0];
@@ -102,6 +106,12 @@ final class Route {
             } else {
                 self::$_routeParams['action'] = $routeConf['default_action'];
             }
+        } else {
+            self::$_routeParams = [
+                'module'     => $routeConf['default_module'],
+                'controller' => $routeConf['default_controller'],
+                'action'     => $routeConf['default_action'],
+            ];
         }
 
         self::$_reqParams = $_REQUEST; 

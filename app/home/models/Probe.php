@@ -1,6 +1,8 @@
 <?php
 namespace app\home\models;
 
+use core\system\Config;
+
 class Probe {
 
     private $ok = '<font style="color:green;">√</font>';
@@ -22,9 +24,22 @@ class Probe {
 
     public function getPhpParam() {
         $zend_version = zend_version();
+
+        $routeConf = Config::get('config', 'route');
+
+        $phpInfoUrl = 'index.php?r=home.phpInfo';
+        if ($routeConf['open_fastroute']) {
+            $phpInfoUrl = '/home/info';
+        } else {
+            if ($routeConf['use_pathinfo'] == 2) {
+                $phpInfoUrl = '/home/phpInfo';
+            }
+        }
+
         return array(
             'plugin_zend_version'        => empty($zend_version) ? $this->no : $zend_version,
             'php_version'                => PHP_VERSION,
+            'php_info_url'               => $phpInfoUrl,
             'php_sapi_name'              => strtoupper(php_sapi_name()),
             'php_memory_limit'           => $this->valueIsOk("memory_limit"),
             'php_safe_mode'              => $this->valueIsOk("safe_mode"),

@@ -119,6 +119,8 @@ class Controller {
     | @param  $action     string   重定向路由，格式有两种：
     |                              1. 'controller.action',重定向到其他控制层
     |                              2. 'action',重定向到自身控制层的其他action
+    |                              如果是fastroute模式下的重定向，action参数的值为对应的uri即可 
+    |                              
     | @param  $param      array    重定向参数
     | @param  $end        bool     重定向后是否终止应用
     | @param  $statusCode int      重定向http请求状态码值，默认302，即重定向
@@ -127,7 +129,31 @@ class Controller {
         if (empty($action)) return false;
 
         $routeConf = Config::get('config', 'route');
+
+        if ($routeConf['open_fastroute']) {
+            header("Location:" . $action, true, $statusCode);
+        } else {
+            $this->defaultRedirect($action, $param, $end, $statusCode);
+        }
 	
+        if ($end) exit(0);
+    }
+
+    /*-------------------------------------------------------------------------------------
+    | 重定向
+    |--------------------------------------------------------------------------------------
+    | @param  $action     string   重定向路由，格式有两种：
+    |                              1. 'controller.action',重定向到其他控制层
+    |                              2. 'action',重定向到自身控制层的其他action
+    |                              如果是fastroute模式下的重定向，action参数的值为对应的uri即可 
+    |                              
+    | @param  $param      array    重定向参数
+    | @param  $end        bool     重定向后是否终止应用
+    | @param  $statusCode int      重定向http请求状态码值，默认302，即重定向
+    --------------------------------------------------------------------------------------*/
+    public function defaultRedirect($action, $param = [], $end = true, $statusCode = 302) {
+        $routeConf = Config::get('config', 'route');
+
         $action = explode('.', $action);
         $route = Application::$_routeParams;
 
@@ -164,8 +190,6 @@ class Controller {
 
             header("Location:".$url, true, $statusCode);
         }
-
-        if ($end) exit(0);
     }
 
 }
