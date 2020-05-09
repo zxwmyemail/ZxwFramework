@@ -58,15 +58,14 @@ final class Application {
     | 根据目前处于开发、测试还是生产模式，判断是否显示错误到页面
     --------------------------------------------------------------------------------------*/
     public static function isDisplayErrors() {
-        error_reporting(E_ALL);
         switch (CUR_ENV) {
             case 'development':
-                ini_set('display_errors', 1);
-                break;
             case 'test':
+                error_reporting(E_ALL);
                 ini_set('display_errors', 1);
                 break;
             case 'product':
+                error_reporting(E_ERROR | E_WARNING | E_PARSE);
                 ini_set('display_errors', 0);
                 break;
             default:
